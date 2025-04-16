@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import Image from "next/image";
 
 interface MediaItem {
     id: number;
@@ -91,7 +92,7 @@ const NewReleased = () => {
                             key={item.id}
                             className="border rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
                         >
-                            <img
+                            <Image
                                 src={item.imageUrl}
                                 alt={item.title}
                                 className="w-full h-48 object-cover"

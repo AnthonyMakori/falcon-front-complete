@@ -5,6 +5,7 @@ import { Button } from "../../components/ui/button";
 import axios from "axios";
 import dayjs from "dayjs";
 import Header from "../../components/header/Header";
+import Image from 'next/image'
 
 interface Movie {
   id: number;
@@ -38,7 +39,7 @@ const ComingSoon = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {movies.map((movie) => (
             <Card key={movie.id} className="relative shadow-lg bg-white text-black">
-              <img
+              <Image
                 src={movie.poster}
                 alt={movie.title}
                 className="w-full h-60 object-cover rounded-t-lg"

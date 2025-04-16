@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
 
 interface UpcomingMovie {
   id: number;
@@ -49,7 +50,7 @@ const Upcoming: React.FC = () => {
             key={movie.id}
             className="movie-card bg-white rounded-lg shadow-lg overflow-hidden transform transition duration-300 hover:scale-105 hover:shadow-2xl"
           >
-            <img
+            <Image
               src={movie.poster}
               alt={movie.title}
               className="w-full h-80 object-cover"

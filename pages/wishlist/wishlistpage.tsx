@@ -4,6 +4,8 @@ import PaymentForm from "../../components/form/PaymentForm";
 import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import Image from 'next/image';
+
 
 
 interface Movie {
@@ -87,7 +89,7 @@ const WishlistPage = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                   {moviesAndSeries.map((item) => (
                     <div key={item.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:scale-105 flex flex-col h-[400px]">
-                      <img
+                      <Image
                         src={item.poster.startsWith("http") ? item.poster : `http://127.0.0.1:8000/storage/${item.poster}`}
                         alt={item.title}
                         className="w-full h-68 object-cover"
@@ -123,7 +125,7 @@ const WishlistPage = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                   {merchandise.map((item) => (
                     <div key={item.id} className="bg-white rounded-lg shadow-md p-4 flex flex-col">
-                    <img src={item.poster} alt={item.title} className="w-full h-48 object-cover" />
+                    <Image src={item.poster} alt={item.title} className="w-full h-48 object-cover" />
                     <h2 className="text-lg text-blue-600 font-semibold mt-2">{item.title}</h2>
                     <p className="text-lg text-green-500 font-semibold">Ksh {item.price}</p>
                     <div className="flex justify-between mt-2">

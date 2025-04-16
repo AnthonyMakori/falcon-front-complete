@@ -187,7 +187,7 @@ const Signup = () => {
                     
                     <div className="text-center mt-4">
                         <p className="text-sm text-gray-600">
-                            Already have an account?{' '}
+                            Already have an account?
                             <Link
                              href="/AdminAuth/signin" className="font-medium text-indigo-600 hover:text-indigo-500">
                                 Login here

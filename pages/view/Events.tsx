@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Header from '../../components/header/Header';
 import Head from "next/head";
 import PaymentForm from "../../components/form/PaymentForm";
+import Image from 'next/image';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -69,7 +70,7 @@ export default function EventsPage() {
                 key={event.id}
                 className="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300"
               >
-                <img
+                <Image
                   src={event.poster}  
                   alt={event.title}
                   className="w-full h-48 object-cover rounded-t-xl"
@@ -106,7 +107,7 @@ export default function EventsPage() {
         <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
           <div className="bg-white p-6 rounded-lg shadow-lg w-96">
             <h2 className="text-xl font-semibold mb-4 text-blue-600">Payment for {selectedEvent.title}</h2>
-            <PaymentForm price={parseFloat(selectedEvent.price)} />
+            <PaymentForm price={parseFloat(selectedEvent.price)} movie={selectedEvent.id} />
             <button
               onClick={() => setSelectedEvent(null)}
               className="mt-4 bg-red-600 text-white px-4 py-2 rounded-lg w-full hover:bg-red-700 transition"

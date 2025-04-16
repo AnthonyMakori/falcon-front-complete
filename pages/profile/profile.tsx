@@ -1,11 +1,12 @@
 import React from 'react';
+import Image from 'next/image'
 
 const ProfilePage = () => {
   return (
     <div className="container mx-auto p-6 max-w-4xl">
       <div className="bg-white shadow-lg rounded-lg p-8">
         <div className="flex items-center justify-center mb-8">
-          <img
+          <Image
             src="profile-picture.jpg"
             alt="Profile"
             className="w-24 h-24 rounded-full border-4 border-blue-600 object-cover"
@@ -44,15 +45,15 @@ const ProfilePage = () => {
           <div className="mt-4">
             <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
               <li className="bg-gray-100 p-6 rounded-lg transition-transform transform hover:scale-105">
-                <img src="movie-thumbnail.jpg" alt="Movie 1" className="w-full h-40 object-cover rounded-md" />
+                <Image src="movie-thumbnail.jpg" alt="Movie 1" className="w-full h-40 object-cover rounded-md" />
                 <p className="text-center text-gray-600 mt-2">Movie Title 1</p>
               </li>
               <li className="bg-gray-100 p-6 rounded-lg transition-transform transform hover:scale-105">
-                <img src="movie-thumbnail.jpg" alt="Movie 2" className="w-full h-40 object-cover rounded-md" />
+                <Image src="movie-thumbnail.jpg" alt="Movie 2" className="w-full h-40 object-cover rounded-md" />
                 <p className="text-center text-gray-600 mt-2">Movie Title 2</p>
               </li>
               <li className="bg-gray-100 p-6 rounded-lg transition-transform transform hover:scale-105">
-                <img src="movie-thumbnail.jpg" alt="Movie 3" className="w-full h-40 object-cover rounded-md" />
+                <Image src="movie-thumbnail.jpg" alt="Movie 3" className="w-full h-40 object-cover rounded-md" />
                 <p className="text-center text-gray-600 mt-2">Movie Title 3</p>
               </li>
             </ul>

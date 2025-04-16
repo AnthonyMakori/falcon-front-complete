@@ -1,5 +1,6 @@
 import React from "react";
 import { Movie } from "../../types/movie";
+import Image from 'next/image'
 
 interface MovieGridProps {
   movies?: Movie[];
@@ -18,7 +19,7 @@ const MovieGrid: React.FC<MovieGridProps> = ({ movies = [] }) => {
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
       {movies.map((movie) => (
         <div key={movie.id} className="border p-2 shadow rounded">
-          <img
+          <Image
             src={movie.posterUrl}
             alt={movie.title}
             className="w-full h-64 object-cover rounded"

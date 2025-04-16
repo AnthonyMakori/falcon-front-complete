@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image'
 
 type MovieDetailsProps = {
   title: string;
@@ -14,7 +15,7 @@ const MovieDetails: React.FC<MovieDetailsProps> = ({ title, genre, runtime, desc
   return (
     <div className="p-4 max-w-2xl mx-auto">
       <div className="flex flex-col md:flex-row items-center md:items-start">
-        <img src={poster} alt={title} className="w-full md:w-1/3 rounded" />
+        <Image src={poster} alt={title} className="w-full md:w-1/3 rounded" />
         <div className="md:ml-4 mt-4 md:mt-0">
           <h1 className="text-2xl font-bold mb-2">{title}</h1>
           <p className="text-sm text-gray-500">Genre: {genre}</p>

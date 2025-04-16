@@ -1,5 +1,6 @@
 'use client';
 import React, { useEffect, useState } from 'react';
+import Image from 'next/image'
 
 interface Movie {
   id: number;
@@ -41,7 +42,7 @@ const GenreCard: React.FC<{ genre: Genre }> = ({ genre }) => {
     <div className="relative group overflow-hidden rounded-lg cursor-pointer">
       <div className="aspect-w-16 aspect-h-9 w-full">
         {genre.posters.length > 0 ? (
-          <img 
+          <Image 
             src={genre.posters[currentPosterIndex]} 
             alt={genre.title} 
             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"

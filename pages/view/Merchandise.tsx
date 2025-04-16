@@ -5,6 +5,7 @@ import Navbar from "../../components/header/Header";
 import { useCart } from "../../context/CartContext"; 
 import Head from "next/head";
 import PaymentForm from "../../components/form/PaymentForm";
+import Image from 'next/image'
 
 interface MerchandiseItem {
   id: number;
@@ -62,7 +63,7 @@ const Merchandise = () => {
             {merchandise.map((item) => (
               <div key={item.id} className="relative bg-gray-800 shadow-lg rounded-lg overflow-hidden group h-[28rem]">
                 <div className="relative w-full h-full overflow-hidden">
-                  <img
+                  <Image
                     src={item.image_url}
                     alt={item.name}
                     className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"

@@ -2,6 +2,7 @@ import { useEffect, useState, useMemo } from "react";
 import { Card, CardContent } from "../../components/ui/card";
 import { Badge } from "../../components/ui/badge";
 import axios from "axios";
+import Image from "next/image";
 
 interface Movie {
   id: number;
@@ -38,7 +39,7 @@ const NewReleases = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {sortedMovies.map((movie) => (
           <Card key={movie.id} className="relative shadow-lg">
-            <img src={movie.poster} alt={movie.title} className="w-full h-60 object-cover rounded-t-lg" />
+            <Image src={movie.poster} alt={movie.title} className="w-full h-60 object-cover rounded-t-lg" />
             <CardContent className="p-4">
               <h2 className="text-lg font-semibold">{movie.title}</h2>
               <Badge variant="secondary">{`Released: ${new Date(movie.releaseDate).toDateString()}`}</Badge>

@@ -3,6 +3,7 @@ import { Card, CardContent } from "../../components/ui/card";
 import { Badge } from "../../components/ui/badge";
 import { Flame } from "lucide-react";
 import axios from "axios";
+import Image from "next/image";
 
 interface Movie {
   id: number;
@@ -44,7 +45,7 @@ const Trending = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {trendingMovies.map((movie) => (
           <Card key={movie.id} className="relative shadow-lg">
-            <img src={movie.poster} alt={movie.title} className="w-full h-60 object-cover rounded-t-lg" />
+            <Image src={movie.poster} alt={movie.title} className="w-full h-60 object-cover rounded-t-lg" />
             <CardContent className="p-4">
               <h2 className="text-lg font-semibold">{movie.title}</h2>
               <div className="flex items-center justify-between mt-2">

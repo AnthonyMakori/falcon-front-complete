@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Search, Bell, User, Menu, Upload, X, ChevronDown, Film, Tv, Clock, Heart, Star, Sun, Moon, TrendingUp, LogOut, Settings, UserCircle } from 'lucide-react';
 import { useTheme } from '../contexts/Theme';
+import Image from 'next/image'
 //import Searcher from '../../components/search/searcher';
 
 const Header = () => {
@@ -55,7 +56,7 @@ const Header = () => {
           {/* Logo and Brand */}
           <div className="flex items-center">
             <Link href="/" className="flex items-center space-x-2 group">
-              <img
+              <Image
                 src={theme === 'dark' ? '/logos/FALCON EYE PHILMZ REVERMPED LOGO (3).jpg' : '/logos/FALCON EYE LOGO.png'}
                 alt="Logo"
                 className="w-12 h-12 rounded-full"

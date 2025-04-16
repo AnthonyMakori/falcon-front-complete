@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 
 interface PopularSeries {
   id: number;
@@ -56,7 +57,7 @@ const Popular: React.FC = () => {
             key={series.id}
             className="series-card bg-white rounded-lg shadow-xl overflow-hidden transform transition duration-500 hover:scale-105 hover:shadow-2xl"
           >
-            <img
+            <Image
               src={series.posterUrl}
               alt={series.title}
               className="w-full h-96 object-cover transition-transform duration-300 ease-in-out hover:scale-110"

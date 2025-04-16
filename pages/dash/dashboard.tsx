@@ -14,15 +14,16 @@ const Dashboard = () => {
     "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
   ];
 
-  const mpesaRevenue = months.map((month, index) => ({
+  const mpesaRevenue = months.map((month, _index) => ({
     month,
-    revenue: Math.floor(Math.random() * (32000 - 3000) + 10000), // Random revenue between 3K - 12K
+    revenue: Math.floor(Math.random() * (32000 - 3000) + 10000), 
   }));
-
-  const bankRevenue = months.map((month, index) => ({
+  
+  const bankRevenue = months.map((month, _index) => ({
     month,
-    revenue: Math.floor(Math.random() * (20000 - 5000) + 5000), // Random revenue between 5K - 20K
+    revenue: Math.floor(Math.random() * (20000 - 5000) + 5000), 
   }));
+  
 
   return (
     <div className="flex text-black bg-gray-400">

@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 
 interface LatestEpisode {
   id: number;
@@ -46,7 +47,7 @@ const Latest: React.FC = () => {
             key={episode.id}
             className="episode-card bg-white rounded-lg shadow-lg overflow-hidden transform transition duration-300 hover:scale-105 hover:shadow-2xl"
           >
-            <img
+            <Image
               src={episode.thumbnailUrl}
               alt={episode.title}
               className="w-full h-80 object-cover"

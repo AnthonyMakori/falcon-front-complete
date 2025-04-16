@@ -5,6 +5,7 @@ import { FaShoppingCart, FaDollarSign } from "react-icons/fa";
 import { useCart } from "../../context/CartContext";
 import { ClipLoader } from "react-spinners"; 
 import PaymentForm from "../../components/form/PaymentForm";
+import Image from 'next/image'
 
 interface Movie {
   id: number;
@@ -84,7 +85,7 @@ export default function MoviesPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {movies.map((movie) => (
             <div key={movie.id} className="border rounded-lg p-4 shadow-lg">
-              <img
+              <Image
                 src={movie.poster.startsWith("http") ? movie.poster : `http://127.0.0.1:8000/storage/${movie.poster}`}
                 alt={movie.title}
                 className="w-full h-64 object-cover mb-4 rounded-lg"
