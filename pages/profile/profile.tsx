@@ -28,14 +28,14 @@ const ProfilePage = () => {
         <div className="mt-8">
           <h3 className="text-2xl font-semibold text-gray-700">Payment History</h3>
           <div className="mt-4">
-            <ul className="space-y-4">
-              <li className="text-lg text-gray-600 hover:bg-gray-100 p-3 rounded-lg transition duration-300">
-                <span className="font-semibold">Payment #1:</span> $10 for "Movie Title" on 01/01/2025
-              </li>
-              <li className="text-lg text-gray-600 hover:bg-gray-100 p-3 rounded-lg transition duration-300">
-                <span className="font-semibold">Payment #2:</span> $15 for "Another Movie" on 15/12/2024
-              </li>
-            </ul>
+          <ul className="space-y-4">
+            <li className="text-lg text-gray-600 hover:bg-gray-100 p-3 rounded-lg transition duration-300">
+              <span className="font-semibold">Payment #1:</span> $10 for &quot;Movie Title&quot; on 01/01/2025
+            </li>
+            <li className="text-lg text-gray-600 hover:bg-gray-100 p-3 rounded-lg transition duration-300">
+              <span className="font-semibold">Payment #2:</span> $15 for &quot;Another Movie&quot; on 15/12/2024
+            </li>
+          </ul>
           </div>
         </div>
 

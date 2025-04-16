@@ -24,14 +24,18 @@ const NewReleased = () => {
             setLoading(true);
             try {
                 const response = await axios.get("http://127.0.0.1:8000/api/latest-media");
-                const movies = response.data.movies.map((movie: any) => ({
+    
+                type RawMediaItem = Omit<MediaItem, "type">;
+    
+                const movies = (response.data.movies as RawMediaItem[]).map((movie) => ({
                     ...movie,
-                    type: "movie",
+                    type: "movie" as const,
                 }));
-                const series = response.data.series.map((series: any) => ({
+                const series = (response.data.series as RawMediaItem[]).map((series) => ({
                     ...series,
-                    type: "series",
+                    type: "series" as const,
                 }));
+    
                 setMediaData([...movies, ...series]);
             } catch (error) {
                 console.error("Error fetching media:", error);
@@ -39,9 +43,10 @@ const NewReleased = () => {
                 setLoading(false);
             }
         };
-
+    
         fetchMedia();
     }, []);
+    
 
     const filteredData = mediaData
         .filter((item) => filter === "all" || item.type === filter)

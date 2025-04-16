@@ -14,15 +14,16 @@ const Dashboard = () => {
     "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
   ];
 
-  const mpesaRevenue = months.map((month, _index) => ({
+  const mpesaRevenue = months.map((month) => ({
     month,
     revenue: Math.floor(Math.random() * (32000 - 3000) + 10000), 
   }));
   
-  const bankRevenue = months.map((month, _index) => ({
+  const bankRevenue = months.map((month) => ({
     month,
     revenue: Math.floor(Math.random() * (20000 - 5000) + 5000), 
   }));
+  
   
 
   return (
