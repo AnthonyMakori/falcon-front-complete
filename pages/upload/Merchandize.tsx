@@ -60,6 +60,7 @@ const AdminMerchUpload = () => {
         console.error("Unexpected error:", error);
         alert("An unexpected error occurred while uploading merchandise.");
       }
+    }
   };
 
   return (
@@ -89,7 +90,6 @@ const AdminMerchUpload = () => {
       </div>
     </div>
   );
-};
 };
 
 export default AdminMerchUpload;
