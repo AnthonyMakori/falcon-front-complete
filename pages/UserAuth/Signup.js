@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import axios from "axios";
 import Link from "next/link";
-import { Button } from "@/components/ui/button"; // Adjust path if different
+import { Button } from "../../components/ui/button"; 
 
 export default function SignUp() {
   const {
