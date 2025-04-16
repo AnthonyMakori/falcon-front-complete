@@ -33,20 +33,21 @@ const Dashboard = () => {
         <Navbar />
         <div className="p-6">
           <div className="grid grid-cols-3 gap-6 mb-6 text-blue-600">
-            {[
+          {[
               { title: "Total Users", value: 5 },
               { title: "Total Subscribers", value: 5 },
               { title: "Total Reviews", value: 34 },
               { title: "Total Cast and Crew", value: 45 },
               { title: "Total Series", value: 15 },
               { title: "Total Movies", value: 25 },
-            ].map((item, index) => (
-              <Card key={index} className="p-4 shadow-md rounded-xl">
+            ].map(item => (
+              <Card key={item.title} className="p-4 shadow-md rounded-xl">
                 <CardContent className="text-xl font-semibold text-center">
                   {item.title}: {item.value}
                 </CardContent>
               </Card>
             ))}
+
           </div>
 
           <div className="bg-white p-4 rounded-xl shadow-md">

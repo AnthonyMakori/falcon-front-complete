@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import axios from "axios";
+import Link from "next/link";
+import { Button } from "@/components/ui/button"; // Adjust path if different
 
 export default function SignUp() {
   const {
@@ -9,6 +11,7 @@ export default function SignUp() {
     handleSubmit,
     formState: { errors },
   } = useForm();
+
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -17,13 +20,13 @@ export default function SignUp() {
     setLoading(true);
     setErrorMessage("");
     try {
-      const response = await axios.post(
+      await axios.post(
         "http://127.0.0.1:8000/api/register",
         {
           name: data.name,
           email: data.email,
           password: data.password,
-          password_confirmation: data.password, 
+          password_confirmation: data.password,
         },
         {
           headers: {
@@ -37,8 +40,9 @@ export default function SignUp() {
         error.response?.data?.message ||
           "Registration failed. Please try again."
       );
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (
@@ -90,16 +94,19 @@ export default function SignUp() {
               <p className="text-red-500">{errors.password.message}</p>
             )}
           </div>
-          <button
+          <Button
             type="submit"
-            className="w-full bg-red-600 text-white p-2 rounded hover:bg-red-700"
+            className="w-full bg-red-600 hover:bg-red-700 text-white"
             disabled={loading}
           >
             {loading ? "Signing up..." : "Sign Up"}
-          </button>
+          </Button>
         </form>
         <p className="text-white text-center mt-4">
-          Already have an account? <a href="/UserAuth/Signin" className="text-red-500 underline">Sign In here</a>
+          Already have an account?{" "}
+          <Link href="/UserAuth/Signin" className="text-red-500 underline">
+            Sign In here
+          </Link>
         </p>
       </div>
     </div>

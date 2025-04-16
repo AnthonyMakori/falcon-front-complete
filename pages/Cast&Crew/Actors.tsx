@@ -32,20 +32,6 @@ export default function ActorsPage() {
   };
   
 
-  interface Actor {
-    id: number;
-    name: string;
-    movies: string;
-    series: string;
-    role: string;
-  }
-
-  interface NewActor {
-    name: string;
-    movies: string;
-    series: string;
-    role: string;
-  }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setNewActor({ ...newActor, [e.target.name]: e.target.value });

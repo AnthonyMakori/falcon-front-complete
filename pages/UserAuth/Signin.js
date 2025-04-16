@@ -64,7 +64,7 @@ export default function SignIn() {
           </button>
         </form>
         <p className="text-white text-center mt-4">
-          Don't have an account?{" "}
+        <p>Don&apos;t have an account? Sign up</p>
           <span
             className="text-red-400 cursor-pointer hover:underline"
             onClick={() => (window.location.href = "/UserAuth/Signup")}
