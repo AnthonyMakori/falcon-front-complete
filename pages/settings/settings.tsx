@@ -33,12 +33,12 @@ const SettingsPage = () => {
     setLoading(true);
     setError('');
     try {
-      // Replace with real API call
-      await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulating API request
+      await new Promise((resolve) => setTimeout(resolve, 2000));
       alert('Changes Saved!');
-    } catch (err) {
+    } catch {
       setError('Failed to save changes');
-    } finally {
+    }
+     finally {
       setLoading(false);
     }
   };

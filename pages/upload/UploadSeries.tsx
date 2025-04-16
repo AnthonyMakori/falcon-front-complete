@@ -52,15 +52,6 @@ export default function SeriesManagement() {
     setNewSeries({ ...newSeries, [e.target.name]: e.target.value });
   };
 
-  // Submit new series
-  interface FormValues {
-    title: string;
-    category: string;
-    price: string;
-    release_date: string;
-    episodes: string;
-    poster?: File | null;
-  }
 
   const handleAddSeries = async (): Promise<void> => {
     try {

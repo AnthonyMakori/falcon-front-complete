@@ -154,6 +154,7 @@ const MovieUploadModal = ({ onClose, onSuccess }: { onClose: () => void, onSucce
   useEffect(() => {
     if (price) {
       setConvertedPrice(convertPrice(price, currency));
+      console.log("Converted Price:", convertedPrice);
     }
   }, [price, currency]);
 

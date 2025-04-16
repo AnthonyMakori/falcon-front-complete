@@ -38,9 +38,9 @@ const AdminMerchUpload = () => {
 
     // Debugging: Log formData entries
     console.log("Submitting form data:");
-    for (let [key, value] of formData.entries()) {
+    for (const [key, value] of formData.entries()) {
       console.log(key, value);
-    }
+    }   
 
     try {
       const response = await axios.post("http://127.0.0.1:8000/api/merchandise/admin/merch", formData, {
@@ -52,10 +52,14 @@ const AdminMerchUpload = () => {
 
       console.log("Response:", response.data);
       alert("Merchandise uploaded successfully!");
-    } catch (error: any) {
-      console.error("Error uploading merchandise:", error.response?.data || error.message);
-      alert(`Failed to upload merchandise. ${error.response?.data?.message || ""}`);
-    }
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        console.error("Error uploading merchandise:", error.response?.data || error.message);
+        alert(`Failed to upload merchandise. ${error.response?.data?.message || ""}`);
+      } else {
+        console.error("Unexpected error:", error);
+        alert("An unexpected error occurred while uploading merchandise.");
+      }
   };
 
   return (
@@ -85,6 +89,7 @@ const AdminMerchUpload = () => {
       </div>
     </div>
   );
+};
 };
 
 export default AdminMerchUpload;
