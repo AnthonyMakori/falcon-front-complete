@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
     format,
     addMonths,
@@ -25,14 +25,21 @@ interface CalendarProps {
 
 const Calendar: React.FC<CalendarProps> = ({ selected, onSelect }) => {
     const [currentMonth, setCurrentMonth] = useState(new Date());
-    const [range, setRange] = useState<DateRange>({ start: null, end: null });
+    const [range, setRange] = useState<DateRange>(selected);
+
+    useEffect(() => {
+        setRange(selected);
+    }, [selected]);
 
     const onDateClick = (day: Date) => {
         if (!range.start || (range.start && range.end)) {
-            setRange({ start: day, end: null });
+            const newRange = { start: day, end: null };
+            setRange(newRange);
+            onSelect(newRange);
         } else {
-            setRange({ ...range, end: day });
-            onSelect({ start: range.start, end: day });
+            const newRange = { ...range, end: day };
+            setRange(newRange);
+            onSelect(newRange);
         }
     };
 
@@ -68,11 +75,13 @@ const Calendar: React.FC<CalendarProps> = ({ selected, onSelect }) => {
         const monthEnd = endOfMonth(monthStart);
         const startDate = startOfWeek(monthStart);
         const endDate = endOfWeek(monthEnd);
-        
+
         let day = startDate;
         const rows = [];
+
         while (day <= endDate) {
             const days = [];
+
             for (let i = 0; i < 7; i++) {
                 const cloneDay = day;
                 days.push(
@@ -82,8 +91,7 @@ const Calendar: React.FC<CalendarProps> = ({ selected, onSelect }) => {
                             !isSameMonth(day, monthStart) ? "text-green-400" : ""
                         } ${isSameDay(day, new Date()) ? "bg-blue-500 text-white" : ""}
                         ${range.start && isSameDay(day, range.start) ? "bg-green-500 text-white" : ""}
-                        ${range.end && isSameDay(day, range.end) ? "bg-green-700 text-white" : ""}
-                        `}
+                        ${range.end && isSameDay(day, range.end) ? "bg-green-700 text-white" : ""}`}
                         onClick={() => onDateClick(cloneDay)}
                     >
                         {format(day, "d")}
@@ -91,8 +99,14 @@ const Calendar: React.FC<CalendarProps> = ({ selected, onSelect }) => {
                 );
                 day = addDays(day, 1);
             }
-            rows.push(<div key={day.toString()} className="grid grid-cols-7">{days}</div>);
+
+            rows.push(
+                <div key={day.toString()} className="grid grid-cols-7">
+                    {days}
+                </div>
+            );
         }
+
         return <div>{rows}</div>;
     };
 

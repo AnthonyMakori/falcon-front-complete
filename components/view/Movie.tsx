@@ -23,7 +23,7 @@ export default function MoviesPage() {
   const [loadingMovieId, setLoadingMovieId] = useState<number | null>(null);
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
   const [loading, setLoading] = useState(true); 
-  const router = useRouter(); 
+  // const router = useRouter(); 
 
   useEffect(() => {
     const fetchMovies = async () => {
