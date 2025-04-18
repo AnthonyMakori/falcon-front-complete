@@ -14,24 +14,29 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ price, movie }) => {
   const handlePayment = async () => {
     setLoading(true);
     setMessage("");
-
+  
     try {
       const response = await fetch("http://127.0.0.1:8000/api/pay", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ phone, email, amount: price, movie_id: movie }),
       });
-
+  
       const data = await response.json();
       if (data.error) throw new Error(data.error);
-
+  
       setMessage("Check your phone to complete payment.");
-    } catch (error: any) {
-      setMessage(error.message);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setMessage(error.message);
+      } else {
+        setMessage("An unexpected error occurred.");
+      }
     } finally {
       setLoading(false);
     }
   };
+  
 
   return (
     <div className="p-4 border rounded-lg bg-white shadow-md text-black">

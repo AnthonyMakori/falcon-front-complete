@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Search, Bell, User, Menu, Upload, X, ChevronDown, Film, Tv, Clock, Heart, Star, Sun, Moon, TrendingUp, LogOut, Settings, UserCircle } from 'lucide-react';
+import { Search, Menu, Upload, X, ChevronDown, Film, Tv, Clock, Heart, Sun, Moon,} from 'lucide-react';
 import { useTheme } from '../contexts/Theme';
 import Image from 'next/image'
 //import Searcher from '../../components/search/searcher';

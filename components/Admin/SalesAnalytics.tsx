@@ -18,10 +18,11 @@ const SalesAnalytics: React.FC = () => {
         setSalesData(response.data);
         setLoading(false);
       })
-      .catch((error) => {
+      .catch((err) => {
         setError('Error fetching sales data.');
         setLoading(false);
       });
+      
   }, []);
 
   if (loading) {
