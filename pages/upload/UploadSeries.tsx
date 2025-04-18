@@ -4,7 +4,7 @@ import { Table, Thead, Tbody, Tr, Th, Td } from "../../components/ui/table";
 import AdminSidebar from "../../components/sidebar/sidebar";
 import Navbar from "../../components/Admin/navbar";
 import Modal from "../../components/ui/modal";
-import { fetchSeries, addSeries, deleteSeries, uploadEpisode } from "../../utils/api";
+import { fetchSeries, deleteSeries, uploadEpisode } from "../../utils/api";
 import axios from "axios";
 
 type Series = {
