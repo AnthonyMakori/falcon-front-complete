@@ -22,8 +22,8 @@ function MyApp({ Component, pageProps }: AppProps) {
       <CartProvider>
         <ThemeProvider>
           <Head>
-            <title>Falcon-Eye Movie Streaming</title>
-            <link rel="icon" href="/logos/FALCON EYE LOGO.png" />
+            <title>FalconEyePhilmz</title>
+            <link rel="icon" href="/logos/FALCON EYE PHILMZ REVERMPED LOGO (3).jpg" />
           </Head>
           <div
             className="min-h-screen text-black transition-colors duration-200 
