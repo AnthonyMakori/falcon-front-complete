@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useRouter } from "next/router"; 
 import { Button } from "../../components/ui/button";
 import { FaShoppingCart, FaDollarSign } from "react-icons/fa";
 import { useCart } from "../../context/CartContext";
@@ -23,7 +22,6 @@ export default function MoviesPage() {
   const [loadingMovieId, setLoadingMovieId] = useState<number | null>(null);
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
   const [loading, setLoading] = useState(true); 
-  // const router = useRouter(); 
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -47,13 +45,6 @@ export default function MoviesPage() {
   }, []);
 
   const handleAddToCart = async (movie: Movie) => {
-    // const isAuthenticated = !!localStorage.getItem("auth_token"); 
-
-    // if (!isAuthenticated) {
-    //   router.push("/UserAuth/Signin"); 
-    //   return;
-    // }
-
     setLoadingMovieId(movie.id);
     await new Promise((resolve) => setTimeout(resolve, 1000));
     addToCart(movie);
