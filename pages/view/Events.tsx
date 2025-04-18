@@ -35,10 +35,13 @@ export default function EventsPage() {
         return res.json();
       })
       .then((data) => {
-        setEvents(data.events.map((event: any) => ({
-          ...event,
-          image: event.poster, 
-        })));
+        setEvents(
+          data.events.map((event: Event) => ({
+            ...event,
+            image: event.poster,
+          }))
+        );
+        
         setLoading(false);
       })
       
