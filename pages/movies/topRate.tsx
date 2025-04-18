@@ -20,15 +20,16 @@ const TopRate = () => {
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        const response = await axios.get("/api/movies/top-rated");
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/top-rated`);
         setMovies(response.data);
       } catch (error) {
         console.error("Error fetching top-rated movies:", error);
       }
     };
-    
+  
     fetchMovies();
   }, []);
+  
 
   // Determine top-rated movies based on purchases and watch count
   const sortedMovies = useMemo(() => {

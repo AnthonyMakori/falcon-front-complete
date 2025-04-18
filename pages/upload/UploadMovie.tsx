@@ -23,10 +23,11 @@ export default function MovieManagement() {
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:8000/api/movies") 
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/movies`)
       .then((response) => setMovies(response.data))
       .catch((error) => console.error("Error fetching movies:", error));
   }, []);
+  
 
   return (
     <div className="flex h-screen">
@@ -177,18 +178,18 @@ const MovieUploadModal = ({ onClose, onSuccess }: { onClose: () => void, onSucce
     formData.append('movie', movieFile);
   
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/upload-movie', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/upload-movie`, {
         method: 'POST',
         body: formData,
         // Do not set Content-Type header manually when sending FormData.
         headers: {
-          Accept: 'application/json', 
+          Accept: 'application/json',
         },
       });
-    
+  
       const responseData = await response.json();
       console.log('Response:', responseData);
-    
+  
       if (response.ok) {
         alert('Movie uploaded successfully');
         onSuccess();
@@ -207,7 +208,7 @@ const MovieUploadModal = ({ onClose, onSuccess }: { onClose: () => void, onSucce
       setIsUploading(false);
     }
   };
-
+  
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 text-black" style={{ marginTop: "40px" }}>
       <div className="bg-white p-6 rounded-lg shadow-lg w-[800px] h-[500px] overflow-y-auto ml-[200px] border-blue-600">

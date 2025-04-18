@@ -22,25 +22,26 @@ const UsersPage = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch("http://localhost:8000/api/admin/users", {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/users`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         });
-
+  
         if (!response.ok) {
           throw new Error("Failed to fetch users");
         }
-
+  
         const data = await response.json();
         setUsers(data);
       } catch (error) {
         console.error("Error fetching users:", error);
       }
     };
-
+  
     fetchUsers();
   }, []);
+  
 
   const filteredUsers = users.filter(
     (user) =>

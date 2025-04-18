@@ -32,7 +32,7 @@ const GenreCard: React.FC<{ genre: Genre }> = ({ genre }) => {
     if (genre.posters.length > 1) {
       const interval = setInterval(() => {
         setCurrentPosterIndex((prevIndex) => (prevIndex + 1) % genre.posters.length);
-      }, 60000); // Change every 1 minute
+      }, 60000); 
 
       return () => clearInterval(interval);
     }
@@ -69,26 +69,26 @@ const GenreGrid = () => {
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:8000/api/movies');
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/movies`);
         const movies: Movie[] = await response.json();
-    
+  
         const updatedGenres = genresData.map((genre) => {
           const filteredPosters = movies
             .filter((movie) => movie.category.toLowerCase() === genre.category.toLowerCase())
-            .map((movie) => `http://127.0.0.1:8000/storage/${movie.poster}`); // Ensure full URL
-    
+            .map((movie) => `${process.env.NEXT_PUBLIC_API_URL}/storage/${movie.poster}`);
+  
           return { ...genre, posters: filteredPosters.length > 0 ? filteredPosters : genre.posters };
         });
-    
+  
         setGenres(updatedGenres);
       } catch (error) {
         console.error('Error fetching movies:', error);
       }
     };
-    
-
+  
     fetchMovies();
   }, []);
+  
 
   return (
     <div className="container mx-auto px-6 py-12">

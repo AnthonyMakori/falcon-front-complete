@@ -60,29 +60,30 @@ const Signup = () => {
         e.preventDefault();
         setError('');
         setSuccess('');
-
-        // Password validation regex
+    
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-
-        // Validate password
+    
         if (!passwordRegex.test(formData.password)) {
             setError('Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.');
             return;
         }
-
+    
         if (formData.password !== formData.confirmPassword) {
             setError('Passwords do not match');
             return;
         }
-
+    
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/admin/register', {
-                name: formData.name,
-                email: formData.email,
-                password: formData.password,
-                password_confirmation: formData.confirmPassword
-            });
-
+            const response = await axios.post(
+                `${process.env.NEXT_PUBLIC_API_URL}/admin/register`,
+                {
+                    name: formData.name,
+                    email: formData.email,
+                    password: formData.password,
+                    password_confirmation: formData.confirmPassword
+                }
+            );
+    
             if (response.status === 201) {
                 setSuccess('Registration Successful!');
                 setTimeout(() => {
@@ -95,6 +96,7 @@ const Signup = () => {
             setError(err.response?.data?.message || 'An error occurred. Please try again.');
         }
     };
+    
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100 py-12 px-4 sm:px-6 lg:px-8 relative">

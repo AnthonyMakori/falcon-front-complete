@@ -42,11 +42,11 @@ export default function UploadEvent() {
         formData.append("price", eventData.price);
     
         try {
-            const response = await fetch(`${API_URL}/api/events`, {
+            const response = await fetch(`${API_URL}/events`, {
                 method: "POST",
                 body: formData,
                 headers: {
-                    "Accept": "application/json" // Ensure Laravel returns JSON
+                    "Accept": "application/json" 
                 },
             });
     

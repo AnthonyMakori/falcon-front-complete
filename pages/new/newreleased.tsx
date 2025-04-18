@@ -23,7 +23,7 @@ const NewReleased = () => {
         const fetchMedia = async () => {
             setLoading(true);
             try {
-                const response = await axios.get("http://127.0.0.1:8000/api/latest-media");
+                const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/latest-media`);
     
                 type RawMediaItem = Omit<MediaItem, "type">;
     
@@ -46,6 +46,7 @@ const NewReleased = () => {
     
         fetchMedia();
     }, []);
+    
     
 
     const filteredData = mediaData

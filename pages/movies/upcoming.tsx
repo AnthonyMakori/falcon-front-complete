@@ -21,15 +21,16 @@ const ComingSoon = () => {
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/movies/coming-soon");
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/coming-soon`);
         setMovies(response.data);
       } catch (error) {
         console.error("Error fetching upcoming movies:", error);
       }
     };
-
+  
     fetchMovies();
   }, []);
+  
 
   return (
     <div className="bg-gray-900 min-h-screen">

@@ -27,14 +27,16 @@ const Merchandise = () => {
   useEffect(() => {
     const fetchMerchandise = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/merchandise");
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/merchandise`);
         setMerchandise(response.data);
       } catch (error) {
         console.error("Error fetching merchandise:", error);
       }
     };
+  
     fetchMerchandise();
   }, []);
+  
 
   const handleAddToCart = (item: MerchandiseItem) => {
     addToCart({

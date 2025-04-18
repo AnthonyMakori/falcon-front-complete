@@ -90,10 +90,13 @@ const WishlistPage = () => {
                   {moviesAndSeries.map((item) => (
                     <div key={item.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:scale-105 flex flex-col h-[400px]">
                       <Image
-                        src={item.poster.startsWith("http") ? item.poster : `http://127.0.0.1:8000/storage/${item.poster}`}
-                        alt={item.title}
-                        className="w-full h-68 object-cover"
-                      />
+                          src={item.poster.startsWith("http") 
+                            ? item.poster 
+                            : `${process.env.NEXT_PUBLIC_API_URL}/storage/${item.poster}`}  
+                          alt={item.title}
+                          className="w-full h-68 object-cover"
+                        />
+
                       <div className="flex flex-col justify-between p-4 flex-grow">
                         <h2 className="text-lg text-blue-600 font-semibold">{item.title}</h2>
                         <p className="text-lg text-green-500 font-semibold">${Number(item.price)}</p>

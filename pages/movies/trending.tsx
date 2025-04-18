@@ -20,15 +20,16 @@ const Trending = () => {
   useEffect(() => {
     const fetchTrendingMovies = async () => {
       try {
-        const response = await axios.get("/api/movies/trending");
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/movies/trending`);
         setMovies(response.data);
       } catch (error) {
         console.error("Error fetching trending movies:", error);
       }
     };
-
+  
     fetchTrendingMovies();
   }, []);
+  
 
   // Sort movies based on recent views and purchases
   const trendingMovies = useMemo(() => {

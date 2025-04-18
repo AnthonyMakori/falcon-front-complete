@@ -10,7 +10,7 @@ export default NextAuth({
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        const res = await fetch("http://localhost:8000/api/auth/login", {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(credentials),
@@ -23,7 +23,7 @@ export default NextAuth({
             id: user.id,
             name: user.name,
             email: user.email,
-            token: user.token, // Store token in session
+            token: user.token,
           };
         }
         return null;
@@ -36,7 +36,7 @@ export default NextAuth({
         token.id = user.id;
         token.name = user.name;
         token.email = user.email;
-        token.token = user.token; // Store user token in JWT
+        token.token = user.token;
       }
       return token;
     },
@@ -44,12 +44,12 @@ export default NextAuth({
       session.user.id = token.id;
       session.user.name = token.name;
       session.user.email = token.email;
-      session.user.token = token.token; // Attach token to session
+      session.user.token = token.token;
       return session;
     },
   },
   secret: process.env.NEXTAUTH_SECRET,
   session: {
-    strategy: "jwt", // Ensure session uses JWT
+    strategy: "jwt",
   },
 });

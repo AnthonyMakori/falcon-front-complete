@@ -16,7 +16,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ price, movie }) => {
     setMessage("");
   
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/pay", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/pay`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ phone, email, amount: price, movie_id: movie }),
@@ -36,6 +36,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ price, movie }) => {
       setLoading(false);
     }
   };
+  
   
 
   return (

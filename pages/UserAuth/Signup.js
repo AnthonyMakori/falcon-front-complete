@@ -21,7 +21,7 @@ export default function SignUp() {
     setErrorMessage("");
     try {
       await axios.post(
-        "http://127.0.0.1:8000/api/register",
+        `${process.env.NEXT_PUBLIC_API_URL}/register`, 
         {
           name: data.name,
           email: data.email,
@@ -44,6 +44,7 @@ export default function SignUp() {
       setLoading(false);
     }
   };
+  
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-900">

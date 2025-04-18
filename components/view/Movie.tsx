@@ -27,7 +27,8 @@ export default function MoviesPage() {
     const fetchMovies = async () => {
       try {
         setLoading(true);
-        const response = await fetch("http://127.0.0.1:8000/api/movies");
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/movies`);
+        
         if (response.ok) {
           const data = await response.json();
           setMovies(data);
@@ -40,9 +41,10 @@ export default function MoviesPage() {
         setLoading(false);
       }
     };
-
+  
     fetchMovies();
   }, []);
+  
 
   const handleAddToCart = async (movie: Movie) => {
     setLoadingMovieId(movie.id);
@@ -77,15 +79,18 @@ export default function MoviesPage() {
           {movies.map((movie) => (
             <div key={movie.id} className="border rounded-lg p-4 shadow-lg">
               <Image
-                src={movie.poster.startsWith("http") ? movie.poster : `http://127.0.0.1:8000/storage/${movie.poster}`}
+                src={movie.poster.startsWith("http")
+                  ? movie.poster
+                  : `${process.env.NEXT_PUBLIC_API_URL}/storage/${movie.poster}`}
                 alt={movie.title}
                 className="w-full h-64 object-cover mb-4 rounded-lg"
                 onError={(e) => {
-                    console.error("Image failed to load:", movie.poster);
-                    const target = e.target as HTMLImageElement;
-                    target.src = "/images/talia1.jpg";
+                  console.error("Image failed to load:", movie.poster);
+                  const target = e.target as HTMLImageElement;
+                  target.src = "/images/talia1.jpg";
                 }}
-                />
+              />
+
 
               <h2 className="text-xl font-semibold">{movie.title}</h2>
               <p className="text-sm text-gray-500">{movie.category}</p>

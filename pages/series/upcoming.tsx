@@ -17,7 +17,7 @@ const Upcoming: React.FC = () => {
   useEffect(() => {
     const fetchUpcomingMovies = async () => {
       try {
-        const response = await fetch('http://localhost:8000/api/upcoming-series'); // Laravel API endpoint
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/upcoming-series`);
         if (!response.ok) {
           throw new Error('Failed to fetch upcoming series.');
         }
@@ -29,9 +29,10 @@ const Upcoming: React.FC = () => {
         setLoading(false);
       }
     };
-
+  
     fetchUpcomingMovies();
   }, []);
+  
 
   return (
     <div className="upcoming-section py-16 px-6 bg-gradient-to-r from-purple-500 to-indigo-500 relative">

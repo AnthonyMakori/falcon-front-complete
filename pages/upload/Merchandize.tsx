@@ -35,21 +35,21 @@ const AdminMerchUpload = () => {
     }
     formData.append("price", merch.price);
     formData.append("description", merch.description);
-
+  
     // Debugging: Log formData entries
     console.log("Submitting form data:");
     for (const [key, value] of formData.entries()) {
       console.log(key, value);
-    }   
-
+    }
+  
     try {
-      const response = await axios.post("http://127.0.0.1:8000/api/merchandise/admin/merch", formData, {
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/merchandise/admin/merch`, formData, {
         headers: { 
           "Content-Type": "multipart/form-data",
           "Accept": "application/json",
         },
       });
-
+  
       console.log("Response:", response.data);
       alert("Merchandise uploaded successfully!");
     } catch (error: unknown) {
@@ -62,6 +62,7 @@ const AdminMerchUpload = () => {
       }
     }
   };
+  
 
   return (
     <div className="flex min-h-screen bg-gray-900">

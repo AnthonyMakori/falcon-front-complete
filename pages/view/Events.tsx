@@ -22,7 +22,7 @@ export default function EventsPage() {
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
 
   useEffect(() => {
-    fetch(`${API_URL}/api/public-events`, {
+    fetch(`${API_URL}/public-events`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

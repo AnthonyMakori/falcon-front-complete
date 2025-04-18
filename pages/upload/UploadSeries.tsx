@@ -56,17 +56,17 @@ export default function SeriesManagement() {
   const handleAddSeries = async (): Promise<void> => {
     try {
       const formData = new FormData();
-formData.append("title", newSeries.title);
-formData.append("category", newSeries.category);
-formData.append("price", String(newSeries.price)); // Ensure it's a string
-formData.append("release_date", newSeries.release_date);
-formData.append("episodes", String(newSeries.episodes)); // Ensure it's a string
-
-if (posterFile) {
-  formData.append("poster", posterFile);
-}
+      formData.append("title", newSeries.title);
+      formData.append("category", newSeries.category);
+      formData.append("price", String(newSeries.price)); 
+      formData.append("release_date", newSeries.release_date);
+      formData.append("episodes", String(newSeries.episodes)); 
   
-      const response = await axios.post("http://127.0.0.1:8000/api/series", formData, {
+      if (posterFile) {
+        formData.append("poster", posterFile);
+      }
+  
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/series`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -87,7 +87,7 @@ if (posterFile) {
         poster: "",
       });
       setPosterFile(null);
-      setIsModalOpen(false); // Close modal after successful submission
+      setIsModalOpen(false); 
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.error("Error adding series", error.response?.data || error.message);
@@ -96,6 +96,7 @@ if (posterFile) {
       }
     }
   };
+  
   
 
   // Delete series

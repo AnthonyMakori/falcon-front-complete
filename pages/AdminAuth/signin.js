@@ -18,30 +18,35 @@ const AdminLogin = () => {
         setLoading(true);
         setError('');
         setSuccess(false);
-
-        const apiUrl = 'http://127.0.0.1:8000/api/admin/login';
-
-        const response = await fetch(apiUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email, password }),
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-            setSuccess(true);
-            setTimeout(() => {
-                window.location.href = '/dash/dashboard';
-            }, 2000);
-        } else {
-            setError(data.message || 'Invalid email or password.');
+    
+        const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/admin/login`;
+    
+        try {
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, password }),
+            });
+    
+            const data = await response.json();
+    
+            if (response.ok) {
+                setSuccess(true);
+                setTimeout(() => {
+                    window.location.href = '/dash/dashboard';
+                }, 2000);
+            } else {
+                setError(data.message || 'Invalid email or password.');
+            }
+        } catch (err) {
+            setError('Something went wrong. Please try again later.');
         }
-
+    
         setLoading(false);
     };
+    
 
     const goBack = () => {
         window.location.href = '/';

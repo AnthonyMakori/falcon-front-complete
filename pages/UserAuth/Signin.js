@@ -18,7 +18,7 @@ export default function SignIn() {
     setErrorMessage("");
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/login",
+        `${process.env.NEXT_PUBLIC_API_URL}/login`, 
         data
       );
       localStorage.setItem("token", response.data.token);
@@ -30,6 +30,7 @@ export default function SignIn() {
     }
     setLoading(false);
   };
+  
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-900">

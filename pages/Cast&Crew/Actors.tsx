@@ -19,17 +19,17 @@ export default function ActorsPage() {
 
   const fetchActors = async () => {
     try {
-      const response = await axios.get("http://127.0.0.1:8000/api/actors");
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/actors`);
       setActors(response.data);
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        // Log the error response details
         console.error("Error fetching actors:", error.response?.data || error.message);
       } else {
         console.error("Unexpected error:", error);
       }
     }
   };
+  
   
 
 
@@ -39,7 +39,10 @@ export default function ActorsPage() {
 
   const handleSave = async () => {
     try {
-      const response = await axios.post("http://127.0.0.1:8000/api/actors", newActor);
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/actors`,
+        newActor
+      );
       alert(response.data.message);
       setIsModalOpen(false);
       fetchActors();
@@ -48,6 +51,7 @@ export default function ActorsPage() {
       alert("There was an error saving the actor.");
     }
   };
+  
 
   return (
     <div className="flex h-screen">
