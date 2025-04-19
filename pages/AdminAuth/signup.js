@@ -143,7 +143,7 @@ const Signup = () => {
                                 className="mt-1 text-black block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             />
                             <span 
-                                className="absolute inset-y-0 right-3 flex items-center cursor-pointer"
+                                className="absolute inset-y-0 right-3 flex items-center cursor-pointer text-black"
                                 onClick={() => setShowPassword(!showPassword)}
                             >
                                 {showPassword ? <FaEyeSlash /> : <FaEye />}
@@ -169,7 +169,7 @@ const Signup = () => {
                                 className="mt-1 text-black block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             />
                             <span 
-                                className="absolute inset-y-0 right-3 flex items-center cursor-pointer"
+                                className="absolute inset-y-0 right-3 flex items-center cursor-pointer text-black"
                                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                             >
                                 {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
