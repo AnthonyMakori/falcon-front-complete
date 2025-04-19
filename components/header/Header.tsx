@@ -275,7 +275,7 @@ const Header = () => {
 
               <Link 
               href="/view/Merchandise" 
-              className="text-[var(--foreground)] hover:text-[var(--primary)] transition-colors"
+              className="flex items-center space-x-2 text-sm text-gray-300 hover:text-blue-400 transition-colors"
             >
               <ShoppingBag size={16} />
               <span>Merchandize</span>
