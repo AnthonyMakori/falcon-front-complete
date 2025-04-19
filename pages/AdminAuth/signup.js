@@ -192,7 +192,7 @@ const Signup = () => {
                         </div>
                         <div className="text-center mt-2">
                         <Link href="/AdminAuth/signin">
-                            <button className="bg-green-600 text-white px-4 py-2 rounded hover:bg-blue-500 transition duration-300">
+                            <button className="bg-green-600 text-white px-4 py-2 rounded hover:bg-blue-500 transition duration-300 w-full">
                             Sign In
                             </button>
                         </Link>
