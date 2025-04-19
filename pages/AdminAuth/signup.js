@@ -182,20 +182,21 @@ const Signup = () => {
 
                     <button
                         type="submit"
-                        className="w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 hover:bg-indigo-700"
+                        className="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 hover:bg-indigo-700"
                     >
                         Sign Up
                     </button>
                     
                     <div className="text-center mt-4">
-                        <p className="text-sm text-gray-600">
-                            Already have an account?
-                            <Link
-                             href="/AdminAuth/signin" className="font-medium text-indigo-600 hover:text-indigo-500">
-                                Login here
-                            </Link>
-                        </p>
-                    </div>
+                        <p className="text-sm text-gray-600">Already have an account?</p>
+                        </div>
+                        <div className="text-center mt-2">
+                        <Link href="/AdminAuth/signin">
+                            <button className="bg-green-600 text-white px-4 py-2 rounded hover:bg-blue-500 transition duration-300">
+                            Sign In
+                            </button>
+                        </Link>
+                        </div>     
                 </form>
             </div>
             {success && (
