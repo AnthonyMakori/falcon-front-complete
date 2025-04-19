@@ -138,16 +138,6 @@ const AdminLogin = () => {
                     </div>
                 )}
 
-                <div className="mt-6 text-center">
-                    <p className="text-sm text-gray-600">
-                        After login,{' '}
-                        <a href="/admin/upload" className="text-blue-600 font-bold hover:underline">
-                            upload movies here
-                        </a>
-                        .
-                    </p>
-                </div>
-
                 <div className="mt-4 text-center">
                     <button
                         onClick={redirectToSignup}
