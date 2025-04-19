@@ -115,11 +115,11 @@ const AdminLogin = () => {
                             className="absolute right-3 top-1/2 transform -translate-y-1/2"
                             aria-label="Toggle password visibility"
                         >
-                            {/* {passwordVisible ? (
+                            {passwordVisible ? (
                                 <FaEyeSlash className="text-gray-600" />
                             ) : (
                                 <FaEye className="text-gray-600" />
-                            )} */}
+                            )}
                         </button>
                     </div>
 
