@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Search, Menu, Upload, X, ChevronDown, Film, Tv, Clock, Heart, Sun, Moon,} from 'lucide-react';
+import { Search, Menu, Upload, X, ChevronDown, Film, Tv, Clock, Heart, Sun, Moon, Calendar, ShoppingBag } from 'lucide-react';
 import { useTheme } from '../contexts/Theme';
 import Image from 'next/image'
 //import Searcher from '../../components/search/searcher';
@@ -272,6 +272,22 @@ const Header = () => {
                 <Heart size={16} />
                 <span>My Wishlist</span>
               </Link>
+
+              <Link 
+              href="/view/Merchandise" 
+              className="text-[var(--foreground)] hover:text-[var(--primary)] transition-colors"
+            >
+              <ShoppingBag size={16} />
+              <span>Merchandize</span>
+            </Link>
+
+            <Link 
+              href="/view/Events" 
+              className="flex items-center space-x-2 text-sm text-gray-300 hover:text-blue-400 transition-colors"
+            >
+              <Calendar size={16} />
+              <span>Events</span>
+            </Link>
             </nav>
 
             <button 
