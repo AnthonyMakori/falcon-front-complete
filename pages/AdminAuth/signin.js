@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-// import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { FaEye, FaEyeSlash } from 'react-icons/fa'; // Make sure to import these icons
 
 const AdminLogin = () => {
     const [email, setEmail] = useState('');
@@ -18,9 +18,9 @@ const AdminLogin = () => {
         setLoading(true);
         setError('');
         setSuccess(false);
-    
+
         const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/admin/login`;
-    
+
         try {
             const response = await fetch(apiUrl, {
                 method: 'POST',
@@ -29,9 +29,9 @@ const AdminLogin = () => {
                 },
                 body: JSON.stringify({ email, password }),
             });
-    
+
             const data = await response.json();
-    
+
             if (response.ok) {
                 setSuccess(true);
                 setTimeout(() => {
@@ -42,11 +42,10 @@ const AdminLogin = () => {
             }
         } catch {
             setError('Something went wrong. Please try again later.');
-        }     
-    
+        }
+
         setLoading(false);
     };
-    
 
     const goBack = () => {
         window.location.href = '/';
@@ -58,7 +57,6 @@ const AdminLogin = () => {
 
     return (
         <div className="flex items-center justify-center h-screen bg-gray-100 relative">
-            {/* Back button */}
             <button
                 onClick={goBack}
                 className="absolute border border-blue-600 top-10 right-4 flex items-center bg-gray-200 text-gray-700 hover:bg-gray-300 hover:text-gray-900 font-medium py-2 px-4 rounded-lg"
@@ -71,7 +69,7 @@ const AdminLogin = () => {
                     stroke="currentColor"
                     className="w-5 h-5 mr-2"
                 >
-                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 19l-7-7 7-7m-7 7h20" />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 19l-7-7 7-7m-7 7h20" />
                 </svg>
                 Home
             </button>
@@ -112,10 +110,10 @@ const AdminLogin = () => {
                         <button
                             type="button"
                             onClick={togglePasswordVisibility}
-                            className="absolute right-3 top-1/2 transform -translate-y-1/2"
+                            className="absolute right-3 top-10 transform -translate-y-1/2 text-gray-600 hover:text-gray-900"
                             aria-label="Toggle password visibility"
                         >
-                           
+                            {passwordVisible ? <FaEyeSlash /> : <FaEye />}
                         </button>
                     </div>
 
@@ -136,7 +134,7 @@ const AdminLogin = () => {
 
                 {success && (
                     <div className="mt-4 text-center text-green-600 font-semibold">
-                        <p>Login successful!, Welcome</p>
+                        <p>Login successful! Welcome</p>
                     </div>
                 )}
 
@@ -150,7 +148,6 @@ const AdminLogin = () => {
                     </p>
                 </div>
 
-                {/* Signup button */}
                 <div className="mt-4 text-center">
                     <button
                         onClick={redirectToSignup}
