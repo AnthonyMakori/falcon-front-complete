@@ -138,6 +138,12 @@ const AdminLogin = () => {
                     </div>
                 )}
 
+                <div className="mt-6 text-center">
+                    <p className="text-sm text-gray-600">
+                        Do not have an account?
+                    </p>
+                </div>
+
                 <div className="mt-4 text-center">
                     <button
                         onClick={redirectToSignup}
