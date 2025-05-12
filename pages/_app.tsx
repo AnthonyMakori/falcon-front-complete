@@ -23,7 +23,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <ThemeProvider>
           <Head>
             <title>FalconEyePhilmz</title>
-            <link rel="icon" href="/logos/FALCON EYE PHILMZ REVERMPED LOGO (3).jpg" />
+            {/* <link rel="icon" href="/logos/FALCON EYE PHILMZ REVERMPED LOGO (3).jpg" /> */}
           </Head>
           <div
             className="min-h-screen text-black transition-colors duration-200 

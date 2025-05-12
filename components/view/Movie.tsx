@@ -84,11 +84,6 @@ export default function MoviesPage() {
                   : `${process.env.NEXT_PUBLIC_API_URL}/storage/${movie.poster}`}
                 alt={movie.title}
                 className="w-full h-64 object-cover mb-4 rounded-lg"
-                onError={(e) => {
-                  console.error("Image failed to load:", movie.poster);
-                  const target = e.target as HTMLImageElement;
-                  target.src = "/images/talia1.jpg";
-                }}
               />
 
 

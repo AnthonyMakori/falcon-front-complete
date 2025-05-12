@@ -236,9 +236,26 @@ const MovieUploadModal = ({ onClose, onSuccess }: { onClose: () => void, onSucce
               <option value="Action">Action</option>
               <option value="Comedy">Comedy</option>
               <option value="Drama">Drama</option>
-              <option value="Fantasy">Fantasy</option>
               <option value="Romance">Romance</option>
               <option value="Sci-Fi">Sci-Fi</option>
+              <option value="Psychological Thriller">Psychological Thriller</option>
+              <option value="Film Noir">Film Noir</option>
+              <option value="Thriller">Thriller</option>
+              <option value="Romcom">Romcom</option>
+              <option value="Horror">Horror</option>
+              <option value="Crime Film">Crime Film</option>
+              <option value="Fantasy">Fantasy</option>
+              <option value="Documentary">Documentary</option>
+              <option value="Animation">Animation</option>
+              <option value="Adventure">Adventure</option>
+              <option value="Musical">Musical</option>
+              <option value="War">War</option>
+              <option value="Highbrid Genre">Highbrid Genre</option>
+              <option value="Experimental">Experimental</option>
+              <option value="Narrative">Narative</option>
+              <option value="History">History</option>
+              <option value="Melodrama">Melodrama</option>
+              <option value="Dark comedy">Dark Comedy</option>
             </select>
           </div>
 
