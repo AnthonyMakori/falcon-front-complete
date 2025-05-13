@@ -83,6 +83,8 @@ export default function MoviesPage() {
                   ? movie.poster
                   : `${process.env.NEXT_PUBLIC_API_URL}/storage/${movie.poster}`}
                 alt={movie.title}
+                width={500}
+                height={750}
                 className="w-full h-64 object-cover mb-4 rounded-lg"
               />
 
@@ -141,3 +143,5 @@ export default function MoviesPage() {
     </div>
   );
 }
+
+

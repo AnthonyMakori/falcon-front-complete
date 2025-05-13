@@ -286,8 +286,6 @@ const MovieUploadModal = ({ onClose, onSuccess }: { onClose: () => void, onSucce
               onChange={(e) => setCurrency(e.target.value)}
             >
               <option value="USD">USD</option>
-              <option value="EUR">EUR</option>
-              <option value="GBP">GBP</option>
               <option value="KES">KES</option>
             </select>
           </div>
