@@ -49,11 +49,11 @@ const Footer = () => {
             <div className="space-y-3">
               <div className="flex items-center space-x-3">
                 <Mail className="w-5 h-5 text-purple-500" />
-                <span>support@falconmoviestream.com</span>
+                <span>falconeyephilmz001@gmail.com</span>
               </div>
               <div className="flex items-center space-x-3">
                 <Phone className="w-5 h-5 text-purple-500" />
-                <span>+254 707 497 200</span>
+                <span>+254 729923951</span>
               </div>
               <div className="flex items-center space-x-3">
                 <MapPin className="w-5 h-5 text-purple-500" />
@@ -64,8 +64,9 @@ const Footer = () => {
         </div>
 
         {/* Copyright */}
-        <div className="border-t border-red-800 pt-6 text-center text-sm">
+        <div className="border-t border-red-800 pt-6  text-sm">
           <p>&copy; {new Date().getFullYear()} Falcon-Eye.MovieStream. All rights reserved.</p>
+          <p className=" text-right">Developed with passion❤️ by Anthony Makori(techstack842@gmail.com) </p>
         </div>
       </div>
     </footer>

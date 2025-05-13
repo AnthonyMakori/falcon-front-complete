@@ -68,6 +68,8 @@ const Merchandise = () => {
                   <Image
                     src={item.image_url}
                     alt={item.name}
+                    width={500}
+                height={750}
                     className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-black bg-opacity-0 flex flex-col justify-end p-4">

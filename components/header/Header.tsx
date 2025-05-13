@@ -60,7 +60,7 @@ const Header = () => {
                 src={theme === 'dark' ? '/logos/FALCON EYE PHILMZ REVERMPED LOGO (3).jpg' : '/logos/FALCON EYE LOGO.png'}
                 alt="Logo"
                 width={20}
-                height='20'
+                height={20}
                 className="w-12 h-12 rounded-full"
               />
               <span className="text-xl font-bold text-[var(--foreground)]">
