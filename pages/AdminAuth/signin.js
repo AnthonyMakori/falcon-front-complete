@@ -75,7 +75,7 @@ const AdminLogin = () => {
             </button>
 
             <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-                <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">Admin Login</h2>
+                <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">Login</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
                         <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">

@@ -96,27 +96,40 @@ export default function MoviesPage() {
                 Released on {movie.date_released}
               </p>
 
-              <div className="flex gap-4 mt-4">
-                <Button
-                  onClick={() => handleAddToCart(movie)}
-                  className="bg-yellow-500 text-white w-full py-2 rounded flex items-center justify-center gap-2"
-                  disabled={loadingMovieId === movie.id}
-                >
-                  {loadingMovieId === movie.id ? (
-                    <ClipLoader size={20} color="#fff" />
-                  ) : (
-                    <>
-                      <FaShoppingCart /> Add to Cart
-                    </>
-                  )}
-                </Button>
-                <Button
-                  onClick={() => setSelectedMovie(movie)}
-                  className="bg-green-500 text-white w-full py-2 rounded flex items-center justify-center gap-2"
-                >
-                  <FaDollarSign /> Purchase
-                </Button>
-              </div>
+             <div className="flex flex-col gap-4 mt-4 items-center">
+  {/* Movie Poster */}
+  <Image
+    width={500}
+    src={movie.poster}
+    alt={movie.title}
+    className="w-full max-w-xs rounded-lg shadow-md"
+  />
+
+  {/* Buttons */}
+  <div className="flex gap-4 mt-4 w-full">
+    <Button
+      onClick={() => handleAddToCart(movie)}
+      className="bg-yellow-500 text-white w-full py-2 rounded flex items-center justify-center gap-2"
+      disabled={loadingMovieId === movie.id}
+    >
+      {loadingMovieId === movie.id ? (
+        <ClipLoader size={20} color="#fff" />
+      ) : (
+        <>
+          <FaShoppingCart /> Add to Cart
+        </>
+      )}
+    </Button>
+
+    <Button
+      onClick={() => setSelectedMovie(movie)}
+      className="bg-green-500 text-white w-full py-2 rounded flex items-center justify-center gap-2"
+    >
+      <FaDollarSign /> Purchase
+    </Button>
+  </div>
+</div>
+
             </div>
           ))}
         </div>
