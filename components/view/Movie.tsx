@@ -75,64 +75,54 @@ export default function MoviesPage() {
           ))}
         </div>
       ) : movies.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {movies.map((movie) => (
-            <div key={movie.id} className="border rounded-lg p-4 shadow-lg">
-              <Image
-                src={movie.poster.startsWith("http")
-                  ? movie.poster
-                  : `${process.env.NEXT_PUBLIC_API_URL}/storage/${movie.poster}`}
-                alt={movie.title}
-                width={500}
-                height={750}
-                className="w-full h-64 object-cover mb-4 rounded-lg"
-              />
+       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+  {movies.map((movie) => (
+    <div key={movie.id} className="border rounded-lg p-4 shadow-lg">
+      <Image
+        src={
+          movie.poster.startsWith("http")
+            ? movie.poster
+            : `https://api.falconeyephilmz.com/${movie.poster}`
+        }
+        alt={movie.title}
+        width={500}
+        height={750}
+        className="w-full h-64 object-cover mb-4 rounded-lg"
+      />
 
+      <h2 className="text-xl font-semibold">{movie.title}</h2>
+      <p className="text-sm text-gray-500">{movie.category}</p>
+      <p className="mt-2 text-lg font-bold">Ksh {movie.price}
+      </p>
+      <p className="text-sm text-gray-400">
+        Released on {movie.date_released}
+      </p>
 
-              <h2 className="text-xl font-semibold">{movie.title}</h2>
-              <p className="text-sm text-gray-500">{movie.category}</p>
-              <p className="mt-2 text-lg font-bold">KES {movie.price}</p>
-              <p className="text-sm text-gray-400">
-                Released on {movie.date_released}
-              </p>
-
-             <div className="flex flex-col gap-4 mt-4 items-center">
-  {/* Movie Poster */}
-  <Image
-    width={500}
-    src={movie.poster}
-    alt={movie.title}
-    className="w-full max-w-xs rounded-lg shadow-md"
-  />
-
-  {/* Buttons */}
-  <div className="flex gap-4 mt-4 w-full">
-    <Button
-      onClick={() => handleAddToCart(movie)}
-      className="bg-yellow-500 text-white w-full py-2 rounded flex items-center justify-center gap-2"
-      disabled={loadingMovieId === movie.id}
-    >
-      {loadingMovieId === movie.id ? (
-        <ClipLoader size={20} color="#fff" />
-      ) : (
-        <>
-          <FaShoppingCart /> Add to Cart
-        </>
-      )}
-    </Button>
-
-    <Button
-      onClick={() => setSelectedMovie(movie)}
-      className="bg-green-500 text-white w-full py-2 rounded flex items-center justify-center gap-2"
-    >
-      <FaDollarSign /> Purchase
-    </Button>
-  </div>
+      <div className="flex gap-4 mt-4">
+        <Button
+          onClick={() => handleAddToCart(movie)}
+          className="bg-yellow-500 text-white w-full py-2 rounded flex items-center justify-center gap-2"
+          disabled={loadingMovieId === movie.id}
+        >
+          {loadingMovieId === movie.id ? (
+            <ClipLoader size={20} color="#fff" />
+          ) : (
+            <>
+              <FaShoppingCart /> Add to Cart
+            </>
+          )}
+        </Button>
+        <Button
+          onClick={() => setSelectedMovie(movie)}
+          className="bg-green-500 text-white w-full py-2 rounded flex items-center justify-center gap-2"
+        >
+          <FaDollarSign /> Purchase
+        </Button>
+      </div>
+    </div>
+  ))}
 </div>
 
-            </div>
-          ))}
-        </div>
       ) : (
         <p className="text-center text-gray-500">No movies available at the moment.</p>
       )}
