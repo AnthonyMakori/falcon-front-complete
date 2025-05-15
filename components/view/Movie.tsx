@@ -81,7 +81,7 @@ export default function MoviesPage() {
               <Image
                 src={movie.poster.startsWith("http")
                   ? movie.poster
-                  : `https:/api.falconeyephilmz.com/assets/movie_posters${movie.poster}`}
+                  : `https:/api.falconeyephilmz.com/assets/movie_posters/1747249347_G.O.T.jpg`}
                 alt={movie.title}
                 width={500}
                 height={750}
