@@ -81,7 +81,7 @@ export default function MoviesPage() {
               <Image
                 src={movie.poster.startsWith("http")
                   ? movie.poster
-                  : `${process.env.NEXT_PUBLIC_API_URL}/storage/${movie.poster}`}
+                  : `${process.env.NEXT_PUBLIC_API_URL}/assets/${movie.poster}`}
                 alt={movie.title}
                 width={500}
                 height={750}
