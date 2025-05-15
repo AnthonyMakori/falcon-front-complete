@@ -20,7 +20,6 @@ const AdminLogin = () => {
         setSuccess(false);
 
         const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/admin/login`;
-
         try {
             const response = await fetch(apiUrl, {
                 method: 'POST',
@@ -40,7 +39,7 @@ const AdminLogin = () => {
             } else {
                 setError(data.message || 'Invalid email or password.');
             }
-        } catch(_) {
+        } catch {
             setError('Something went wrong. Please try again later.');
         }
 
