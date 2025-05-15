@@ -40,7 +40,7 @@ const AdminLogin = () => {
             } else {
                 setError(data.message || 'Invalid email or password.');
             }
-        } catch {
+        } catch(_) {
             setError('Something went wrong. Please try again later.');
         }
 
