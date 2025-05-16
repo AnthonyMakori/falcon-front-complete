@@ -4,7 +4,7 @@ import { FaShoppingCart, FaDollarSign } from "react-icons/fa";
 import { useCart } from "../../context/CartContext";
 import { ClipLoader } from "react-spinners"; 
 import PaymentForm from "../../components/form/PaymentForm";
-import Image from 'next/image'
+// import Image from 'next/image'
 
 interface Movie {
   id: number;
