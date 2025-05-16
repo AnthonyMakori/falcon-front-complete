@@ -4,7 +4,7 @@ import { FaShoppingCart, FaDollarSign } from "react-icons/fa";
 import { useCart } from "../../context/CartContext";
 import { ClipLoader } from "react-spinners"; 
 import PaymentForm from "../../components/form/PaymentForm";
-import Image from 'next/image'
+// import Image from 'next/image'
 
 interface Movie {
   id: number;
@@ -78,7 +78,8 @@ export default function MoviesPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {movies.map((movie) => (
             <div key={movie.id} className="border rounded-lg p-4 shadow-lg">
-              <Image
+              {/* eslint-disable @next/next/no-img-element */}
+              <img
                 src={movie.poster.startsWith("http")
                   ? movie.poster
                   : `https://api.falconeyephilmz.com/assets/movie_posters/1747286108_NGORI%20KURUKA%20OFFICIAL%20FLYER.jpg`}
@@ -87,8 +88,7 @@ export default function MoviesPage() {
                 height={750}
                 className="w-full h-64 object-cover mb-4 rounded-lg"
               />
-
-
+              {/* eslint-enable @next/next/no-img-element */}
               <h2 className="text-xl font-semibold">{movie.title}</h2>
               <p className="text-sm text-gray-500">{movie.category}</p>
               <p className="mt-2 text-lg font-bold">KES {movie.price}</p>
