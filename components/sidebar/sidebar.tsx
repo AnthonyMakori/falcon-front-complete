@@ -8,10 +8,13 @@ import {
   ChevronRight,
   Users,
   Clapperboard,
+  Shirt,
   BarChart3,
-  UploadCloud,
+  NotepadText,
+  ArrowBigUp,
   Banknote,
   CreditCard,
+  
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -85,8 +88,8 @@ const AdminSidebar: React.FC<SidebarProps> = ({ isCollapsed, toggleSidebar }) =>
             className="cursor-pointer flex items-center gap-3 p-3 rounded-lg hover:bg-gray-700"
             onClick={() => setMediaDropdown({ ...mediaDropdown, videos: !mediaDropdown.videos })}
           >
-            <UploadCloud size={20} />
-            {!isCollapsed && !isMobileView && <span>Upload Content</span>}
+            <ArrowBigUp size={20} />
+            {!isCollapsed && !isMobileView && <span>Upload</span>}
           </div>
           {mediaDropdown.videos && !isCollapsed && !isMobileView && (
             <div className="ml-6 space-y-2">
@@ -100,6 +103,18 @@ const AdminSidebar: React.FC<SidebarProps> = ({ isCollapsed, toggleSidebar }) =>
                 <div className="flex items-center gap-2 p-2 hover:bg-gray-700 rounded-lg">
                   <Clapperboard size={16} />
                   <span>Series</span>
+                </div>
+              </Link>
+              <Link href="/upload/UploadMerchandise">
+                <div className="flex items-center gap-2 p-2 hover:bg-gray-700 rounded-lg">
+                  <Shirt size={16} />
+                  <span>Merchandise</span>
+                </div>
+              </Link>
+              <Link href="/upload/UploadEvent">
+                <div className="flex items-center gap-2 p-2 hover:bg-gray-700 rounded-lg">
+                  <NotepadText size={16} />
+                  <span>Event</span>
                 </div>
               </Link>
             </div>
