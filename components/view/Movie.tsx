@@ -78,7 +78,7 @@ export default function MoviesPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {movies.map((movie) => (
             <div key={movie.id} className="border rounded-lg p-4 shadow-lg">
-              <Image
+              <img
                 src={movie.poster.startsWith("http")
                   ? movie.poster
                   : `https://api.falconeyephilmz.com/assets/movie_posters/1747286108_NGORI%20KURUKA%20OFFICIAL%20FLYER.jpg`}
