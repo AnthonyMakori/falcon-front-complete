@@ -105,13 +105,13 @@ const AdminSidebar: React.FC<SidebarProps> = ({ isCollapsed, toggleSidebar }) =>
                   <span>Series</span>
                 </div>
               </Link>
-              <Link href="/upload/UploadMerchandise">
+              <Link href="/upload/Merchandize">
                 <div className="flex items-center gap-2 p-2 hover:bg-gray-700 rounded-lg">
                   <Shirt size={16} />
                   <span>Merchandise</span>
                 </div>
               </Link>
-              <Link href="/upload/UploadEvent">
+              <Link href="/upload/Event">
                 <div className="flex items-center gap-2 p-2 hover:bg-gray-700 rounded-lg">
                   <NotepadText size={16} />
                   <span>Event</span>
