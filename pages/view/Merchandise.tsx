@@ -65,13 +65,15 @@ const Merchandise = () => {
             {merchandise.map((item) => (
               <div key={item.id} className="relative bg-gray-800 shadow-lg rounded-lg overflow-hidden group h-[28rem]">
                 <div className="relative w-full h-full overflow-hidden">
-                  <Image
+                   {/* eslint-disable @next/next/no-img-element */}
+                  <img
                     src={item.image_url}
                     alt={item.name}
                     width={500}
                 height={750}
                     className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                   />
+                  {/* eslint-enable @next/next/no-img-element */}
                   <div className="absolute inset-0 bg-black bg-opacity-0 flex flex-col justify-end p-4">
                     <div className="flex justify-between items-center">
                       <h3 className="text-xl font-semibold text-blue-600">{item.name}</h3>
