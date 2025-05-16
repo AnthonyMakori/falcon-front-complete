@@ -5,7 +5,7 @@ import Navbar from "../../components/header/Header";
 import { useCart } from "../../context/CartContext"; 
 import Head from "next/head";
 import PaymentForm from "../../components/form/PaymentForm";
-import Image from 'next/image'
+// import Image from 'next/image'
 
 interface MerchandiseItem {
   id: number;
