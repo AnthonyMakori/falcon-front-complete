@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import Header from '../../components/header/Header';
 import Head from "next/head";
 import PaymentForm from "../../components/form/PaymentForm";
-import Image from 'next/image';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -73,13 +72,13 @@ export default function EventsPage() {
                 key={event.id}
                 className="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300"
               >
-                <Image
-                  src={event.poster}  
+                {/* eslint-disable @next/next/no-img-element */}
+                <img
+                  src={`https://api.falconeyephilmz.com/${event.poster}`}  
                   alt={event.title}
                   className="w-full h-48 object-cover rounded-t-xl"
                 />
-
-
+                {/* eslint-enable @next/next/no-img-element */}
                 <h2 className="text-2xl font-semibold text-blue-800 mt-4">{event.title}</h2>
                 <p className="mt-2 text-gray-600">{event.description}</p>
                 <div className="mt-4 flex items-center space-x-4 text-sm text-gray-500">
