@@ -67,7 +67,7 @@ const Merchandise = () => {
                 <div className="relative w-full h-full overflow-hidden">
                    {/* eslint-disable @next/next/no-img-element */}
                   <img
-                    src={item.image_url}
+                    src={'https://api.falconeyephilmz.com/assets/merchandise/1747578110_drama.jpeg'}
                     alt={item.name}
                     width={500}
                 height={750}
