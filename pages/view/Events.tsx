@@ -78,6 +78,7 @@ export default function EventsPage() {
                   alt={event.title}
                   className="w-full h-48 object-cover rounded-t-xl"
                 />
+
                 {/* eslint-enable @next/next/no-img-element */}
                 <h2 className="text-2xl font-semibold text-blue-800 mt-4">{event.title}</h2>
                 <p className="mt-2 text-gray-600">{event.description}</p>
