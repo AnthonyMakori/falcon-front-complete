@@ -12,7 +12,7 @@ interface MerchandiseItem {
   name: string;
   description: string;
   price: number;
-  image_url: string;
+  image: string;
 }
 
 const Merchandise = () => {
@@ -43,7 +43,7 @@ const Merchandise = () => {
       id: item.id,
       title: item.name,
       price: item.price,
-      poster: item.image_url,
+      poster: item.image,
       type: "merchandise",
     });
     alert(`${item.name} added to cart!`);
@@ -65,42 +65,43 @@ const Merchandise = () => {
             {merchandise.map((item) => (
               <div key={item.id} className="relative bg-gray-800 shadow-lg rounded-lg overflow-hidden group h-[28rem]">
                 <div className="relative w-full h-full overflow-hidden">
-                   {/* eslint-disable @next/next/no-img-element */}
-                  <img
-                    src={'https://api.falconeyephilmz.com/assets/merchandise/1747578110_drama.jpeg'}
-                    alt={item.name}
-                    width={500}
+              {/* eslint-disable @next/next/no-img-element */}
+              <img
+                src={`https://api.falconeyephilmz.com/${item.image}`}
+                alt={item.name}
+                width={500}
                 height={750}
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                  />
-                  {/* eslint-enable @next/next/no-img-element */}
-                  <div className="absolute inset-0 bg-black bg-opacity-0 flex flex-col justify-end p-4">
-                    <div className="flex justify-between items-center">
-                      <h3 className="text-xl font-semibold text-blue-600">{item.name}</h3>
-                      <p className="text-2xl font-bold text-green-600">Ksh {item.price}</p>
-                    </div>
-                    <p className="text-white text-sm mt-1">{item.description}</p>
-                    <div className="flex justify-between gap-2">
-                      <Button
-                        onClick={() => handleAddToCart(item)}
-                        className="mt-3 w-1/2 bg-yellow-500 hover:bg-yellow-400 text-black font-semibold py-2 rounded-lg transition"
-                      >
-                        Add to Cart
-                      </Button>
-                      <Button
-                        onClick={() => {
-                          setSelectedMerch(item);
-                          setShowPaymentForm(false); 
-                          setSelectedColor(""); 
-                          setSelectedSize(""); 
-                        }}
-                        className="mt-3 w-1/2 bg-blue-600 hover:bg-blue-500 text-white font-semibold py-2 rounded-lg transition"
-                      >
-                        Purchase
-                      </Button>
-                    </div>
-                  </div>
+                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+              />
+              {/* eslint-enable @next/next/no-img-element */}
+              <div className="absolute inset-0 bg-black bg-opacity-0 flex flex-col justify-end p-4">
+                <div className="flex justify-between items-center">
+                  <h3 className="text-xl font-semibold text-blue-600">{item.name}</h3>
+                  <p className="text-2xl font-bold text-green-600">Ksh {item.price}</p>
                 </div>
+                <p className="text-white text-sm mt-1">{item.description}</p>
+                <div className="flex justify-between gap-2">
+                  <Button
+                    onClick={() => handleAddToCart(item)}
+                    className="mt-3 w-1/2 bg-yellow-500 hover:bg-yellow-400 text-black font-semibold py-2 rounded-lg transition"
+                  >
+                    Add to Cart
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      setSelectedMerch(item);
+                      setShowPaymentForm(false);
+                      setSelectedColor("");
+                      setSelectedSize("");
+                    }}
+                    className="mt-3 w-1/2 bg-blue-600 hover:bg-blue-500 text-white font-semibold py-2 rounded-lg transition"
+                  >
+                    Purchase
+                  </Button>
+                </div>
+              </div>
+            </div>
+
               </div>
             ))}
           </div>
