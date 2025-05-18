@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import Header from '../../components/header/Header';
 import Head from "next/head";
 import PaymentForm from "../../components/form/PaymentForm";
-import Image from 'next/image';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
