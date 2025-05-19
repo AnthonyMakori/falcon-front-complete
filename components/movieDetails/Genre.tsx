@@ -75,7 +75,7 @@ const GenreGrid = () => {
         const updatedGenres = genresData.map((genre) => {
           const filteredPosters = movies
             .filter((movie) => movie.category.toLowerCase() === genre.category.toLowerCase())
-            .map((movie) => `${process.env.NEXT_PUBLIC_API_URL}/storage/${movie.poster}`);
+            .map((movie) => `${process.env.NEXT_PUBLIC_API_URL}${movie.poster}`);
   
           return { ...genre, posters: filteredPosters.length > 0 ? filteredPosters : genre.posters };
         });
