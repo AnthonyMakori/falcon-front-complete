@@ -4,7 +4,6 @@ import { FaShoppingCart, FaDollarSign } from "react-icons/fa";
 import { useCart } from "../../context/CartContext";
 import { ClipLoader } from "react-spinners"; 
 import PaymentForm from "../../components/form/PaymentForm";
-import {Input} from "../../components/ui/input";
 // import Image from 'next/image'
 
 interface Movie {
@@ -57,7 +56,7 @@ export default function MoviesPage() {
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-6">Movies</h1>
-      <Input>Search</Input>
+      
 
       {loading ? (
         // Loading skeleton placeholders
