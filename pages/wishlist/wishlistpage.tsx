@@ -92,7 +92,7 @@ const WishlistPage = () => {
                       <Image
                           src={item.poster.startsWith("http") 
                             ? item.poster 
-                            : `${process.env.NEXT_PUBLIC_API_URL}/storage/${item.poster}`}  
+                            : `${process.env.NEXT_PUBLIC_API_URL}/assets/${item.poster}`}  
                           alt={item.title}
                           className="w-full h-68 object-cover"
                         />
