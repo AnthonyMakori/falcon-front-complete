@@ -74,7 +74,7 @@ export default function EventsPage() {
               >
                 {/* eslint-disable @next/next/no-img-element */}
                 <img
-                  src={`https://api.falconeyephilmz.com/${event.poster}`}
+                  src={event.poster}
                   alt={event.title}
                   className="w-full h-48 object-cover rounded-t-xl"
                   width={500}
