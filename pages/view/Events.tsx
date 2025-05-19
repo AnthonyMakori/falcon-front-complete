@@ -74,9 +74,12 @@ export default function EventsPage() {
               >
                 {/* eslint-disable @next/next/no-img-element */}
                 <img
-                  src={`https://api.falconeyephilmz.com/assets/Events/1747576557_8.jpg`}  
+                  src="https://api.falconeyephilmz.com/assets/Events/1747576557_8.jpg"
                   alt={event.title}
                   className="w-full h-48 object-cover rounded-t-xl"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = '/images/crime.jpg'; 
+                  }}
                 />
 
                 {/* eslint-enable @next/next/no-img-element */}
