@@ -82,7 +82,7 @@ export default function MoviesPage() {
               <img
                 src={movie.poster.startsWith("http")
                   ? movie.poster
-                  : `https://api.falconeyephilmz.com/assets/movie_posters/1747286108_NGORI%20KURUKA%20OFFICIAL%20FLYER.jpg`}
+                  : `https://api.falconeyephilmz.com/${movie.poster}`}
                 alt={movie.title}
                 width={500}
                 height={750}
