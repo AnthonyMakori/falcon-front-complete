@@ -5,6 +5,13 @@ import { Pagination, PaginationContent, PaginationItem, PaginationLink } from ".
 import AdminSidebar from "../../components/sidebar/sidebar";
 import Navbar from "../../components/Admin/navbar";
 import axios from "axios";
+import Uppy from "@uppy/core";
+import { Dashboard } from "@uppy/react";
+import XHRUpload from "@uppy/xhr-upload";
+import { v4 as uuidv4 } from "uuid";
+import "@uppy/core/dist/style.min.css";
+import "@uppy/dashboard/dist/style.min.css";
+
 
 export default function MovieManagement() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
