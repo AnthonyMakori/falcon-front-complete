@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import Uppy from "@uppy/core";
 import XHRUpload from "@uppy/xhr-upload";
 import { Dashboard } from "@uppy/react";
@@ -25,7 +25,7 @@ const MovieUploader = () => {
     poster: null
   });
 
-  const [uuid, setUuid] = useState(() => crypto.randomUUID());
+const uuid = useMemo(() => crypto.randomUUID(), []);
   const [originalName, setOriginalName] = useState("");
   const [totalChunks, setTotalChunks] = useState(0);
 
