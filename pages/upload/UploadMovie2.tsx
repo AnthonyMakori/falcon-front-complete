@@ -37,11 +37,11 @@ export default function MovieUploader({ onClose }: MovieUploaderProps) {
     });
     setUppyInstance(uppy);
 
-    interface Chunk {
-        offset: number;
-        size: number;
-        data: Blob;
-    }
+    // interface Chunk {
+    //     offset: number;
+    //     size: number;
+    //     data: Blob;
+    // }
 
     // interface RequestData {
     //     uploadId: string;
