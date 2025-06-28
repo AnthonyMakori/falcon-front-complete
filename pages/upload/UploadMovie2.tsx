@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Uppy, { UppyFile } from "@uppy/core";
+import Uppy from "@uppy/core";
 import { Dashboard } from "@uppy/react";
 import XHRUpload from "@uppy/xhr-upload";
 import { v4 as uuidv4 } from "uuid";
@@ -13,7 +13,6 @@ interface MovieUploaderProps {
 
 export default function MovieUploader({ onClose }: MovieUploaderProps) {
   const [uploadId] = useState(uuidv4());
-  const [originalName, setOriginalName] = useState("");
   const [videoPath, setVideoPath] = useState("");
   const [uploadComplete, setUploadComplete] = useState(false);
 
@@ -44,12 +43,12 @@ export default function MovieUploader({ onClose }: MovieUploaderProps) {
         data: Blob;
     }
 
-    interface RequestData {
-        uploadId: string;
-        chunkIndex: number;
-        originalName: string;
-        chunk: Chunk;
-    }
+    // interface RequestData {
+    //     uploadId: string;
+    //     chunkIndex: number;
+    //     originalName: string;
+    //     chunk: Chunk;
+    // }
 
     uppy.use(XHRUpload, {
         endpoint: "/api/upload-chunk",
@@ -64,7 +63,7 @@ export default function MovieUploader({ onClose }: MovieUploaderProps) {
 
     uppy.on("complete", async (result) => {
       const name = result.successful && result.successful.length > 0 ? result.successful[0].name : "";
-      setOriginalName(name ?? "");
+    
 
       if (name) {
         const response = await fetch("/api/assemble-chunks", {
