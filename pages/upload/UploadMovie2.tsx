@@ -66,15 +66,15 @@ interface MovieFormData {
     poster: File | null;
 }
 
-interface FormChangeEvent extends React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement> {}
-
-const handleFormChange = (e: FormChangeEvent) => {
-    const { name, value, files } = e.target as HTMLInputElement;
-    setFormData((prev: MovieFormData) => ({
-        ...prev,
-        [name]: files ? files[0] : value
-    }));
+const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const { name, value, files } = e.target as HTMLInputElement;
+  setFormData((prev) => ({
+    ...prev,
+    [name]: files ? files[0] : value,
+  }));
 };
+
+
 
   const handleSubmit = async () => {
     const payload = new FormData();
