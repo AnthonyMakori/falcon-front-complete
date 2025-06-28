@@ -56,15 +56,15 @@ const uuid = useMemo(() => crypto.randomUUID(), []);
     return () => uppy.destroy();
   }, []);
 
-interface MovieFormData {
-    title: string;
-    category: string;
-    description: string;
-    price: string;
-    currency: string;
-    dateReleased: string;
-    poster: File | null;
-}
+// interface MovieFormData {
+//     title: string;
+//     category: string;
+//     description: string;
+//     price: string;
+//     currency: string;
+//     dateReleased: string;
+//     poster: File | null;
+// }
 
 const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
   const { name, value, files } = e.target as HTMLInputElement;
