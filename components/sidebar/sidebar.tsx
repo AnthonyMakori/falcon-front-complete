@@ -93,7 +93,7 @@ const AdminSidebar: React.FC<SidebarProps> = ({ isCollapsed, toggleSidebar }) =>
           </div>
           {mediaDropdown.videos && !isCollapsed && !isMobileView && (
             <div className="ml-6 space-y-2">
-              <Link href="/upload/UploadMovie2">
+              <Link href="/upload/UploadMovie">
                 <div className="flex items-center gap-2 p-2 hover:bg-gray-700 rounded-lg">
                   <Film size={16} />
                   <span>Movies</span>
