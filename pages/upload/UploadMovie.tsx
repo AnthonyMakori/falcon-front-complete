@@ -145,6 +145,50 @@ const MovieUploadModal = ({ onClose, onSuccess }: { onClose: () => void, onSucce
   const [currency, setCurrency] = useState('USD');
   const [convertedPrice, setConvertedPrice] = useState('');
   const [movieFile, setMovieFile] = useState<File | null>(null);
+  const CHUNK_SIZE = 100 * 1024 * 1024; // 100MB
+
+
+  const uploadInChunks = async (file: File) => {
+  const totalChunks = Math.ceil(file.size / CHUNK_SIZE);
+
+  for (let index = 0; index < totalChunks; index++) {
+    const start = index * CHUNK_SIZE;
+    const end = Math.min(start + CHUNK_SIZE, file.size);
+    const chunk = file.slice(start, end);
+
+    const formData = new FormData();
+    formData.append('chunk', chunk);
+    formData.append('filename', file.name);
+    formData.append('index', index.toString());
+    formData.append('totalChunks', totalChunks.toString());
+
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/upload-chunk`, {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error(`Chunk ${index} failed`);
+      }
+    } catch (error) {
+      console.error("Chunk upload error:", error);
+      throw error;
+    }
+  }
+
+  // Trigger backend to merge
+  const mergeResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/merge-chunks`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ filename: file.name }),
+  });
+
+  if (!mergeResponse.ok) {
+    throw new Error("Failed to merge chunks");
+  }
+};
+
 
   // Price conversion function
   const convertPrice = (amount: string, currency: string) => {
@@ -160,54 +204,49 @@ const MovieUploadModal = ({ onClose, onSuccess }: { onClose: () => void, onSucce
   }, [price, currency]);
 
   const handleUpload = async () => {
-    // Validate all required fields including the movie file
-    if (!title || !description || !price || !poster || !category || !dateReleased || !movieFile) {
-      alert('All fields are required, including the movie file');
-      return;
+  if (!title || !description || !price || !poster || !category || !dateReleased || !movieFile) {
+    alert('All fields are required, including the movie file');
+    return;
+  }
+
+  setIsUploading(true);
+
+  try {
+    // Upload movie in chunks first
+    await uploadInChunks(movieFile);
+
+    // Then upload the rest of the metadata (excluding movie file)
+    const metadata = new FormData();
+    metadata.append('title', title);
+    metadata.append('description', description);
+    metadata.append('price', price);
+    metadata.append('poster', poster);
+    metadata.append('category', category);
+    metadata.append('currency', currency);
+    metadata.append('date_released', dateReleased);
+    metadata.append('movie_filename', movieFile.name); 
+
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/upload-movie-metadata`, {
+      method: 'POST',
+      body: metadata,
+    });
+
+    const responseData = await response.json();
+    if (response.ok) {
+      alert('Movie uploaded successfully');
+      onSuccess();
+      onClose();
+    } else {
+      alert(`Metadata upload failed: ${responseData.message || 'Unknown error'}`);
     }
-  
-    setIsUploading(true);
-    const formData = new FormData();
-    formData.append('title', title);
-    formData.append('description', description);
-    formData.append('price', price);
-    formData.append('poster', poster);
-    formData.append('category', category);
-    formData.append('currency', currency);
-    formData.append('date_released', dateReleased); 
-    formData.append('movie', movieFile);
-  
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/upload-movie`, {
-        method: 'POST',
-        body: formData,
-        // Do not set Content-Type header manually when sending FormData.
-        headers: {
-          Accept: 'application/json',
-        },
-      });
-  
-      const responseData = await response.json();
-      console.log('Response:', responseData);
-  
-      if (response.ok) {
-        alert('Movie uploaded successfully');
-        onSuccess();
-        onClose();
-      } else {
-        alert(`Failed to upload movie: ${responseData.message || JSON.stringify(responseData)}`);
-      }
-    } catch (error) {
-      console.error('Error uploading movie:', error);
-      if (error instanceof Error) {
-        alert(`An error occurred while uploading the movie: ${error.message}`);
-      } else {
-        alert('An unknown error occurred while uploading the movie.');
-      }
-    } finally {
-      setIsUploading(false);
-    }
-  };
+  } catch (error) {
+    console.error('Upload failed:', error);
+    alert(`Upload failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+  } finally {
+    setIsUploading(false);
+  }
+};
+
   
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 text-black" style={{ marginTop: "40px" }}>
