@@ -1,12 +1,28 @@
-import { useState } from "react";
-import PaymentForm from "./PaymentForm"; 
+import { useState, useEffect } from "react";
+import PaymentForm from "./PaymentForm";
 
 const PaymentWrapper = ({ price, movie }: { price: number; movie: number }) => {
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
+  const [showTick, setShowTick] = useState(false);
+  const [showThankYou, setShowThankYou] = useState(false);
+
+  useEffect(() => {
+    if (status === "success") {
+      setShowTick(true);
+      const tickTimeout = setTimeout(() => setShowTick(false), 3000);
+      const messageTimeout = setTimeout(() => setShowThankYou(false), 4000);
+      setShowThankYou(true);
+
+      return () => {
+        clearTimeout(tickTimeout);
+        clearTimeout(messageTimeout);
+      };
+    }
+  }, [status]);
 
   return (
-    <div className="flex flex-col items-center gap-4">
+    <div className="flex flex-col items-center gap-4 relative">
       {status !== "success" && (
         <PaymentForm
           price={price}
@@ -19,17 +35,43 @@ const PaymentWrapper = ({ price, movie }: { price: number; movie: number }) => {
         />
       )}
 
-      {status === "success" && (
-        <div className="p-6 border rounded-lg shadow-md bg-white text-green-700 text-center max-w-md">
-          <div className="text-5xl mb-4">✅</div>
-          <p className="font-bold text-lg mb-2">Thank You for keeping it Falcon Philmz.</p>
-          <p className="text-sm">
-            Check Email for movie link. <br />
-            If not received, Hit the WhatsApp button.
-          </p>
+      {/* ✅ Center Tick Animation */}
+      {showTick && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-white bg-opacity-80">
+          <svg
+            className="w-32 h-32 text-green-600 animate-draw"
+            viewBox="0 0 52 52"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle
+              cx="26"
+              cy="26"
+              r="25"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            />
+            <path
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="5"
+              d="M14 27l7 7 17-17"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
         </div>
       )}
 
+      {/* ✅ Bottom Left Message */}
+      {showThankYou && (
+        <div className="fixed bottom-4 left-4 bg-green-600 text-white px-4 py-3 rounded shadow-lg z-50 animate-fade-in-out">
+          <p className="font-bold">Thank You for keeping it Falcon Eye Philmz.</p>
+          <p className="text-sm">Check Email for movie link. If not, hit the WhatsApp button.</p>
+        </div>
+      )}
+
+      {/* ❌ Error Message */}
       {status === "error" && message && (
         <div className="p-4 bg-red-100 border border-red-400 text-red-700 rounded w-full text-center">
           {message}

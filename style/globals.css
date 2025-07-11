@@ -37,4 +37,38 @@
                 color 0.3s ease, 
                 box-shadow 0.3s ease;
   }
+  @keyframes draw {
+  0% {
+    stroke-dasharray: 0, 100;
+  }
+  100% {
+    stroke-dasharray: 100, 0;
+  }
+}
+
+.animate-draw path {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: draw 3s ease forwards;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  10%, 90% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+.animate-fade-in-out {
+  animation: fadeInOut 4s ease forwards;
+}
+
 }
