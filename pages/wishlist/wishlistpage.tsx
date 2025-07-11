@@ -24,6 +24,9 @@ const WishlistPage = () => {
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
   const [isClient, setIsClient] = useState(false);
   const router = useRouter();
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
+const [paymentError, setPaymentError] = useState("");
+
 
   useEffect(() => {
     setIsClient(true);
@@ -156,7 +159,17 @@ const WishlistPage = () => {
           <h2 className="text-lg font-bold mb-3 text-blue-600">
             Purchase {selectedMovie.title}
           </h2>
-          <PaymentForm price={Number(selectedMovie.price)} movie={selectedMovie.id} />
+            <PaymentForm
+              price={Number(selectedMovie.price)}
+              movie={selectedMovie.id}
+              onSuccess={() => {
+                setPaymentSuccess(true);
+                setShowPaymentForm(null); 
+              }}
+              onError={(message) => {
+                setPaymentError(message);
+              }}
+            />
           <button
             onClick={handleClosePaymentForm}
             className="mt-3 px-4 py-2 bg-red-600 text-white font-semibold rounded-md hover:bg-red-700 transition duration-200"
