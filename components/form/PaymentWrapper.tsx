@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import PaymentForm from "./PaymentForm";
 
 const PaymentWrapper = ({ price, movie }: { price: number; movie: number }) => {
@@ -10,19 +10,23 @@ const PaymentWrapper = ({ price, movie }: { price: number; movie: number }) => {
   useEffect(() => {
     if (status === "success") {
       setShowTick(true);
-      const tickTimeout = setTimeout(() => setShowTick(false), 3000);
-      const messageTimeout = setTimeout(() => setShowThankYou(false), 4000);
       setShowThankYou(true);
 
+      const tickTimer = setTimeout(() => setShowTick(false), 3000);
+      const messageTimer = setTimeout(() => {
+        setShowThankYou(false);
+        setStatus("idle");
+      }, 4000);
+
       return () => {
-        clearTimeout(tickTimeout);
-        clearTimeout(messageTimeout);
+        clearTimeout(tickTimer);
+        clearTimeout(messageTimer);
       };
     }
   }, [status]);
 
   return (
-    <div className="flex flex-col items-center gap-4 relative">
+    <div className="relative flex flex-col items-center gap-4 min-h-screen">
       {status !== "success" && (
         <PaymentForm
           price={price}
@@ -35,11 +39,11 @@ const PaymentWrapper = ({ price, movie }: { price: number; movie: number }) => {
         />
       )}
 
-      {/* ✅ Center Tick Animation */}
+      {/* ✅ Tick Animation */}
       {showTick && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-white bg-opacity-80">
           <svg
-            className="w-32 h-32 text-green-600 animate-draw"
+            className="w-24 h-24 text-green-500"
             viewBox="0 0 52 52"
             xmlns="http://www.w3.org/2000/svg"
           >
@@ -52,12 +56,13 @@ const PaymentWrapper = ({ price, movie }: { price: number; movie: number }) => {
               strokeWidth="2"
             />
             <path
+              d="M14 27l7 7 17-17"
               fill="none"
               stroke="currentColor"
-              strokeWidth="5"
-              d="M14 27l7 7 17-17"
+              strokeWidth="4"
               strokeLinecap="round"
               strokeLinejoin="round"
+              className="tick-path"
             />
           </svg>
         </div>
@@ -65,13 +70,13 @@ const PaymentWrapper = ({ price, movie }: { price: number; movie: number }) => {
 
       {/* ✅ Bottom Left Message */}
       {showThankYou && (
-        <div className="fixed bottom-4 left-4 bg-green-600 text-white px-4 py-3 rounded shadow-lg z-50 animate-fade-in-out">
+        <div className="fixed bottom-4 left-4 bg-green-600 text-white px-4 py-3 rounded shadow-md z-50 animate-fadeinout">
           <p className="font-bold">Thank You for keeping it Falcon Eye Philmz.</p>
           <p className="text-sm">Check Email for movie link. If not, hit the WhatsApp button.</p>
         </div>
       )}
 
-      {/* ❌ Error Message */}
+      {/* ❌ Error message */}
       {status === "error" && message && (
         <div className="p-4 bg-red-100 border border-red-400 text-red-700 rounded w-full text-center">
           {message}
