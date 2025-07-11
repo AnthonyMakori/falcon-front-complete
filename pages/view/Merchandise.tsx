@@ -180,7 +180,18 @@ const Merchandise = () => {
             {/* Payment Form */}
             {showPaymentForm && (
               <>
-                <PaymentForm movie={selectedMerch.id} price={selectedMerch.price} />
+              <PaymentForm
+                movie={selectedMerch.id}
+                price={selectedMerch.price}
+                onSuccess={() => {
+                  setShowPaymentForm(false);
+                  setSelectedMerch(null);
+                  alert("Payment successful! Check your email.");
+                }}
+                onError={(message) => {
+                  alert(`Payment failed: ${message}`);
+                }}
+              />
                 <Button
                   onClick={() => setSelectedMerch(null)}
                   className="mt-4 bg-red-500 text-white w-full py-2 rounded"

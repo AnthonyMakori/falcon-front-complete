@@ -22,6 +22,9 @@ export default function MoviesPage() {
   const [loadingMovieId, setLoadingMovieId] = useState<number | null>(null);
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
   const [loading, setLoading] = useState(true); 
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
+const [paymentError, setPaymentError] = useState("");
+
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -125,22 +128,59 @@ export default function MoviesPage() {
         <p className="text-center text-gray-500">No movies available at the moment.</p>
       )}
 
-      {selectedMovie && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
-            <h2 className="text-xl font-bold mb-4 text-blue-600">
-              Purchase {selectedMovie.title}
-            </h2>
-            <PaymentForm movie={selectedMovie?.id} price={selectedMovie.price} />
-            <Button
-              onClick={() => setSelectedMovie(null)}
-              className="mt-4 bg-red-500 text-white w-full py-2 rounded"
-            >
-              Cancel
-            </Button>
-          </div>
-        </div>
+      {selectedMovie && !paymentSuccess && (
+  <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+    <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
+      <h2 className="text-xl font-bold mb-4 text-blue-600">
+        Purchase {selectedMovie.title}
+      </h2>
+
+      <PaymentForm
+        movie={selectedMovie.id}
+        price={selectedMovie.price}
+        onSuccess={() => setPaymentSuccess(true)}
+        onError={(msg) => setPaymentError(msg)}
+      />
+
+      <Button
+        onClick={() => {
+          setSelectedMovie(null);
+          setPaymentError("");
+        }}
+        className="mt-4 bg-red-500 text-white w-full py-2 rounded"
+      >
+        Cancel
+      </Button>
+
+      {paymentError && (
+        <p className="mt-2 text-sm text-red-500 text-center">{paymentError}</p>
       )}
+    </div>
+  </div>
+)}
+
+{paymentSuccess && (
+  <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+    <div className="bg-white p-6 rounded-lg shadow-lg max-w-md text-center text-green-700">
+      <div className="text-5xl mb-4">✅</div>
+      <p className="font-bold text-lg mb-2">Thank You for keeping it Falcon Philmz.</p>
+      <p className="text-sm mb-4">
+        Check your email for the movie link. <br />
+        If not received, hit the WhatsApp button.
+      </p>
+      <Button
+        onClick={() => {
+          setSelectedMovie(null);
+          setPaymentSuccess(false);
+        }}
+        className="bg-blue-600 text-white w-full py-2 rounded"
+      >
+        Close
+      </Button>
+    </div>
+  </div>
+)}
+
     </div>
   );
 }
