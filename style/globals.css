@@ -52,7 +52,7 @@
   animation: draw 3s ease forwards;
 }
 
-@keyframes fadeInOut {
+/* @keyframes fadeInOut {
   0% {
     opacity: 0;
     transform: translateY(10px);
@@ -69,6 +69,40 @@
 
 .animate-fade-in-out {
   animation: fadeInOut 4s ease forwards;
+} */
+
+/* Draw stroke animation */
+.tick-path {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: draw-tick 3s ease forwards;
 }
+
+@keyframes draw-tick {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Fade in and out animation */
+@keyframes fadeinout {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  10%, 90% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+.animate-fadeinout {
+  animation: fadeinout 4s ease-in-out forwards;
+}
+
 
 }
