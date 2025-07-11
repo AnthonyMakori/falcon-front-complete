@@ -3,17 +3,18 @@ import { useState } from "react";
 interface PaymentFormProps {
   price: number;
   movie: number;
+  onSuccess: () => void;
+  onError: (message: string) => void;
 }
 
-const PaymentForm: React.FC<PaymentFormProps> = ({ price, movie }) => {
+const PaymentForm: React.FC<PaymentFormProps> = ({ price, movie, onSuccess, onError }) => {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
-  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handlePayment = async () => {
-    setStatus("loading");
-    setMessage("");
+    setLoading(true);
+    onError("");
 
     const payload = {
       phone,
@@ -32,20 +33,21 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ price, movie }) => {
       const data = await response.json();
       if (data.error) throw new Error(data.error);
 
-      setStatus("success");
+      onSuccess(); // notify parent
     } catch (error: unknown) {
-      setStatus("error");
       if (error instanceof Error) {
-        setMessage(error.message);
+        onError(error.message);
       } else {
-        setMessage("An unexpected error occurred.");
+        onError("An unexpected error occurred.");
       }
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="p-4 border rounded-lg bg-white shadow-md text-black min-h-[300px] flex flex-col justify-center items-center">
-      {(status === "idle" || status === "error") && (
+      {!loading && (
         <>
           <h2 className="text-lg font-semibold mb-2 text-cyan-500">Make Payment</h2>
 
@@ -75,36 +77,13 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ price, movie }) => {
           >
             Confirm Payment
           </button>
-
-          {message && (
-            <p className="mt-2 text-sm text-red-500 text-center">{message}</p>
-          )}
         </>
       )}
 
-      {status === "loading" && (
+      {loading && (
         <div className="flex flex-col items-center gap-4">
           <div className="border-4 border-green-600 border-t-transparent rounded-full w-12 h-12 animate-spin"></div>
           <p className="text-green-700 font-medium">Processing Payment...</p>
-        </div>
-      )}
-
-      {status === "success" && (
-        <div className="text-center text-green-700">
-          <div className="text-5xl mb-4">✅</div>
-          <p className="font-bold text-lg mb-2">Thank You for keeping it Falcon Philmz.</p>
-          <p className="text-sm">
-            Check Email for movie link. <br />
-            If not received, Hit the whatsapp button
-            <a
-              href="https://wa.me/2547XXXXXXXX"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline text-green-800"
-            >
-              WhatsApp
-            </a>.
-          </p>
         </div>
       )}
     </div>

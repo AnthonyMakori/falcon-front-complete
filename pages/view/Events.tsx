@@ -112,7 +112,12 @@ export default function EventsPage() {
         <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
           <div className="bg-white p-6 rounded-lg shadow-lg w-96">
             <h2 className="text-xl font-semibold mb-4 text-blue-600">Payment for {selectedEvent.title}</h2>
-            <PaymentForm price={parseFloat(selectedEvent.price)} movie={selectedEvent.id} />
+            <PaymentForm
+              price={parseFloat(selectedEvent.price)}
+              movie={selectedEvent.id}
+              onSuccess={() => setSelectedEvent(null)} 
+              onError={(msg) => console.error("Payment error:", msg)} 
+            />
             <button
               onClick={() => setSelectedEvent(null)}
               className="mt-4 bg-red-600 text-white px-4 py-2 rounded-lg w-full hover:bg-red-700 transition"
