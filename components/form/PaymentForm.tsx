@@ -45,7 +45,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ price, movie }) => {
 
   return (
     <div className="p-4 border rounded-lg bg-white shadow-md text-black min-h-[300px] flex flex-col justify-center items-center">
-      {status === "idle" && (
+      {(status === "idle" || status === "error") && (
         <>
           <h2 className="text-lg font-semibold mb-2 text-cyan-500">Make Payment</h2>
 
@@ -76,7 +76,9 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ price, movie }) => {
             Confirm Payment
           </button>
 
-          {message && <p className="mt-2 text-sm text-red-500">{message}</p>}
+          {message && (
+            <p className="mt-2 text-sm text-red-500 text-center">{message}</p>
+          )}
         </>
       )}
 
@@ -93,21 +95,16 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ price, movie }) => {
           <p className="font-bold text-lg mb-2">Thank You for keeping it Falcon Philmz.</p>
           <p className="text-sm">
             Check Email for movie link. <br />
-            If not received, click the whatsapp button.
+            If not received, Hit the whatsapp button
+            <a
+              href="https://wa.me/2547XXXXXXXX"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline text-green-800"
+            >
+              WhatsApp
+            </a>.
           </p>
-        </div>
-      )}
-
-      {status === "error" && (
-        <div className="text-center text-red-600">
-          <p className="mb-2">Payment Failed</p>
-          <p className="text-sm">{message}</p>
-          <button
-            onClick={() => setStatus("idle")}
-            className="mt-4 bg-red-500 text-white px-4 py-2 rounded"
-          >
-            Try Again
-          </button>
         </div>
       )}
     </div>
