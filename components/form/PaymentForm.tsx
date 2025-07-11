@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 interface PaymentFormProps {
-  price: number; 
+  price: number;
   movie: number;
 }
 
@@ -18,8 +18,8 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ price, movie }) => {
     const payload = {
       phone,
       email,
-      amount: price,     
-      movie_id: movie,    
+      amount: Math.floor(price),  // Ensure amount is a whole number
+      movie_id: movie,
     };
 
     try {
@@ -65,7 +65,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ price, movie }) => {
       />
 
       <button className="text-sm text-gray-600 mb-2" disabled>
-        {`Pay KES ${price}`}
+        {`Pay KES ${Math.floor(price)}`}
       </button>
 
       <button
