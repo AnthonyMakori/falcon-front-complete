@@ -93,7 +93,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ price, movie }) => {
           <p className="font-bold text-lg mb-2">Thank You for keeping it Falcon Philmz.</p>
           <p className="text-sm">
             Check Email for movie link. <br />
-            If not received, contact us through our WhatsApp.
+            If not received, click the whatsapp button.
           </p>
         </div>
       )}
