@@ -2,10 +2,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Button } from "../../components/ui/button";
 import Navbar from "../../components/header/Header";
-import { useCart } from "../../context/CartContext"; 
+import { useCart } from "../../context/CartContext";
 import Head from "next/head";
 import PaymentForm from "../../components/form/PaymentForm";
-// import Image from 'next/image'
 
 interface MerchandiseItem {
   id: number;
@@ -15,9 +14,16 @@ interface MerchandiseItem {
   image: string;
 }
 
+const colorOptions = [
+  "Red", "Blue", "Black", "White", "Green", "Yellow", "Orange", "Purple", "Pink",
+  "Gray", "Brown", "Teal", "Maroon", "Navy", "Cyan", "Magenta", "Gold", "Silver",
+  "Beige", "Lavender", "Olive", "Turquoise", "Burgundy", "Coral", "Mint", "Peach",
+  "Sky Blue", "Violet", "Indigo", "Charcoal"
+];
+
 const Merchandise = () => {
   const [merchandise, setMerchandise] = useState<MerchandiseItem[]>([]);
-  const { addToCart } = useCart(); 
+  const { addToCart } = useCart();
   const [selectedMerch, setSelectedMerch] = useState<MerchandiseItem | null>(null);
   const [selectedColor, setSelectedColor] = useState<string>("");
   const [selectedSize, setSelectedSize] = useState<string>("");
@@ -33,10 +39,8 @@ const Merchandise = () => {
         console.error("Error fetching merchandise:", error);
       }
     };
-  
     fetchMerchandise();
   }, []);
-  
 
   const handleAddToCart = (item: MerchandiseItem) => {
     addToCart({
@@ -50,58 +54,56 @@ const Merchandise = () => {
   };
 
   return (
-    <div style={{ marginTop: "60px" }}>
+    <div className="mt-16">
       <Head>
         <title>Merchandise</title>
-        <meta name="description" content="Stay updated with upcoming events." />
-        <meta name="keywords" content="events, upcoming events, community events" />
-        <meta name="robots" content="index, follow" />
+        <meta name="description" content="Explore and purchase awesome merchandise." />
       </Head>
-      <div className="bg-gray-900 text-white">
-        <Navbar />
-        <main className="p-6 max-w-5xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-12 text-blue-400">Available Merchandise</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {merchandise.map((item) => (
-              <div key={item.id} className="relative bg-gray-800 shadow-lg rounded-lg overflow-hidden group h-[28rem]">
-                <div className="relative w-full h-full overflow-hidden">
-              {/* eslint-disable @next/next/no-img-element */}
-              <img
-                src={`https://api.falconeyephilmz.com/${item.image}`}
-                alt={item.name}
-                width={500}
-                height={750}
-                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-              {/* eslint-enable @next/next/no-img-element */}
-              <div className="absolute inset-0 bg-black bg-opacity-0 flex flex-col justify-end p-4">
-                <div className="flex justify-between items-center">
-                  <h3 className="text-xl font-semibold text-blue-600">{item.name}</h3>
-                  <p className="text-2xl font-bold text-green-600">Ksh {item.price}</p>
-                </div>
-                <p className="text-white text-sm mt-1">{item.description}</p>
-                <div className="flex justify-between gap-2">
-                  <Button
-                    onClick={() => handleAddToCart(item)}
-                    className="mt-3 w-1/2 bg-yellow-500 hover:bg-yellow-400 text-black font-semibold py-2 rounded-lg transition"
-                  >
-                    Add to Cart
-                  </Button>
-                  <Button
-                    onClick={() => {
-                      setSelectedMerch(item);
-                      setShowPaymentForm(false);
-                      setSelectedColor("");
-                      setSelectedSize("");
-                    }}
-                    className="mt-3 w-1/2 bg-blue-600 hover:bg-blue-500 text-white font-semibold py-2 rounded-lg transition"
-                  >
-                    Purchase
-                  </Button>
-                </div>
-              </div>
-            </div>
 
+      <div className="bg-gray-900 text-white min-h-screen">
+        <Navbar />
+        <main className="p-6 max-w-7xl mx-auto">
+          <h2 className="text-4xl font-bold text-center mb-12 text-blue-400">Available Merchandise</h2>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+            {merchandise.map((item) => (
+              <div
+                key={item.id}
+                className="relative bg-gray-800 shadow-lg rounded-lg overflow-hidden group h-[28rem] flex flex-col"
+              >
+                <img
+                  src={`https://api.falconeyephilmz.com/${item.image}`}
+                  alt={item.name}
+                  className="w-full h-2/3 object-cover transition-transform duration-300 group-hover:scale-105"
+                />
+                <div className="flex-1 p-4 flex flex-col justify-between">
+                  <div>
+                    <h3 className="text-xl font-semibold text-blue-400">{item.name}</h3>
+                    <p className="text-sm text-white mt-1">{item.description}</p>
+                  </div>
+                  <div className="flex justify-between items-center mt-4">
+                    <p className="text-xl font-bold text-green-500">Ksh {item.price}</p>
+                  </div>
+                  <div className="flex gap-2 mt-3">
+                    <Button
+                      onClick={() => handleAddToCart(item)}
+                      className="flex-1 bg-yellow-500 hover:bg-yellow-400 text-black"
+                    >
+                      Add to Cart
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        setSelectedMerch(item);
+                        setShowPaymentForm(false);
+                        setSelectedColor("");
+                        setSelectedSize("");
+                      }}
+                      className="flex-1 bg-blue-600 hover:bg-blue-500 text-white"
+                    >
+                      Purchase
+                    </Button>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
@@ -109,38 +111,34 @@ const Merchandise = () => {
       </div>
 
       {selectedMerch && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
-            <h2 className="text-xl font-bold mb-4 text-blue-600">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 z-50">
+          <div className="bg-white text-black p-6 rounded-lg shadow-xl max-w-md w-full relative">
+            <h2 className="text-xl font-bold text-blue-600 mb-4">
               Purchase {selectedMerch.name}
             </h2>
 
-            {/* Color Selection */}
             {!showPaymentForm && (
               <>
-                <div className="relative mt-2 text-black">
-                  <div 
-                    className="border rounded-lg p-2 cursor-pointer bg-white" 
+                {/* Color Selection */}
+                <div className="mb-4">
+                  <label className="font-semibold">Select Color:</label>
+                  <div
+                    className="mt-2 border rounded-lg p-2 cursor-pointer bg-white"
                     onClick={() => setColorDropdownOpen(!colorDropdownOpen)}
                   >
                     {selectedColor || "Choose a color"}
                   </div>
 
                   {colorDropdownOpen && (
-                    <div className="absolute left-0 w-full bg-white border rounded-lg mt-1 shadow-md max-h-40 overflow-y-auto">
-                      {[
-                        "Red", "Blue", "Black", "White", "Green", "Yellow", "Orange", "Purple", "Pink", 
-                        "Gray", "Brown", "Teal", "Maroon", "Navy", "Cyan", "Magenta", "Gold", "Silver", 
-                        "Beige", "Lavender", "Olive", "Turquoise", "Burgundy", "Coral", "Mint", "Peach", 
-                        "Sky Blue", "Violet", "Indigo", "Charcoal",
-                      ].map((color) => (
+                    <div className="grid grid-cols-4 gap-2 mt-2 max-h-40 overflow-y-auto">
+                      {colorOptions.map((color) => (
                         <div
                           key={color}
                           onClick={() => {
                             setSelectedColor(color);
-                            setColorDropdownOpen(false); 
+                            setColorDropdownOpen(false);
                           }}
-                          className="p-2 cursor-pointer text-black text-center hover:text-white transition"
+                          className="cursor-pointer p-2 text-center text-sm rounded-lg text-white"
                           style={{ backgroundColor: color.toLowerCase() }}
                         >
                           {color}
@@ -149,9 +147,10 @@ const Merchandise = () => {
                     </div>
                   )}
                 </div>
+
                 {/* Size Selection */}
-                <div className="mb-4 text-black">
-                  <label className="block text-gray-700 font-semibold">Select Size:</label>
+                <div className="mb-4">
+                  <label className="block font-semibold">Select Size:</label>
                   <select
                     value={selectedSize}
                     onChange={(e) => setSelectedSize(e.target.value)}
@@ -165,7 +164,6 @@ const Merchandise = () => {
                   </select>
                 </div>
 
-                {/* Continue to Payment Button */}
                 {selectedColor && selectedSize && (
                   <Button
                     onClick={() => setShowPaymentForm(true)}
@@ -180,21 +178,21 @@ const Merchandise = () => {
             {/* Payment Form */}
             {showPaymentForm && (
               <>
-              <PaymentForm
-                movie={selectedMerch.id}
-                price={selectedMerch.price}
-                onSuccess={() => {
-                  setShowPaymentForm(false);
-                  setSelectedMerch(null);
-                  alert("Payment successful! Check your email.");
-                }}
-                onError={(message) => {
-                  alert(`Payment failed: ${message}`);
-                }}
-              />
+                <PaymentForm
+                  movie={selectedMerch.id}
+                  price={selectedMerch.price}
+                  onSuccess={() => {
+                    setShowPaymentForm(false);
+                    setSelectedMerch(null);
+                    alert("Payment successful! Check your email.");
+                  }}
+                  onError={(message) => {
+                    alert(`Payment failed: ${message}`);
+                  }}
+                />
                 <Button
                   onClick={() => setSelectedMerch(null)}
-                  className="mt-4 bg-red-500 text-white w-full py-2 rounded"
+                  className="mt-4 bg-red-500 text-white w-full"
                 >
                   Cancel
                 </Button>
