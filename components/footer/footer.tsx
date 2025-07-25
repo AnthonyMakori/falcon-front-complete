@@ -66,7 +66,7 @@ const Footer = () => {
         {/* Copyright */}
         <div className="border-t border-red-800 pt-6  text-sm">
           <p>&copy; {new Date().getFullYear()} Falcon-Eye.MovieStream. All rights reserved.</p>
-          <p className=" text-right">Developed with passion❤️ by Anthony Makori(techstack842@gmail.com) </p>
+          <p className=" text-right">Developed with ❤️ by Sanny (techstack842@gmail.com) </p>
         </div>
       </div>
     </footer>
