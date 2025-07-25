@@ -118,39 +118,31 @@ export default function MoviesPage() {
             {paginatedMovies.map((movie) => (
               <div
   key={movie.id}
-  className="flex flex-col border rounded-xl shadow-md hover:shadow-xl transition duration-300 bg-white overflow-hidden h-[500px]"
+  className="relative rounded-xl overflow-hidden shadow-md hover:shadow-xl transition duration-300 h-[500px] group"
 >
-  {/* Poster section with overlay */}
-  <div className="relative h-1/2 w-full">
-    {/* eslint-disable-next-line @next/next/no-img-element */}
-    <img
-      src={
-        movie.poster.startsWith("http")
-          ? movie.poster
-          : `https://api.falconeyephilmz.com/${movie.poster}`
-      }
-      alt={movie.title}
-      className="w-full h-full object-cover"
-    />
+  {/* Full-size poster */}
+  {/* eslint-disable-next-line @next/next/no-img-element */}
+  <img
+    src={
+      movie.poster.startsWith("http")
+        ? movie.poster
+        : `https://api.falconeyephilmz.com/${movie.poster}`
+    }
+    alt={movie.title}
+    className="w-full h-full object-cover"
+  />
 
-    {/* Gradient overlay */}
-    <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 via-black/30 to-transparent px-4 py-3">
-      <h2 className="text-lg font-semibold text-white drop-shadow">{movie.title}</h2>
-      <p className="text-sm text-gray-200">{movie.category}</p>
-    </div>
-  </div>
+  {/* Overlay content at bottom */}
+  <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black via-black/60 to-transparent p-4 text-white">
+    <h2 className="text-lg font-bold mb-1">{movie.title}</h2>
+    <p className="text-sm text-gray-200 mb-1">{movie.category}</p>
+    <p className="text-md font-semibold text-green-300 mb-2">KES {movie.price}</p>
 
-  {/* Details and buttons */}
-  <div className="flex flex-col justify-between h-1/2 p-4">
-    <div>
-      <p className="text-lg font-bold text-green-700">KES {movie.price}</p>
-      <p className="text-xs text-gray-400">Released on {movie.date_released}</p>
-    </div>
-
-    <div className="flex flex-col gap-2 mt-4">
+    {/* Action buttons */}
+    <div className="flex flex-col gap-2">
       <Button
         onClick={() => handleAddToCart(movie)}
-        className="bg-yellow-500 hover:bg-yellow-600 text-white w-full py-2 rounded-lg text-sm flex items-center justify-center gap-2"
+        className="bg-yellow-500 hover:bg-yellow-600 text-white w-full py-2 rounded text-sm flex items-center justify-center gap-2"
         disabled={loadingMovieId === movie.id}
       >
         {loadingMovieId === movie.id ? (
@@ -164,7 +156,7 @@ export default function MoviesPage() {
 
       <Button
         onClick={() => setSelectedMovie(movie)}
-        className="bg-green-500 hover:bg-green-600 text-white w-full py-2 rounded-lg text-sm flex items-center justify-center gap-2"
+        className="bg-green-500 hover:bg-green-600 text-white w-full py-2 rounded text-sm flex items-center justify-center gap-2"
       >
         <FaDollarSign /> Purchase
       </Button>
@@ -172,7 +164,7 @@ export default function MoviesPage() {
       {movie.trailer_url && (
         <Button
           onClick={() => setTrailerUrl(movie.trailer_url!)}
-          className="bg-indigo-500 hover:bg-indigo-600 text-white w-full py-2 rounded-lg text-sm"
+          className="bg-indigo-500 hover:bg-indigo-600 text-white w-full py-2 rounded text-sm"
         >
           🎥 Watch Trailer
         </Button>
