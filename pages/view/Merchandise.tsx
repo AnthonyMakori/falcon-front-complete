@@ -69,22 +69,22 @@ const Merchandise = () => {
             {merchandise.map((item) => (
               <div
                 key={item.id}
-                className="relative bg-gray-800 shadow-lg rounded-lg overflow-hidden group h-[28rem] flex flex-col"
+                className="relative bg-gray-900 text-white rounded-lg overflow-hidden shadow-lg group h-[28rem]"
               >
+                {/* Full image background */}
                 <img
                   src={`https://api.falconeyephilmz.com/${item.image}`}
                   alt={item.name}
-                  className="w-full h-2/3 object-cover transition-transform duration-300 group-hover:scale-105"
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                 />
-                <div className="flex-1 p-4 flex flex-col justify-between">
-                  <div>
-                    <h3 className="text-xl font-semibold text-blue-400">{item.name}</h3>
-                    <p className="text-sm text-white mt-1">{item.description}</p>
-                  </div>
-                  <div className="flex justify-between items-center mt-4">
-                    <p className="text-xl font-bold text-green-500">Ksh {item.price}</p>
-                  </div>
-                  <div className="flex gap-2 mt-3">
+
+                {/* Gradient overlay with content */}
+                <div className="absolute bottom-0 w-full bg-gradient-to-t from-black via-black/60 to-transparent p-4">
+                  <h3 className="text-lg font-bold text-white">{item.name}</h3>
+                  <p className="text-sm text-gray-200 mb-2">{item.description}</p>
+                  <p className="text-xl font-bold text-green-400 mb-3">Ksh {item.price}</p>
+
+                  <div className="flex gap-2">
                     <Button
                       onClick={() => handleAddToCart(item)}
                       className="flex-1 bg-yellow-500 hover:bg-yellow-400 text-black"
@@ -107,6 +107,7 @@ const Merchandise = () => {
               </div>
             ))}
           </div>
+
         </main>
       </div>
 
