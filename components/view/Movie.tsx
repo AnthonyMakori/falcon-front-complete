@@ -117,65 +117,70 @@ export default function MoviesPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {paginatedMovies.map((movie) => (
               <div
-                    key={movie.id}
-                    className="flex flex-col border rounded-xl shadow-md hover:shadow-xl transition duration-300 bg-white overflow-hidden h-[480px]"
-                  >
-                    {/* Image section */}
-                    <div className="h-1/2 w-full">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={
-                          movie.poster.startsWith("http")
-                            ? movie.poster
-                            : `https://api.falconeyephilmz.com/${movie.poster}`
-                        }
-                        alt={movie.title}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
+  key={movie.id}
+  className="flex flex-col border rounded-xl shadow-md hover:shadow-xl transition duration-300 bg-white overflow-hidden h-[500px]"
+>
+  {/* Poster section with overlay */}
+  <div className="relative h-1/2 w-full">
+    {/* eslint-disable-next-line @next/next/no-img-element */}
+    <img
+      src={
+        movie.poster.startsWith("http")
+          ? movie.poster
+          : `https://api.falconeyephilmz.com/${movie.poster}`
+      }
+      alt={movie.title}
+      className="w-full h-full object-cover"
+    />
 
-                    {/* Content section */}
-                    <div className="flex flex-col justify-between h-1/2 p-4">
-                      <div>
-                        <h2 className="text-lg font-semibold text-gray-800">{movie.title}</h2>
-                        <p className="text-sm text-gray-500">{movie.category}</p>
-                        <p className="mt-2 text-lg font-bold text-green-700">KES {movie.price}</p>
-                        <p className="text-xs text-gray-400">Released on {movie.date_released}</p>
-                      </div>
+    {/* Gradient overlay */}
+    <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 via-black/30 to-transparent px-4 py-3">
+      <h2 className="text-lg font-semibold text-white drop-shadow">{movie.title}</h2>
+      <p className="text-sm text-gray-200">{movie.category}</p>
+    </div>
+  </div>
 
-                      <div className="flex flex-col gap-2 mt-4">
-                        <Button
-                          onClick={() => handleAddToCart(movie)}
-                          className="bg-yellow-500 hover:bg-yellow-600 text-white w-full py-2 rounded-lg text-sm flex items-center justify-center gap-2"
-                          disabled={loadingMovieId === movie.id}
-                        >
-                          {loadingMovieId === movie.id ? (
-                            <ClipLoader size={18} color="#fff" />
-                          ) : (
-                            <>
-                              <FaShoppingCart /> Add to Cart
-                            </>
-                          )}
-                        </Button>
+  {/* Details and buttons */}
+  <div className="flex flex-col justify-between h-1/2 p-4">
+    <div>
+      <p className="text-lg font-bold text-green-700">KES {movie.price}</p>
+      <p className="text-xs text-gray-400">Released on {movie.date_released}</p>
+    </div>
 
-                        <Button
-                          onClick={() => setSelectedMovie(movie)}
-                          className="bg-green-500 hover:bg-green-600 text-white w-full py-2 rounded-lg text-sm flex items-center justify-center gap-2"
-                        >
-                          <FaDollarSign /> Purchase
-                        </Button>
+    <div className="flex flex-col gap-2 mt-4">
+      <Button
+        onClick={() => handleAddToCart(movie)}
+        className="bg-yellow-500 hover:bg-yellow-600 text-white w-full py-2 rounded-lg text-sm flex items-center justify-center gap-2"
+        disabled={loadingMovieId === movie.id}
+      >
+        {loadingMovieId === movie.id ? (
+          <ClipLoader size={18} color="#fff" />
+        ) : (
+          <>
+            <FaShoppingCart /> Add to Cart
+          </>
+        )}
+      </Button>
 
-                        {movie.trailer_url && (
-                          <Button
-                            onClick={() => setTrailerUrl(movie.trailer_url!)}
-                            className="bg-indigo-500 hover:bg-indigo-600 text-white w-full py-2 rounded-lg text-sm"
-                          >
-                            🎥 Watch Trailer
-                          </Button>
-                        )}
-                      </div>
-                    </div>
-                  </div>
+      <Button
+        onClick={() => setSelectedMovie(movie)}
+        className="bg-green-500 hover:bg-green-600 text-white w-full py-2 rounded-lg text-sm flex items-center justify-center gap-2"
+      >
+        <FaDollarSign /> Purchase
+      </Button>
+
+      {movie.trailer_url && (
+        <Button
+          onClick={() => setTrailerUrl(movie.trailer_url!)}
+          className="bg-indigo-500 hover:bg-indigo-600 text-white w-full py-2 rounded-lg text-sm"
+        >
+          🎥 Watch Trailer
+        </Button>
+      )}
+    </div>
+  </div>
+</div>
+
             ))}
           </div>
 
