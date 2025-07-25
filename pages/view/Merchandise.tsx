@@ -131,7 +131,7 @@ const Merchandise = () => {
                   </div>
 
                   {colorDropdownOpen && (
-                    <div className="grid grid-cols-4 gap-2 mt-2 max-h-40 overflow-y-auto">
+                    <div className="grid grid-cols-4 gap-2 mt-2 max-h-40 overflow-y-auto text-blue-600">
                       {colorOptions.map((color) => (
                         <div
                           key={color}
