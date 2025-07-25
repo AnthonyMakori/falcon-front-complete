@@ -39,7 +39,6 @@ const PaymentWrapper = ({ price, movie }: { price: number; movie: number }) => {
         />
       )}
 
-      {/* ✅ Tick Animation */}
       {showTick && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-white bg-opacity-80">
           <svg
@@ -68,7 +67,6 @@ const PaymentWrapper = ({ price, movie }: { price: number; movie: number }) => {
         </div>
       )}
 
-      {/* ✅ Bottom Left Message */}
       {showThankYou && (
         <div className="fixed bottom-4 left-4 bg-green-600 text-white px-4 py-3 rounded shadow-md z-50 animate-fadeinout">
           <p className="font-bold">Thank You for keeping it Falcon Eye Philmz.</p>
@@ -76,7 +74,6 @@ const PaymentWrapper = ({ price, movie }: { price: number; movie: number }) => {
         </div>
       )}
 
-      {/* ❌ Error message */}
       {status === "error" && message && (
         <div className="p-4 bg-red-100 border border-red-400 text-red-700 rounded w-full text-center">
           {message}
