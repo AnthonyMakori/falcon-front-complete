@@ -116,54 +116,66 @@ export default function MoviesPage() {
         <>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {paginatedMovies.map((movie) => (
-              <div key={movie.id} className="border rounded-xl p-4 shadow-md hover:shadow-xl transition duration-300 bg-white">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={
-                    movie.poster.startsWith("http")
-                      ? movie.poster
-                      : `https://api.falconeyephilmz.com/${movie.poster}`
-                  }
-                  alt={movie.title}
-                  className="w-full h-64 object-cover mb-4 rounded-lg"
-                />
-                <h2 className="text-lg font-semibold text-gray-800">{movie.title}</h2>
-                <p className="text-sm text-gray-500">{movie.category}</p>
-                <p className="mt-2 text-lg font-bold text-green-700">KES {movie.price}</p>
-                <p className="text-xs text-gray-400">Released on {movie.date_released}</p>
-
-                <div className="flex flex-col gap-2 mt-4">
-                  <Button
-                    onClick={() => handleAddToCart(movie)}
-                    className="bg-yellow-500 hover:bg-yellow-600 text-white w-full py-2 rounded-lg text-sm flex items-center justify-center gap-2"
-                    disabled={loadingMovieId === movie.id}
+              <div
+                    key={movie.id}
+                    className="flex flex-col border rounded-xl shadow-md hover:shadow-xl transition duration-300 bg-white overflow-hidden h-[480px]"
                   >
-                    {loadingMovieId === movie.id ? (
-                      <ClipLoader size={18} color="#fff" />
-                    ) : (
-                      <>
-                        <FaShoppingCart /> Add to Cart
-                      </>
-                    )}
-                  </Button>
+                    {/* Image section */}
+                    <div className="h-1/2 w-full">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={
+                          movie.poster.startsWith("http")
+                            ? movie.poster
+                            : `https://api.falconeyephilmz.com/${movie.poster}`
+                        }
+                        alt={movie.title}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
 
-                  <Button
-                    onClick={() => setSelectedMovie(movie)}
-                    className="bg-green-500 hover:bg-green-600 text-white w-full py-2 rounded-lg text-sm flex items-center justify-center gap-2"
-                  >
-                    <FaDollarSign /> Purchase
-                  </Button>
+                    {/* Content section */}
+                    <div className="flex flex-col justify-between h-1/2 p-4">
+                      <div>
+                        <h2 className="text-lg font-semibold text-gray-800">{movie.title}</h2>
+                        <p className="text-sm text-gray-500">{movie.category}</p>
+                        <p className="mt-2 text-lg font-bold text-green-700">KES {movie.price}</p>
+                        <p className="text-xs text-gray-400">Released on {movie.date_released}</p>
+                      </div>
 
-                  {movie.trailer_url && (
-                    <Button
-                      onClick={() => setTrailerUrl(movie.trailer_url!)}
-                      className="bg-indigo-500 hover:bg-indigo-600 text-white w-full py-2 rounded-lg text-sm"
-                    >
-                      🎥 Watch Trailer
-                    </Button>
-                  )}
-                </div>
-              </div>
+                      <div className="flex flex-col gap-2 mt-4">
+                        <Button
+                          onClick={() => handleAddToCart(movie)}
+                          className="bg-yellow-500 hover:bg-yellow-600 text-white w-full py-2 rounded-lg text-sm flex items-center justify-center gap-2"
+                          disabled={loadingMovieId === movie.id}
+                        >
+                          {loadingMovieId === movie.id ? (
+                            <ClipLoader size={18} color="#fff" />
+                          ) : (
+                            <>
+                              <FaShoppingCart /> Add to Cart
+                            </>
+                          )}
+                        </Button>
+
+                        <Button
+                          onClick={() => setSelectedMovie(movie)}
+                          className="bg-green-500 hover:bg-green-600 text-white w-full py-2 rounded-lg text-sm flex items-center justify-center gap-2"
+                        >
+                          <FaDollarSign /> Purchase
+                        </Button>
+
+                        {movie.trailer_url && (
+                          <Button
+                            onClick={() => setTrailerUrl(movie.trailer_url!)}
+                            className="bg-indigo-500 hover:bg-indigo-600 text-white w-full py-2 rounded-lg text-sm"
+                          >
+                            🎥 Watch Trailer
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+                  </div>
             ))}
           </div>
 
