@@ -121,7 +121,7 @@ const Merchandise = () => {
             {!showPaymentForm && (
               <>
                 {/* Color Selection */}
-                <div className="mb-4 bg-black text-white p-4 rounded-lg">
+                <div className="mb-4 bg-gray-600 text-blue-600 p-4 rounded-lg">
                   <label className="font-semibold">Select Color:</label>
                   <div
                     className="mt-2 border rounded-lg p-2 cursor-pointer bg-white"
