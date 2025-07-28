@@ -17,7 +17,7 @@ export default function MpesaPaymentsAdmin() {
   type MpesaPayment = {
     id: string | number;
     email?: string;
-    checkout_request_id?: string;
+    mpesa_receipt_number?: string;
     amount: string | number;
     status: string;
     transaction_date?: string;
@@ -41,7 +41,7 @@ export default function MpesaPaymentsAdmin() {
 
   const filteredPayments = mpesaPayments.filter((payment) =>
     payment.email?.toLowerCase().includes(search.toLowerCase()) ||
-    payment.checkout_request_id?.toLowerCase().includes(search.toLowerCase())
+    payment.mpesa_receipt_number?.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
@@ -86,7 +86,7 @@ export default function MpesaPaymentsAdmin() {
                 <Tbody>
                   {filteredPayments.map((payment) => (
                     <Tr key={payment.id}>
-                      <Td>{payment.checkout_request_id}</Td>
+                      <Td>{payment.mpesa_receipt_number}</Td>
                       <Td>{payment.email}</Td>
                       <Td>KES {parseFloat(payment.amount.toString()).toLocaleString()}</Td>
                       <Td>
