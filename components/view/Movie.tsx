@@ -139,37 +139,40 @@ export default function MoviesPage() {
     <p className="text-md font-semibold text-green-300 mb-2">KES {movie.price}</p>
 
     {/* Action buttons */}
-    <div className="flex flex-col gap-2">
-      <Button
-        onClick={() => handleAddToCart(movie)}
-        className="bg-#B8860B hover:bg-#B8860B text-white w-full py-2 rounded text-sm flex items-center justify-center gap-2"
-        disabled={loadingMovieId === movie.id}
-      >
-        {loadingMovieId === movie.id ? (
-          <ClipLoader size={18} color="#fff" />
-        ) : (
-          <>
-            <FaShoppingCart /> Add to Cart
-          </>
-        )}
-      </Button>
+   <div className="flex flex-col gap-2">
+  <Button
+    onClick={() => handleAddToCart(movie)}
+    style={{ backgroundColor: '#B8860B' }}
+    className="text-white w-full py-2 rounded text-sm flex items-center justify-center gap-2"
+    disabled={loadingMovieId === movie.id}
+  >
+    {loadingMovieId === movie.id ? (
+      <ClipLoader size={18} color="#fff" />
+    ) : (
+      <>
+        <FaShoppingCart /> Add to Cart
+      </>
+    )}
+  </Button>
 
-      <Button
-        onClick={() => setSelectedMovie(movie)}
-        className="bg-#00004d hover:bg-#00004d text-white w-full py-2 rounded text-sm flex items-center justify-center gap-2"
-      >
-        <FaDollarSign /> Purchase
-      </Button>
+  <Button
+    onClick={() => setSelectedMovie(movie)}
+    style={{ backgroundColor: '#00004d' }}
+    className="text-white w-full py-2 rounded text-sm flex items-center justify-center gap-2"
+  >
+    <FaDollarSign /> Purchase
+  </Button>
 
-      {movie.trailer_url && (
-        <Button
-          onClick={() => setTrailerUrl(movie.trailer_url!)}
-          className="bg-indigo-500 hover:bg-indigo-600 text-white w-full py-2 rounded text-sm"
-        >
-          🎥 Watch Trailer
-        </Button>
-      )}
-    </div>
+  {movie.trailer_url && (
+    <Button
+      onClick={() => setTrailerUrl(movie.trailer_url!)}
+      className="bg-indigo-500 hover:bg-indigo-600 text-white w-full py-2 rounded text-sm"
+    >
+      🎥 Watch Trailer
+    </Button>
+  )}
+</div>
+
   </div>
 </div>
 
