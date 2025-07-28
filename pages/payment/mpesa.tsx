@@ -79,7 +79,7 @@ export default function MpesaPaymentsAdmin() {
                     <Th>Email</Th>
                     <Th>Amount</Th>
                     <Th>Status</Th>
-                    <Th>Payment For</Th> {/* New Column */}
+                    <Th>Payment For</Th>
                     <Th>Date</Th>
                   </Tr>
                 </Thead>
