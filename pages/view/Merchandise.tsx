@@ -190,7 +190,7 @@ const Merchandise = () => {
                   onSuccess={() => {
                     setShowPaymentForm(false);
                     setSelectedMerch(null);
-                    alert("Payment successful! Check your email.");
+                    alert("Check Your phone to complete payment");
                   }}
                   onError={(message) => {
                     alert(`Payment failed: ${message}`);
