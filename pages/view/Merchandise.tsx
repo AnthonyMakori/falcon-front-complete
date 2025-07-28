@@ -4,7 +4,7 @@ import { Button } from "../../components/ui/button";
 import Navbar from "../../components/header/Header";
 import { useCart } from "../../context/CartContext";
 import Head from "next/head";
-import PaymentForm from "../../components/form/PaymentForm";
+import PaymentForm from "../../components/form/paymentformmerch";
 
 interface MerchandiseItem {
   id: number;
@@ -185,6 +185,8 @@ const Merchandise = () => {
                 <PaymentForm
                   movie={selectedMerch.id}
                   price={selectedMerch.price}
+                  selectedColor={selectedColor}
+                  selectedSize={selectedSize}
                   onSuccess={() => {
                     setShowPaymentForm(false);
                     setSelectedMerch(null);
@@ -194,6 +196,8 @@ const Merchandise = () => {
                     alert(`Payment failed: ${message}`);
                   }}
                 />
+
+
                 <Button
                   onClick={() => setSelectedMerch(null)}
                   className="mt-4 bg-red-500 text-white w-full"
