@@ -87,7 +87,8 @@ const Merchandise = () => {
                   <div className="flex gap-2">
                     <Button
                       onClick={() => handleAddToCart(item)}
-                      className="flex-1 bg-#B8860B hover:#B8860B text-black"
+                      className="flex-1 text-black"
+                      style={{ backgroundColor: '#B8860B' }}
                     >
                       Add to Cart
                     </Button>
@@ -98,11 +99,13 @@ const Merchandise = () => {
                         setSelectedColor("");
                         setSelectedSize("");
                       }}
-                      className="flex-1 bg-#00004d hover:#00004d text-white"
+                      className="flex-1 text-white"
+                      style={{ backgroundColor: '#00004d' }}
                     >
                       Purchase
                     </Button>
                   </div>
+
                 </div>
               </div>
             ))}
