@@ -153,20 +153,23 @@ const MovieUploadModal = ({ onClose, onSuccess }: { onClose: () => void, onSucce
   };
 
   useEffect(() => {
-    if (price) {
-      setConvertedPrice(convertPrice(price, currency));
-      console.log("Converted Price:", convertedPrice);
-    }
-  }, [price, currency]);
+  if (price) {
+    const result = convertPrice(price, currency);
+    setConvertedPrice(result);
+  }
+}, [price, currency]);
+
 
   const handleUpload = async () => {
-    // Validate all required fields including the movie file
-    if (!title || !description || !price || !poster || !category || !dateReleased || !movieFile) {
-      alert('All fields are required, including the movie file');
-      return;
-    }
-  
-    setIsUploading(true);
+  if (!title || !description || !price || !poster || !category || !dateReleased || !movieFile) {
+    alert('All fields are required, including the movie file');
+    return;
+  }
+
+  setIsUploading(true);
+
+  try {
+    //  Send metadata & poster to Laravel (excluding video file)
     const formData = new FormData();
     formData.append('title', title);
     formData.append('description', description);
@@ -174,40 +177,52 @@ const MovieUploadModal = ({ onClose, onSuccess }: { onClose: () => void, onSucce
     formData.append('poster', poster);
     formData.append('category', category);
     formData.append('currency', currency);
-    formData.append('date_released', dateReleased); 
-    formData.append('movie', movieFile);
-  
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/upload-movie`, {
-        method: 'POST',
-        body: formData,
-        // Do not set Content-Type header manually when sending FormData.
-        headers: {
-          Accept: 'application/json',
-        },
-      });
-  
-      const responseData = await response.json();
-      console.log('Response:', responseData);
-  
-      if (response.ok) {
-        alert('Movie uploaded successfully');
-        onSuccess();
-        onClose();
-      } else {
-        alert(`Failed to upload movie: ${responseData.message || JSON.stringify(responseData)}`);
-      }
-    } catch (error) {
-      console.error('Error uploading movie:', error);
-      if (error instanceof Error) {
-        alert(`An error occurred while uploading the movie: ${error.message}`);
-      } else {
-        alert('An unknown error occurred while uploading the movie.');
-      }
-    } finally {
-      setIsUploading(false);
+    formData.append('date_released', dateReleased);
+
+    const metadataRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/upload-movie`, {
+      method: 'POST',
+      body: formData,
+    });
+
+    const metadata = await metadataRes.json();
+    if (!metadata.videoId) {
+      throw new Error("Failed to get video ID from server.");
     }
-  };
+
+    // Upload movie file directly to Bunny
+    const BUNNY_LIBRARY_ID = "468878";
+    const BUNNY_API_KEY = "9a08c4d9-5e1c-45e6-b85aca0a3e25-2cc4-49ce";
+
+    const bunnyUploadUrl = `https://video.bunnycdn.com/library/${BUNNY_LIBRARY_ID}/videos/${metadata.videoId}`;
+
+    const uploadRes = await fetch(bunnyUploadUrl, {
+      method: 'PUT',
+      headers: {
+        'AccessKey': BUNNY_API_KEY,
+        'Content-Type': 'application/octet-stream',
+      },
+      body: movieFile,
+    });
+
+    if (!uploadRes.ok) {
+      throw new Error("Video upload to Bunny failed.");
+    }
+
+    alert("Movie uploaded successfully!");
+    onSuccess();
+    onClose();
+  } catch (error: unknown) {
+  console.error('Upload error:', error);
+  if (error instanceof Error) {
+    alert(error.message);
+  } else {
+    alert('Unknown error occurred during upload.');
+  }
+} finally {
+    setIsUploading(false);
+  }
+};
+
   
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 text-black" style={{ marginTop: "40px" }}>
@@ -267,17 +282,20 @@ const MovieUploadModal = ({ onClose, onSuccess }: { onClose: () => void, onSucce
               onChange={(e) => setDescription(e.target.value)}
             ></textarea>
           </div>
-
-          <div>
-            <label className="block text-sm font-medium">Price</label>
-            <input 
-              type="number" 
-              className="w-full border p-2 rounded mb-2 border-blue-600" 
-              value={price} 
-              onChange={(e) => setPrice(e.target.value)}
-            />
-          </div>
-
+            <div>
+              <label className="block text-sm font-medium">Price</label>
+              <input 
+                type="number" 
+                className="w-full border p-2 rounded mb-2 border-blue-600" 
+                value={price} 
+                onChange={(e) => setPrice(e.target.value)}
+              />
+              {convertedPrice && (
+                <p className="text-sm text-blue-600">
+                  Converted Price: {convertedPrice} {currency}
+                </p>
+              )}
+            </div>
           <div>
             <label className="block text-sm font-medium">Currency</label>
             <select 
