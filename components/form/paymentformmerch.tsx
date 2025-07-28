@@ -37,17 +37,17 @@ const PaymentForm = ({
     try {
       setLoading(true);
 
-      const res = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/initiate/merchandise`,
-        {
-          phone,
-          amount: price,
-          email,
-          merchandise_id: movie,
-          color: selectedColor,
-          size: selectedSize,
-        }
-      );
+      const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL ?? "";
+      const endpoint = `${apiBaseUrl.replace(/\/$/, "")}/initiate/merchandise`;
+
+      const res = await axios.post(endpoint, {
+        phone,
+        amount: price,
+        email,
+        merchandise_id: movie,
+        color: selectedColor,
+        size: selectedSize,
+      });
 
       if (res.data.CheckoutRequestID) {
         onSuccess();
