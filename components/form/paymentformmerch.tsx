@@ -38,7 +38,7 @@ const PaymentForm = ({
       setLoading(true);
 
       const res = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/initiate/merchandise`,
+        `${process.env.NEXT_PUBLIC_API_URL}/initiate/merchandise`,
         {
           phone,
           amount: price,
