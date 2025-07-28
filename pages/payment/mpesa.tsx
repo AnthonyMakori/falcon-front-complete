@@ -1,6 +1,3 @@
-// ✅ Removed unused `loading` state
-// You can re-enable it later if you want a loading spinner
-
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Card, CardContent } from "../../components/ui/card";
@@ -14,6 +11,7 @@ import Navbar from "../../components/Admin/navbar";
 export default function MpesaPaymentsAdmin() {
   const [search, setSearch] = useState("");
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+
   type MpesaPayment = {
     id: string | number;
     email?: string;
@@ -22,6 +20,7 @@ export default function MpesaPaymentsAdmin() {
     status: string;
     transaction_date?: string;
     created_at?: string;
+    payment_for?: "movie" | "merchandise"; // <-- New field to identify source
   };
 
   const [mpesaPayments, setMpesaPayments] = useState<MpesaPayment[]>([]);
@@ -80,6 +79,7 @@ export default function MpesaPaymentsAdmin() {
                     <Th>Email</Th>
                     <Th>Amount</Th>
                     <Th>Status</Th>
+                    <Th>Payment For</Th>
                     <Th>Date</Th>
                   </Tr>
                 </Thead>
@@ -101,6 +101,13 @@ export default function MpesaPaymentsAdmin() {
                             <XCircle className="w-5 h-5 mr-1" /> {payment.status}
                           </span>
                         )}
+                      </Td>
+                      <Td>
+                        {payment.payment_for === "movie"
+                          ? "Movie Purchase"
+                          : payment.payment_for === "merchandise"
+                          ? "Merchandise Purchase"
+                          : "Unknown"}
                       </Td>
                       <Td>{new Date(payment.transaction_date || payment.created_at || "").toLocaleDateString()}</Td>
                     </Tr>
