@@ -327,15 +327,18 @@ const MovieUploadModal = ({ onClose, onSuccess }: { onClose: () => void, onSucce
             />
           </div>
 
-          <div className="col-span-2">
-            <label className="block text-sm font-medium">Movie File (Max: 6GB)</label>
-            <input 
-              type="file" 
-              accept="video/mp4,video/mkv,video/ts" 
-              className="w-full border p-2 rounded mb-2 border-blue-600" 
-              onChange={(e) => setMovieFile(e.target.files ? e.target.files[0] : null)} 
-            />
-          </div>
+          <input 
+            type="file" 
+            name="movie"
+            accept="video/mp4,video/mkv,video/ts"
+            className="w-full border p-2 rounded mb-2 border-blue-600"
+            onChange={(e) => {
+              const file = e.target.files?.[0] ?? null;
+              console.log("Selected movie file:", file);
+              setMovieFile(file);
+            }} 
+          />
+
         </div>
 
         <div className="flex justify-between mt-4">
