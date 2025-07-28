@@ -64,7 +64,7 @@ const Dashboard = () => {
     };
 
     fetchMpesaRevenue();
-  }, []); // ✅ No need to include `months`
+  }, []); 
 
   return (
     <div className="flex flex-col md:flex-row text-black bg-gray-100 min-h-screen">
