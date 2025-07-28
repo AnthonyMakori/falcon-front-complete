@@ -327,17 +327,17 @@ const MovieUploadModal = ({ onClose, onSuccess }: { onClose: () => void, onSucce
             />
           </div>
 
-          <input 
-            type="file" 
-            name="movie"
+          <input
+            key="movie-upload"
+            type="file"
             accept="video/mp4,video/mkv,video/ts"
-            className="w-full border p-2 rounded mb-2 border-blue-600"
             onChange={(e) => {
-              const file = e.target.files?.[0] ?? null;
-              console.log("Selected movie file:", file);
-              setMovieFile(file);
-            }} 
+              const file = e.target.files?.[0];
+              console.log("Setting movie file", file);
+              setMovieFile(file || null);
+            }}
           />
+          {movieFile && <p className="text-green-600 text-sm">Movie file selected: {movieFile.name}</p>}
 
         </div>
 
