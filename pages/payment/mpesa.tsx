@@ -1,3 +1,6 @@
+// ✅ Removed unused `loading` state
+// You can re-enable it later if you want a loading spinner
+
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Card, CardContent } from "../../components/ui/card";
@@ -22,7 +25,6 @@ export default function MpesaPaymentsAdmin() {
   };
 
   const [mpesaPayments, setMpesaPayments] = useState<MpesaPayment[]>([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchPayments = async () => {
@@ -31,8 +33,6 @@ export default function MpesaPaymentsAdmin() {
         setMpesaPayments(response.data);
       } catch (error) {
         console.error("Failed to fetch payments:", error);
-      } finally {
-        setLoading(false);
       }
     };
 

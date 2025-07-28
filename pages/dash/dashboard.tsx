@@ -13,14 +13,15 @@ import {
   Bar,
 } from "recharts";
 
+// ✅ Moved outside the component
+const months = [
+  "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+];
+
 const Dashboard = () => {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [selectedRevenueType, setSelectedRevenueType] = useState("mpesa");
-
-  const months = [
-    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-  ];
 
   const [mpesaRevenue, setMpesaRevenue] = useState<{ month: string; revenue: number }[]>([]);
   const [bankRevenue] = useState(
@@ -63,7 +64,7 @@ const Dashboard = () => {
     };
 
     fetchMpesaRevenue();
-  }, []);
+  }, []); // ✅ No need to include `months`
 
   return (
     <div className="flex flex-col md:flex-row text-black bg-gray-100 min-h-screen">
@@ -77,20 +78,14 @@ const Dashboard = () => {
         <Navbar />
         <div className="p-4 md:p-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6 text-blue-600">
-            {[
-              { title: "Total Users", value: 5 },
-              { title: "Total Subscribers", value: 5 },
-              { title: "Total Reviews", value: 34 },
-              { title: "Total Cast and Crew", value: 45 },
-              { title: "Total Series", value: 15 },
-              { title: "Total Movies", value: 25 },
-            ].map((item) => (
-              <Card key={item.title} className="p-4 shadow-md rounded-xl hover:shadow-lg transition-all duration-200">
-                <CardContent className="text-lg md:text-xl font-semibold text-center">
-                  {item.title}: {item.value}
-                </CardContent>
-              </Card>
-            ))}
+            {[{ title: "Total Users", value: 5 }, { title: "Total Subscribers", value: 5 }, { title: "Total Reviews", value: 34 }, { title: "Total Cast and Crew", value: 45 }, { title: "Total Series", value: 15 }, { title: "Total Movies", value: 25 }]
+              .map((item) => (
+                <Card key={item.title} className="p-4 shadow-md rounded-xl hover:shadow-lg transition-all duration-200">
+                  <CardContent className="text-lg md:text-xl font-semibold text-center">
+                    {item.title}: {item.value}
+                  </CardContent>
+                </Card>
+              ))}
           </div>
 
           <div className="bg-white p-4 md:p-6 rounded-xl shadow-md">
@@ -98,17 +93,13 @@ const Dashboard = () => {
 
             <div className="flex gap-4 mb-4 justify-center md:justify-start">
               <button
-                className={`px-3 md:px-4 py-2 rounded-md font-medium transition-all duration-200 ${
-                  selectedRevenueType === "mpesa" ? "bg-blue-600 text-white" : "bg-gray-300 hover:bg-gray-400"
-                }`}
+                className={`px-3 md:px-4 py-2 rounded-md font-medium transition-all duration-200 ${selectedRevenueType === "mpesa" ? "bg-blue-600 text-white" : "bg-gray-300 hover:bg-gray-400"}`}
                 onClick={() => setSelectedRevenueType("mpesa")}
               >
                 M-Pesa Revenue
               </button>
               <button
-                className={`px-3 md:px-4 py-2 rounded-md font-medium transition-all duration-200 ${
-                  selectedRevenueType === "bank" ? "bg-blue-600 text-white" : "bg-gray-300 hover:bg-gray-400"
-                }`}
+                className={`px-3 md:px-4 py-2 rounded-md font-medium transition-all duration-200 ${selectedRevenueType === "bank" ? "bg-blue-600 text-white" : "bg-gray-300 hover:bg-gray-400"}`}
                 onClick={() => setSelectedRevenueType("bank")}
               >
                 Bank Revenue
