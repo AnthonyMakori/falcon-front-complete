@@ -184,7 +184,7 @@ const Merchandise = () => {
               <>
                 <PaymentForm
                   movie={selectedMerch.id}
-                  price={selectedMerch.price}
+                  price={Math.round(selectedMerch.price)} 
                   selectedColor={selectedColor}
                   selectedSize={selectedSize}
                   onSuccess={() => {
