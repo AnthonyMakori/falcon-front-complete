@@ -160,13 +160,15 @@ const MovieUploadModal = ({ onClose, onSuccess }: { onClose: () => void, onSucce
   }, [price, currency]);
 
   const handleUpload = async () => {
-    // Validate all required fields including the movie file
-    if (!title || !description || !price || !poster || !category || !dateReleased || !movieFile) {
-      alert('All fields are required, including the movie file');
-      return;
-    }
-  
-    setIsUploading(true);
+  if (!title || !description || !price || !poster || !category || !dateReleased || !movieFile) {
+    alert('All fields are required, including the movie file');
+    return;
+  }
+
+  setIsUploading(true);
+
+  try {
+    // 1. Send metadata & poster to Laravel (excluding video file)
     const formData = new FormData();
     formData.append('title', title);
     formData.append('description', description);
@@ -174,40 +176,48 @@ const MovieUploadModal = ({ onClose, onSuccess }: { onClose: () => void, onSucce
     formData.append('poster', poster);
     formData.append('category', category);
     formData.append('currency', currency);
-    formData.append('date_released', dateReleased); 
-    formData.append('movie', movieFile);
-  
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/upload-movie`, {
-        method: 'POST',
-        body: formData,
-        // Do not set Content-Type header manually when sending FormData.
-        headers: {
-          Accept: 'application/json',
-        },
-      });
-  
-      const responseData = await response.json();
-      console.log('Response:', responseData);
-  
-      if (response.ok) {
-        alert('Movie uploaded successfully');
-        onSuccess();
-        onClose();
-      } else {
-        alert(`Failed to upload movie: ${responseData.message || JSON.stringify(responseData)}`);
-      }
-    } catch (error) {
-      console.error('Error uploading movie:', error);
-      if (error instanceof Error) {
-        alert(`An error occurred while uploading the movie: ${error.message}`);
-      } else {
-        alert('An unknown error occurred while uploading the movie.');
-      }
-    } finally {
-      setIsUploading(false);
+    formData.append('date_released', dateReleased);
+
+    const metadataRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/upload-movie`, {
+      method: 'POST',
+      body: formData,
+    });
+
+    const metadata = await metadataRes.json();
+    if (!metadata.videoId) {
+      throw new Error("Failed to get video ID from server.");
     }
-  };
+
+    // Upload movie file directly to Bunny
+    const BUNNY_LIBRARY_ID = "468878";
+    const BUNNY_API_KEY = "9a08c4d9-5e1c-45e6-b85aca0a3e25-2cc4-49ce";
+
+    const bunnyUploadUrl = `https://video.bunnycdn.com/library/${BUNNY_LIBRARY_ID}/videos/${metadata.videoId}`;
+
+    const uploadRes = await fetch(bunnyUploadUrl, {
+      method: 'PUT',
+      headers: {
+        'AccessKey': BUNNY_API_KEY,
+        'Content-Type': 'application/octet-stream',
+      },
+      body: movieFile,
+    });
+
+    if (!uploadRes.ok) {
+      throw new Error("Video upload to Bunny failed.");
+    }
+
+    alert("Movie uploaded successfully!");
+    onSuccess();
+    onClose();
+  } catch (error: any) {
+    console.error('Upload error:', error);
+    alert(error.message || 'Unknown error during upload.');
+  } finally {
+    setIsUploading(false);
+  }
+};
+
   
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 text-black" style={{ marginTop: "40px" }}>
