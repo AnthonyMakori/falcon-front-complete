@@ -1,6 +1,7 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
 import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../components/ui/tabs";
-import { useState } from "react";
 import { BarChart, LineChart, PieChart } from "../../components/ui/charts";
 import { Table, Thead, Tbody, Tr, Th, Td } from "../../components/ui/table";
 import { CalendarIcon } from "lucide-react";
@@ -14,16 +15,47 @@ type DateRange = {
   to: Date | null;
 };
 
+type MovieSalesData = {
+  movie: string;
+  sales_count: number;
+  total_revenue: number;
+};
+
 export default function AdminAnalytics() {
   const [dateRange, setDateRange] = useState<DateRange>({ from: null, to: null });
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const [movieSalesData, setMovieSalesData] = useState<MovieSalesData[]>([]);
+
+  useEffect(() => {
+    const fetchMovieSales = async () => {
+      try {
+        const res = await axios.get("https://api.falconeyephilmz.com/api/analytics/movie-sales");
+        setMovieSalesData(res.data);
+      } catch (err) {
+        console.error("Failed to fetch movie sales data", err);
+      }
+    };
+
+    fetchMovieSales();
+  }, []);
+
+  // Prepare chart data
+  const salesChartData = movieSalesData.map((item) => ({
+    name: item.movie,
+    value: item.sales_count,
+  }));
+
+  const revenueChartData = movieSalesData.map((item) => ({
+    name: item.movie,
+    value: item.total_revenue,
+  }));
 
   return (
     <div className="flex min-h-screen bg-gray-200">
       <div className={`${isSidebarCollapsed ? 'w-16' : 'w-64'} transition-width duration-300`}>
         <AdminSidebar isCollapsed={isSidebarCollapsed} toggleSidebar={() => setIsSidebarCollapsed(!isSidebarCollapsed)} />
       </div>
-      
+
       <div className="flex-1 flex flex-col transition-margin duration-300 ml-auto w-full">
         <Navbar />
 
@@ -50,15 +82,20 @@ export default function AdminAnalytics() {
                     <CardTitle className="text-blue-600">Movie Sales</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <BarChart data={[]} />
+                    <BarChart
+                      data={salesChartData}
+                    />
                   </CardContent>
                 </Card>
+
                 <Card className="bg-white shadow-md border-l-8 border-blue-400">
                   <CardHeader>
                     <CardTitle className="text-blue-400">Revenue</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <LineChart data={[]} />
+                    <LineChart
+                      data={revenueChartData}
+                    />
                   </CardContent>
                 </Card>
               </div>
