@@ -171,6 +171,17 @@ export default function MovieManagement() {
 }
 
 // Reusable Upload & Edit Modal
+interface Movie {
+  id: number;
+  title: string;
+  category: string;
+  price: number;
+  date_released: string;
+  purchases: number;
+  description?: string;
+  currency?: string;
+}
+
 const MovieUploadModal = ({
   onClose,
   onSuccess,
@@ -178,7 +189,7 @@ const MovieUploadModal = ({
 }: {
   onClose: () => void;
   onSuccess: () => void;
-  initialData?: any;
+  initialData?: Movie | null;
 }) => {
   const [title, setTitle] = useState(initialData?.title || '');
   const [description, setDescription] = useState(initialData?.description || '');
