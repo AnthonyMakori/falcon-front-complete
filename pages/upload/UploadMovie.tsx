@@ -282,17 +282,20 @@ const MovieUploadModal = ({ onClose, onSuccess }: { onClose: () => void, onSucce
               onChange={(e) => setDescription(e.target.value)}
             ></textarea>
           </div>
-
-          <div>
-            <label className="block text-sm font-medium">Price</label>
-            <input 
-              type="number" 
-              className="w-full border p-2 rounded mb-2 border-blue-600" 
-              value={price} 
-              onChange={(e) => setPrice(e.target.value)}
-            />
-          </div>
-
+            <div>
+              <label className="block text-sm font-medium">Price</label>
+              <input 
+                type="number" 
+                className="w-full border p-2 rounded mb-2 border-blue-600" 
+                value={price} 
+                onChange={(e) => setPrice(e.target.value)}
+              />
+              {convertedPrice && (
+                <p className="text-sm text-blue-600">
+                  Converted Price: {convertedPrice} {currency}
+                </p>
+              )}
+            </div>
           <div>
             <label className="block text-sm font-medium">Currency</label>
             <select 
