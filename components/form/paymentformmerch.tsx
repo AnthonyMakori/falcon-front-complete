@@ -3,7 +3,7 @@ import axios from "axios";
 import { Button } from "../ui/button";
 
 interface PaymentFormProps {
-  movie: number; // this represents merchandise_id
+  movie: number;
   price: number;
   selectedColor: string;
   selectedSize: string;
@@ -37,23 +37,33 @@ const PaymentForm = ({
     try {
       setLoading(true);
 
-      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/initiate/merchandise`, {
-        phone,
-        amount: price,
-        email,
-        merchandise_id: movie,
-        color: selectedColor,
-        size: selectedSize,
-      });
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/initiate/merchandise`,
+        {
+          phone,
+          amount: price,
+          email,
+          merchandise_id: movie,
+          color: selectedColor,
+          size: selectedSize,
+        }
+      );
 
       if (res.data.CheckoutRequestID) {
         onSuccess();
       } else {
         onError("Failed to initiate payment.");
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Payment error:", err);
-      onError(err.response?.data?.message || "Something went wrong.");
+
+      if (axios.isAxiosError(err)) {
+        onError(err.response?.data?.message || "Something went wrong.");
+      } else if (err instanceof Error) {
+        onError(err.message);
+      } else {
+        onError("Something went wrong.");
+      }
     } finally {
       setLoading(false);
     }
