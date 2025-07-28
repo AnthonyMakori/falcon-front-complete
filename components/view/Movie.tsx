@@ -142,7 +142,7 @@ export default function MoviesPage() {
     <div className="flex flex-col gap-2">
       <Button
         onClick={() => handleAddToCart(movie)}
-        className="bg-yellow-500 hover:bg-yellow-600 text-white w-full py-2 rounded text-sm flex items-center justify-center gap-2"
+        className="bg-#B8860B hover:bg-#B8860B text-white w-full py-2 rounded text-sm flex items-center justify-center gap-2"
         disabled={loadingMovieId === movie.id}
       >
         {loadingMovieId === movie.id ? (
@@ -156,7 +156,7 @@ export default function MoviesPage() {
 
       <Button
         onClick={() => setSelectedMovie(movie)}
-        className="bg-green-500 hover:bg-green-600 text-white w-full py-2 rounded text-sm flex items-center justify-center gap-2"
+        className="bg-#00004d hover:bg-#00004d text-white w-full py-2 rounded text-sm flex items-center justify-center gap-2"
       >
         <FaDollarSign /> Purchase
       </Button>

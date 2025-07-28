@@ -87,7 +87,7 @@ const Merchandise = () => {
                   <div className="flex gap-2">
                     <Button
                       onClick={() => handleAddToCart(item)}
-                      className="flex-1 bg-yellow-500 hover:bg-yellow-400 text-black"
+                      className="flex-1 bg-#B8860B hover:#B8860B text-black"
                     >
                       Add to Cart
                     </Button>
@@ -98,7 +98,7 @@ const Merchandise = () => {
                         setSelectedColor("");
                         setSelectedSize("");
                       }}
-                      className="flex-1 bg-blue-600 hover:bg-blue-500 text-white"
+                      className="flex-1 bg-#00004d hover:#00004d text-white"
                     >
                       Purchase
                     </Button>
