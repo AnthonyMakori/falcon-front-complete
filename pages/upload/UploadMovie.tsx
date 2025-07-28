@@ -153,11 +153,12 @@ const MovieUploadModal = ({ onClose, onSuccess }: { onClose: () => void, onSucce
   };
 
   useEffect(() => {
-    if (price) {
-      setConvertedPrice(convertPrice(price, currency));
-      console.log("Converted Price:", convertedPrice);
-    }
-  }, [price, currency]);
+  if (price) {
+    const result = convertPrice(price, currency);
+    setConvertedPrice(result);
+  }
+}, [price, currency]);
+
 
   const handleUpload = async () => {
   if (!title || !description || !price || !poster || !category || !dateReleased || !movieFile) {
@@ -168,7 +169,7 @@ const MovieUploadModal = ({ onClose, onSuccess }: { onClose: () => void, onSucce
   setIsUploading(true);
 
   try {
-    // 1. Send metadata & poster to Laravel (excluding video file)
+    //  Send metadata & poster to Laravel (excluding video file)
     const formData = new FormData();
     formData.append('title', title);
     formData.append('description', description);
@@ -210,10 +211,14 @@ const MovieUploadModal = ({ onClose, onSuccess }: { onClose: () => void, onSucce
     alert("Movie uploaded successfully!");
     onSuccess();
     onClose();
-  } catch (error: any) {
-    console.error('Upload error:', error);
-    alert(error.message || 'Unknown error during upload.');
-  } finally {
+  } catch (error: unknown) {
+  console.error('Upload error:', error);
+  if (error instanceof Error) {
+    alert(error.message);
+  } else {
+    alert('Unknown error occurred during upload.');
+  }
+} finally {
     setIsUploading(false);
   }
 };
