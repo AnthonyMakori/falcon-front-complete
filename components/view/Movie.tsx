@@ -30,7 +30,7 @@ export default function MoviesPage() {
   // Filtering & Pagination
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 6;
+  const itemsPerPage = 25;
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -66,10 +66,7 @@ export default function MoviesPage() {
   );
 
   const totalPages = Math.ceil(filteredMovies.length / itemsPerPage);
-  const paginatedMovies = filteredMovies.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
+  const paginatedMovies = filteredMovies.slice(0, currentPage * itemsPerPage);
 
   return (
     <div className="px-4 md:px-12 py-8 bg-gray-50 min-h-screen">
@@ -120,7 +117,6 @@ export default function MoviesPage() {
   key={movie.id}
   className="relative rounded-xl overflow-hidden shadow-md hover:shadow-xl transition duration-300 h-[500px] group"
 >
-  {/* Full-size poster */}
   {/* eslint-disable-next-line @next/next/no-img-element */}
   <img
     src={
@@ -179,24 +175,18 @@ export default function MoviesPage() {
             ))}
           </div>
 
-          {/* Pagination */}
-          <div className="mt-6 flex justify-center gap-2">
-            <Button
-              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-              disabled={currentPage === 1}
-              className="bg-gray-300 hover:bg-gray-400 text-black"
-            >
-              Prev
-            </Button>
-            <span className="px-4 py-2 text-sm">{currentPage} / {totalPages}</span>
-            <Button
-              onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-              disabled={currentPage === totalPages}
-              className="bg-gray-300 hover:bg-gray-400 text-black"
-            >
-              Next
-            </Button>
-          </div>
+          {/* Load More Button */}
+            {currentPage < totalPages && (
+              <div className="mt-6 flex justify-center">
+                <Button
+                  onClick={() => setCurrentPage((prev) => prev + 1)}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded"
+                >
+                  Load More
+                </Button>
+              </div>
+            )}
+
         </>
       ) : (
         <p className="text-center text-gray-500 text-lg mt-8">
