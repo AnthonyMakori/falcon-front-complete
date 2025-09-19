@@ -111,28 +111,28 @@ function EventCard({
   onBook: () => void;
 }) {
   return (
-    <div className="relative bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition">
+    <div className="relative bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-3xl transition-transform transform hover:-translate-y-1">
       {/* Background Image */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={event.poster}
         alt={event.title || "Event poster"}
-        className="w-full h-80 object-cover"
+        className="w-full h-96 object-cover" // increased from h-80 to h-96
       />
 
       {/* Overlay with details */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent flex flex-col justify-end p-4">
-        <h2 className="text-xl font-bold text-white">{event.title}</h2>
-        <p className="text-sm text-gray-200 line-clamp-2 mt-1">
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent flex flex-col justify-end p-5">
+        <h2 className="text-2xl font-bold text-white">{event.title}</h2>
+        <p className="text-sm text-gray-200 line-clamp-3 mt-2">
           {event.description}
         </p>
 
-        <div className="mt-2 flex items-center justify-between text-xs text-gray-300">
+        <div className="mt-3 flex items-center justify-between text-xs text-gray-300">
           <span>📅 {new Date(event.date).toDateString()}</span>
           <span>📍 {event.location}</span>
         </div>
 
-        <div className="mt-3 flex items-center justify-between">
+        <div className="mt-4 flex items-center justify-between">
           <p className="text-lg font-bold text-green-400">
             {Intl.NumberFormat("en-KE", {
               style: "currency",
@@ -141,7 +141,7 @@ function EventCard({
           </p>
           <button
             onClick={onBook}
-            className="bg-blue-600 text-white px-3 py-1.5 rounded-lg text-sm hover:bg-blue-700 transition"
+            className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition"
           >
             Book Now
           </button>
