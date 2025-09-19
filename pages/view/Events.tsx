@@ -21,34 +21,29 @@ export default function EventsPage() {
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
 
   useEffect(() => {
-    fetch(`${API_URL}/public-events`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
+  fetch(`${API_URL}/public-events`, {
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
+  })
+    .then((res) => {
+      if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
+      return res.json();
     })
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(`HTTP error! Status: ${res.status}`);
-        }
-        return res.json();
-      })
-      .then((data) => {
-        setEvents(
-          data.events.map((event: Event) => ({
-            ...event,
-            image: event.poster,
-          }))
-        );
-        
-        setLoading(false);
-      })
-      
-      .catch((error) => {
-        console.error("Error fetching events:", error);
-        setLoading(false);
-      });
-  }, []);
+    .then((data) => {
+      setEvents(
+        data.events.map((event: Event) => ({
+          ...event,
+          poster: `${API_URL}/${event.poster}`, 
+        }))
+      );
+      setLoading(false);
+    })
+    .catch((error) => {
+      console.error("Error fetching events:", error);
+      setLoading(false);
+    });
+}, []);
+
 
   return (
     <div>
