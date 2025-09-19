@@ -48,7 +48,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ price, eventId, onSuccess, on
     };
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/stk/initiate`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events/stk/initiate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
