@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Head from "next/head";
 import Header from "../../components/header/Header";
-import PaymentForm from "../../components/form/PaymentForm";
+import EventPaymentForm from "../../components/form/eventPaymentForm";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -20,8 +20,11 @@ export default function EventsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
+  const [paymentError, setPaymentError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
-  useEffect(() => {
+  const fetchEvents = () => {
+    setLoading(true);
     fetch(`${API_URL}/public-events`)
       .then((res) => {
         if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
@@ -36,6 +39,10 @@ export default function EventsPage() {
         setError("Failed to load events. Please try again later.");
         setLoading(false);
       });
+  };
+
+  useEffect(() => {
+    fetchEvents();
   }, []);
 
   return (
@@ -53,6 +60,12 @@ export default function EventsPage() {
         <h1 className="text-4xl font-extrabold text-center text-blue-700 mb-10">
           Upcoming Events
         </h1>
+
+        {successMessage && (
+          <div className="bg-green-100 text-green-700 p-4 rounded mb-6 text-center">
+            {successMessage}
+          </div>
+        )}
 
         {loading && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -80,7 +93,10 @@ export default function EventsPage() {
             <EventCard
               key={event.id}
               event={event}
-              onBook={() => setSelectedEvent(event)}
+              onBook={() => {
+                setSelectedEvent(event);
+                setPaymentError("");
+              }}
             />
           ))}
         </div>
@@ -91,12 +107,20 @@ export default function EventsPage() {
           <h2 className="text-xl font-semibold mb-4 text-blue-600">
             Payment for {selectedEvent.title}
           </h2>
-          <PaymentForm
+          <EventPaymentForm
             price={parseFloat(selectedEvent.price)}
-            movie={selectedEvent.id}
-            onSuccess={() => setSelectedEvent(null)}
-            onError={(msg) => console.error("Payment error:", msg)}
+            eventId={selectedEvent.id}
+            onSuccess={() => {
+              setSelectedEvent(null);
+              setPaymentError("");
+              setSuccessMessage("Payment successful! Your ticket has been booked.");
+              fetchEvents(); 
+            }}
+            onError={(msg) => setPaymentError(msg)}
           />
+          {paymentError && (
+            <p className="text-red-600 text-sm mt-2">{paymentError}</p>
+          )}
         </Modal>
       )}
     </div>
@@ -112,7 +136,6 @@ function EventCard({
 }) {
   return (
     <div className="relative bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-3xl transition-transform transform hover:-translate-y-1">
-      {/* Background Image */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={event.poster}
@@ -120,7 +143,6 @@ function EventCard({
         className="w-full h-[48rem] object-cover"
       />
 
-      {/* Overlay with details */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent flex flex-col justify-end p-5">
         <h2 className="text-2xl font-bold text-white">{event.title}</h2>
         <p className="text-sm text-gray-200 line-clamp-3 mt-2">
