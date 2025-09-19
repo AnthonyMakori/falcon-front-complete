@@ -117,7 +117,7 @@ function EventCard({
       <img
         src={event.poster}
         alt={event.title || "Event poster"}
-        className="w-full h-96 object-cover" // increased from h-80 to h-96
+        className="w-full h-[36rem] object-cover"
       />
 
       {/* Overlay with details */}
