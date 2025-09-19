@@ -21,29 +21,30 @@ export default function EventsPage() {
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
 
   useEffect(() => {
-  fetch(`${API_URL}/public-events`, {
-    method: "GET",
-    headers: { "Content-Type": "application/json" },
-  })
-    .then((res) => {
-      if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
-      return res.json();
+    fetch(`${API_URL}/public-events`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
     })
-    .then((data) => {
-      setEvents(
-        data.events.map((event: Event) => ({
-          ...event,
-          poster: `${API_URL}/${event.poster}`, 
-        }))
-      );
-      setLoading(false);
-    })
-    .catch((error) => {
-      console.error("Error fetching events:", error);
-      setLoading(false);
-    });
-}, []);
-
+      .then((res) => {
+        if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
+        return res.json();
+      })
+      .then((data) => {
+        // Fix poster URL → remove /api prefix
+        const baseURL = API_URL?.replace("/api", "");
+        setEvents(
+          data.events.map((event: Event) => ({
+            ...event,
+            poster: `${baseURL}/${event.poster}`, 
+          }))
+        );
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching events:", error);
+        setLoading(false);
+      });
+  }, []);
 
   return (
     <div>
@@ -75,8 +76,8 @@ export default function EventsPage() {
                   width={500}
                   height={750}
                 />
-
                 {/* eslint-enable @next/next/no-img-element */}
+
                 <h2 className="text-2xl font-semibold text-blue-800 mt-4">{event.title}</h2>
                 <p className="mt-2 text-gray-600">{event.description}</p>
                 <div className="mt-4 flex items-center space-x-4 text-sm text-gray-500">
