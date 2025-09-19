@@ -30,12 +30,10 @@ export default function EventsPage() {
         return res.json();
       })
       .then((data) => {
-        // Fix poster URL → remove /api prefix
-        const baseURL = API_URL?.replace("/api", "");
         setEvents(
           data.events.map((event: Event) => ({
             ...event,
-            poster: `${baseURL}/${event.poster}`, 
+            poster: event.poster, // ✅ already a full URL from backend
           }))
         );
         setLoading(false);
@@ -84,9 +82,7 @@ export default function EventsPage() {
                   <span className="flex items-center">
                     📅 {new Date(event.date).toDateString()}
                   </span>
-                  <span className="flex items-center">
-                    📍 {event.location}
-                  </span>
+                  <span className="flex items-center">📍 {event.location}</span>
                 </div>
                 <div className="mt-4 flex items-center justify-between">
                   <p className="text-lg font-bold text-green-600">Price: {event.price}</p>
@@ -101,18 +97,22 @@ export default function EventsPage() {
             ))}
           </div>
         ) : (
-          <div className="text-center text-lg text-gray-500">No upcoming events available.</div>
+          <div className="text-center text-lg text-gray-500">
+            No upcoming events available.
+          </div>
         )}
       </div>
       {selectedEvent && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
           <div className="bg-white p-6 rounded-lg shadow-lg w-96">
-            <h2 className="text-xl font-semibold mb-4 text-blue-600">Payment for {selectedEvent.title}</h2>
+            <h2 className="text-xl font-semibold mb-4 text-blue-600">
+              Payment for {selectedEvent.title}
+            </h2>
             <PaymentForm
               price={parseFloat(selectedEvent.price)}
               movie={selectedEvent.id}
-              onSuccess={() => setSelectedEvent(null)} 
-              onError={(msg) => console.error("Payment error:", msg)} 
+              onSuccess={() => setSelectedEvent(null)}
+              onError={(msg) => console.error("Payment error:", msg)}
             />
             <button
               onClick={() => setSelectedEvent(null)}
