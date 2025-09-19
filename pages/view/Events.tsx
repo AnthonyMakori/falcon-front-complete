@@ -111,36 +111,41 @@ function EventCard({
   onBook: () => void;
 }) {
   return (
-    <div className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition p-4 flex flex-col">
+    <div className="relative bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition">
+      {/* Background Image */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={event.poster}
         alt={event.title || "Event poster"}
-        className="w-full h-48 object-cover rounded-lg"
+        className="w-full h-80 object-cover"
       />
-      <h2 className="text-2xl font-semibold text-blue-800 mt-4">
-        {event.title}
-      </h2>
-      <p className="mt-2 text-gray-600 line-clamp-3">{event.description}</p>
 
-      <div className="mt-4 flex items-center justify-between text-sm text-gray-500">
-        <span>📅 {new Date(event.date).toDateString()}</span>
-        <span>📍 {event.location}</span>
-      </div>
-
-      <div className="mt-4 flex items-center justify-between">
-        <p className="text-lg font-bold text-green-600">
-          {Intl.NumberFormat("en-KE", {
-            style: "currency",
-            currency: "KES",
-          }).format(Number(event.price))}
+      {/* Overlay with details */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent flex flex-col justify-end p-4">
+        <h2 className="text-xl font-bold text-white">{event.title}</h2>
+        <p className="text-sm text-gray-200 line-clamp-2 mt-1">
+          {event.description}
         </p>
-        <button
-          onClick={onBook}
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
-        >
-          Book Now
-        </button>
+
+        <div className="mt-2 flex items-center justify-between text-xs text-gray-300">
+          <span>📅 {new Date(event.date).toDateString()}</span>
+          <span>📍 {event.location}</span>
+        </div>
+
+        <div className="mt-3 flex items-center justify-between">
+          <p className="text-lg font-bold text-green-400">
+            {Intl.NumberFormat("en-KE", {
+              style: "currency",
+              currency: "KES",
+            }).format(Number(event.price))}
+          </p>
+          <button
+            onClick={onBook}
+            className="bg-blue-600 text-white px-3 py-1.5 rounded-lg text-sm hover:bg-blue-700 transition"
+          >
+            Book Now
+          </button>
+        </div>
       </div>
     </div>
   );
