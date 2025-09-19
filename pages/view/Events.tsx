@@ -140,7 +140,7 @@ function EventCard({
       <img
         src={event.poster}
         alt={event.title || "Event poster"}
-        className="w-full h-[48rem] object-cover"
+        className="w-full h-[36rem] object-cover"
       />
 
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent flex flex-col justify-end p-5">
