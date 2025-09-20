@@ -113,7 +113,7 @@ export default function EventsPage() {
             onSuccess={() => {
               setSelectedEvent(null);
               setPaymentError("");
-              setSuccessMessage("Payment successful! Your ticket has been booked.");
+              setSuccessMessage("Check Your Phone to complete payment!");
               fetchEvents(); 
             }}
             onError={(msg) => setPaymentError(msg)}
