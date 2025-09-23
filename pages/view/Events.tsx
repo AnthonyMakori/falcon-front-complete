@@ -45,6 +45,15 @@ export default function EventsPage() {
     fetchEvents();
   }, []);
 
+  useEffect(() => {
+    if (successMessage) {
+      const timer = setTimeout(() => {
+        setSuccessMessage("");
+      }, 10000);
+      return () => clearTimeout(timer);
+    }
+  }, [successMessage]);
+
   return (
     <div>
       <Head>
