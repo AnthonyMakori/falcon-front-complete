@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Button } from "../../components/ui/button";
 import { useState, useEffect } from "react";
 import { Table, Tbody, Td, Th, Thead, Tr } from "../../components/ui/table";
@@ -8,7 +8,9 @@ import Navbar from "../../components/Admin/navbar";
 import axios from "axios";
 import axiosOriginal from "axios";
 import type { CancelTokenSource } from "axios";
+import ErrorBoundary from "../../components/ErrorBoundary"; 
 
+// ---- Movie Management Page ----
 export default function MovieManagement() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -60,121 +62,125 @@ export default function MovieManagement() {
   };
 
   return (
-    <div className="flex h-screen">
-      <div className={`${isSidebarCollapsed ? 'w-16' : 'w-64'} transition-width duration-300`}>
-        <AdminSidebar
-          isCollapsed={isSidebarCollapsed}
-          toggleSidebar={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
-        />
-      </div>
+    <ErrorBoundary>
+      <div className="flex h-screen">
+        <div className={`${isSidebarCollapsed ? 'w-16' : 'w-64'} transition-width duration-300`}>
+          <AdminSidebar
+            isCollapsed={isSidebarCollapsed}
+            toggleSidebar={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+          />
+        </div>
 
-      <div className="flex-1 flex flex-col transition-margin duration-300 ml-auto w-full">
-        <Navbar />
+        <div className="flex-1 flex flex-col transition-margin duration-300 ml-auto w-full">
+          <Navbar />
 
-        <div className="p-4">
-          <div className="flex justify-between items-center mb-4">
-            <h1 className="text-xl font-bold">Movie Management</h1>
-            <Button
-              className="bg-blue-500 text-white px-4 py-2 rounded"
-              onClick={() => {
-                setEditMovieData(null);
-                setIsModalOpen(true);
-              }}
-            >
-              + Add New Movie
-            </Button>
-          </div>
+          <div className="p-4">
+            <div className="flex justify-between items-center mb-4">
+              <h1 className="text-xl font-bold">Movie Management</h1>
+              <Button
+                className="bg-blue-500 text-white px-4 py-2 rounded"
+                onClick={() => {
+                  setEditMovieData(null);
+                  setIsModalOpen(true);
+                }}
+              >
+                + Add New Movie
+              </Button>
+            </div>
 
-          <div className="overflow-x-auto">
-            <Table>
-              <Thead>
-                <Tr>
-                  <Th>Movie Title</Th>
-                  <Th>Category</Th>
-                  <Th>Price</Th>
-                  <Th>Date Released</Th>
-                  <Th>Purchases</Th>
-                  <Th>Actions</Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                {movies.map((movie) => (
-                  <Tr key={movie.id}>
-                    <Td>{movie.title}</Td>
-                    <Td>{movie.category}</Td>
-                    <Td>${movie.price}</Td>
-                    <Td>{movie.date_released}</Td>
-                    <Td>{movie.purchases}</Td>
-                    <Td>
-                      <Button
-                        className="bg-green-500 text-white px-2 py-1 rounded"
-                        onClick={() => handleEdit(movie)}
-                      >
-                        Edit
-                      </Button>
-                      <Button
-                        className="bg-red-500 text-white px-2 py-1 rounded ml-2"
-                        onClick={() => handleDelete(movie.id)}
-                      >
-                        Delete
-                      </Button>
-                    </Td>
+            <div className="overflow-x-auto">
+              <Table>
+                <Thead>
+                  <Tr>
+                    <Th>Movie Title</Th>
+                    <Th>Category</Th>
+                    <Th>Price</Th>
+                    <Th>Date Released</Th>
+                    <Th>Purchases</Th>
+                    <Th>Actions</Th>
                   </Tr>
-                ))}
-              </Tbody>
-            </Table>
-          </div>
+                </Thead>
+                <Tbody>
+                  {movies.map((movie) => (
+                    <Tr key={movie.id}>
+                      <Td>{movie.title}</Td>
+                      <Td>{movie.category}</Td>
+                      <Td>${movie.price}</Td>
+                      <Td>{movie.date_released}</Td>
+                      <Td>{movie.purchases}</Td>
+                      <Td>
+                        <Button
+                          className="bg-green-500 text-white px-2 py-1 rounded"
+                          onClick={() => handleEdit(movie)}
+                        >
+                          Edit
+                        </Button>
+                        <Button
+                          className="bg-red-500 text-white px-2 py-1 rounded ml-2"
+                          onClick={() => handleDelete(movie.id)}
+                        >
+                          Delete
+                        </Button>
+                      </Td>
+                    </Tr>
+                  ))}
+                </Tbody>
+              </Table>
+            </div>
 
-          <div className="flex justify-between items-center mt-4">
-            <Pagination>
-              <PaginationContent>
-                <PaginationItem>
-                  <PaginationLink href="#">1</PaginationLink>
-                </PaginationItem>
-                <PaginationItem>
-                  <PaginationLink href="#">2</PaginationLink>
-                </PaginationItem>
-                <PaginationItem>
-                  <PaginationLink href="#">...</PaginationLink>
-                </PaginationItem>
-                <PaginationItem>
-                  <PaginationLink href="#">100</PaginationLink>
-                </PaginationItem>
-              </PaginationContent>
-            </Pagination>
-            <div className="flex gap-2">
-              <Button className="bg-gray-300 px-3 py-1 rounded">Previous</Button>
-              <Button className="bg-gray-300 px-3 py-1 rounded">Next</Button>
+            <div className="flex justify-between items-center mt-4">
+              <Pagination>
+                <PaginationContent>
+                  <PaginationItem>
+                    <PaginationLink href="#">1</PaginationLink>
+                  </PaginationItem>
+                  <PaginationItem>
+                    <PaginationLink href="#">2</PaginationLink>
+                  </PaginationItem>
+                  <PaginationItem>
+                    <PaginationLink href="#">...</PaginationLink>
+                  </PaginationItem>
+                  <PaginationItem>
+                    <PaginationLink href="#">100</PaginationLink>
+                  </PaginationItem>
+                </PaginationContent>
+              </Pagination>
+              <div className="flex gap-2">
+                <Button className="bg-gray-300 px-3 py-1 rounded">Previous</Button>
+                <Button className="bg-gray-300 px-3 py-1 rounded">Next</Button>
+              </div>
             </div>
           </div>
         </div>
+
+        {isModalOpen && (
+          <ErrorBoundary fallback={<div className="p-4 bg-red-100 text-red-700 rounded">Modal crashed.</div>}>
+            <MovieUploadModal
+              onClose={() => {
+                setIsModalOpen(false);
+                setEditMovieData(null);
+              }}
+              onSuccess={() => {
+                setIsSuccessMessageVisible(true);
+                fetchMovies();
+                setTimeout(() => setIsSuccessMessageVisible(false), 5000); // auto-hide after 5s
+              }}
+              initialData={editMovieData}
+            />
+          </ErrorBoundary>
+        )}
+
+        {isSuccessMessageVisible && (
+          <div className="fixed bottom-4 left-4 bg-green-500 text-white p-4 rounded-lg shadow-lg">
+            Movie uploaded successfully!
+          </div>
+        )}
       </div>
-
-      {isModalOpen && (
-        <MovieUploadModal
-          onClose={() => {
-            setIsModalOpen(false);
-            setEditMovieData(null);
-          }}
-          onSuccess={() => {
-            setIsSuccessMessageVisible(true);
-            fetchMovies();
-            setTimeout(() => setIsSuccessMessageVisible(false), 5000); // auto-hide after 5s
-          }}
-          initialData={editMovieData}
-        />
-      )}
-
-      {isSuccessMessageVisible && (
-        <div className="fixed bottom-4 left-4 bg-green-500 text-white p-4 rounded-lg shadow-lg">
-          Movie uploaded successfully!
-        </div>
-      )}
-    </div>
+    </ErrorBoundary>
   );
 }
 
-// Reusable Upload & Edit Modal
+// ---- Upload / Edit Modal ----
 interface Movie {
   id: number;
   title: string;
@@ -207,6 +213,7 @@ const MovieUploadModal = ({
   const [isUploading, setIsUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [cancelTokenSource, setCancelTokenSource] = useState<CancelTokenSource | null>(null);
+
   const convertPrice = (amount: string, currency: string) => {
     const rates: Record<string, number> = { USD: 1, EUR: 0.92, GBP: 0.78, KES: 130 };
     return (parseFloat(amount) * (rates[currency] || 1)).toFixed(2);
@@ -294,105 +301,107 @@ const MovieUploadModal = ({
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 text-black" style={{ marginTop: "40px" }}>
-      <div className="bg-white p-6 rounded-lg shadow-lg w-[800px] h-[500px] overflow-y-auto ml-[200px] border-blue-600">
-        <h2 className="text-xl font-bold mb-4">{initialData ? "Edit Movie" : "Upload New Movie"}</h2>
+    <ErrorBoundary fallback={<div className="p-4 bg-red-100 text-red-700 rounded">Modal failed to render.</div>}>
+      <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 text-black" style={{ marginTop: "40px" }}>
+        <div className="bg-white p-6 rounded-lg shadow-lg w-[800px] h-[500px] overflow-y-auto ml-[200px] border-blue-600">
+          <h2 className="text-xl font-bold mb-4">{initialData ? "Edit Movie" : "Upload New Movie"}</h2>
 
-        <div className="grid grid-cols-2 gap-2">
-          <div>
-            <label className="block text-sm font-medium">Movie Title</label>
-            <input type="text" className="w-full border p-2 rounded mb-2 border-blue-600" value={title} onChange={(e) => setTitle(e.target.value)} />
-          </div>
-           <div>
-            <label className="block text-sm font-medium">Category</label>
-            <select 
-              className="w-full border p-2 rounded mb-2 border-blue-600" 
-              value={category} 
-              onChange={(e) => setCategory(e.target.value)}
-            >
-              <option value="">Select a category</option>
-              <option value="Action">Action</option>
-              <option value="Comedy">Comedy</option>
-              <option value="Drama">Drama</option>
-              <option value="Romance">Romance</option>
-              <option value="Sci-Fi">Sci-Fi</option>
-              <option value="Psychological Thriller">Psychological Thriller</option>
-              <option value="Film Noir">Film Noir</option>
-              <option value="Thriller">Thriller</option>
-              <option value="Romcom">Romcom</option>
-              <option value="Horror">Horror</option>
-              <option value="Crime Film">Crime Film</option>
-              <option value="Fantasy">Fantasy</option>
-              <option value="Documentary">Documentary</option>
-              <option value="Animation">Animation</option>
-              <option value="Adventure">Adventure</option>
-              <option value="Musical">Musical</option>
-              <option value="War">War</option>
-              <option value="Highbrid Genre">Highbrid Genre</option>
-              <option value="Experimental">Experimental</option>
-              <option value="Narrative">Narative</option>
-              <option value="History">History</option>
-              <option value="Melodrama">Melodrama</option>
-              <option value="Dark comedy">Dark Comedy</option>
-            </select>
-          </div>
-
-          <div className="col-span-2">
-            <label className="block text-sm font-medium">Description</label>
-            <textarea className="w-full border p-2 rounded mb-2 border-blue-600" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
-          </div>
-          <div>
-            <label className="block text-sm font-medium">Price</label>
-            <input type="number" className="w-full border p-2 rounded mb-2 border-blue-600" value={price} onChange={(e) => setPrice(e.target.value)} />
-            {convertedPrice && <p className="text-sm text-blue-600">Converted Price: {convertedPrice} {currency}</p>}
-          </div>
-          <div>
-            <label className="block text-sm font-medium">Currency</label>
-            <select className="w-full border p-2 rounded border-blue-600" value={currency} onChange={(e) => setCurrency(e.target.value)}>
-              <option value="USD">USD</option>
-              <option value="KES">KES</option>
-            </select>
-          </div>
-          <div>
-            <label className="block text-sm font-medium">Date Released</label>
-            <input type="date" className="w-full border p-2 rounded mb-2 border-blue-600" value={dateReleased} onChange={(e) => setDateReleased(e.target.value)} />
-          </div>
-          {!initialData && (
-            <>
-              <div className="col-span-2">
-                <label className="block text-sm font-medium">Movie Poster</label>
-                <input type="file" className="w-full border p-2 rounded mb-2 border-blue-600" onChange={(e) => setPoster(e.target.files?.[0] || null)} />
-              </div>
-              <input type="file" accept="video/*" onChange={(e) => setMovieFile(e.target.files?.[0] || null)} />
-              {movieFile && <p className="text-green-600 text-sm">Movie file selected: {movieFile.name}</p>}
-            </>
-          )}
-        </div>
-
-        {/* Upload Progress Bar */}
-        {isUploading && (
-          <div className="w-full bg-gray-200 rounded-full h-4 mt-4">
-            <div
-              className="bg-blue-500 h-4 rounded-full text-white text-xs flex items-center justify-center"
-              style={{ width: `${uploadProgress}%` }}
-            >
-              {uploadProgress}%
+          <div className="grid grid-cols-2 gap-2">
+            <div>
+              <label className="block text-sm font-medium">Movie Title</label>
+              <input type="text" className="w-full border p-2 rounded mb-2 border-blue-600" value={title} onChange={(e) => setTitle(e.target.value)} />
             </div>
-          </div>
-        )}
+            <div>
+              <label className="block text-sm font-medium">Category</label>
+              <select 
+                className="w-full border p-2 rounded mb-2 border-blue-600" 
+                value={category} 
+                onChange={(e) => setCategory(e.target.value)}
+              >
+                <option value="">Select a category</option>
+                <option value="Action">Action</option>
+                <option value="Comedy">Comedy</option>
+                <option value="Drama">Drama</option>
+                <option value="Romance">Romance</option>
+                <option value="Sci-Fi">Sci-Fi</option>
+                <option value="Psychological Thriller">Psychological Thriller</option>
+                <option value="Film Noir">Film Noir</option>
+                <option value="Thriller">Thriller</option>
+                <option value="Romcom">Romcom</option>
+                <option value="Horror">Horror</option>
+                <option value="Crime Film">Crime Film</option>
+                <option value="Fantasy">Fantasy</option>
+                <option value="Documentary">Documentary</option>
+                <option value="Animation">Animation</option>
+                <option value="Adventure">Adventure</option>
+                <option value="Musical">Musical</option>
+                <option value="War">War</option>
+                <option value="Highbrid Genre">Highbrid Genre</option>
+                <option value="Experimental">Experimental</option>
+                <option value="Narrative">Narative</option>
+                <option value="History">History</option>
+                <option value="Melodrama">Melodrama</option>
+                <option value="Dark comedy">Dark Comedy</option>
+              </select>
+            </div>
 
-        <div className="flex justify-between mt-4">
-          <Button className="bg-gray-500 text-white px-4 py-2 rounded" onClick={onClose}>Cancel</Button>
-          {isUploading && cancelTokenSource && (
-            <Button className="bg-red-500 text-white px-4 py-2 rounded" onClick={handleCancelUpload}>
-              Cancel Upload
-            </Button>
+            <div className="col-span-2">
+              <label className="block text-sm font-medium">Description</label>
+              <textarea className="w-full border p-2 rounded mb-2 border-blue-600" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
+            </div>
+            <div>
+              <label className="block text-sm font-medium">Price</label>
+              <input type="number" className="w-full border p-2 rounded mb-2 border-blue-600" value={price} onChange={(e) => setPrice(e.target.value)} />
+              {convertedPrice && <p className="text-sm text-blue-600">Converted Price: {convertedPrice} {currency}</p>}
+            </div>
+            <div>
+              <label className="block text-sm font-medium">Currency</label>
+              <select className="w-full border p-2 rounded border-blue-600" value={currency} onChange={(e) => setCurrency(e.target.value)}>
+                <option value="USD">USD</option>
+                <option value="KES">KES</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium">Date Released</label>
+              <input type="date" className="w-full border p-2 rounded mb-2 border-blue-600" value={dateReleased} onChange={(e) => setDateReleased(e.target.value)} />
+            </div>
+            {!initialData && (
+              <>
+                <div className="col-span-2">
+                  <label className="block text-sm font-medium">Movie Poster</label>
+                  <input type="file" className="w-full border p-2 rounded mb-2 border-blue-600" onChange={(e) => setPoster(e.target.files?.[0] || null)} />
+                </div>
+                <input type="file" accept="video/*" onChange={(e) => setMovieFile(e.target.files?.[0] || null)} />
+                {movieFile && <p className="text-green-600 text-sm">Movie file selected: {movieFile.name}</p>}
+              </>
+            )}
+          </div>
+
+          {/* Upload Progress Bar */}
+          {isUploading && (
+            <div className="w-full bg-gray-200 rounded-full h-4 mt-4">
+              <div
+                className="bg-blue-500 h-4 rounded-full text-white text-xs flex items-center justify-center"
+                style={{ width: `${uploadProgress}%` }}
+              >
+                {uploadProgress}%
+              </div>
+            </div>
           )}
-          <Button className="bg-blue-500 text-white px-4 py-2 rounded" onClick={handleUpload} disabled={isUploading}>
-            {isUploading ? "Uploading..." : initialData ? "Update" : "Upload"}
-          </Button>
+
+          <div className="flex justify-between mt-4">
+            <Button className="bg-gray-500 text-white px-4 py-2 rounded" onClick={onClose}>Cancel</Button>
+            {isUploading && cancelTokenSource && (
+              <Button className="bg-red-500 text-white px-4 py-2 rounded" onClick={handleCancelUpload}>
+                Cancel Upload
+              </Button>
+            )}
+            <Button className="bg-blue-500 text-white px-4 py-2 rounded" onClick={handleUpload} disabled={isUploading}>
+              {isUploading ? "Uploading..." : initialData ? "Update" : "Upload"}
+            </Button>
+          </div>
         </div>
       </div>
-    </div>
+    </ErrorBoundary>
   );
 };
