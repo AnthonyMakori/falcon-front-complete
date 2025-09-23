@@ -5,6 +5,7 @@ import { Pagination, PaginationContent, PaginationItem, PaginationLink } from ".
 import AdminSidebar from "../../components/sidebar/sidebar";
 import Navbar from "../../components/Admin/navbar";
 import axios from "axios";
+import axiosOriginal from "axios";
 
 export default function MovieManagement() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
@@ -156,6 +157,7 @@ export default function MovieManagement() {
           onSuccess={() => {
             setIsSuccessMessageVisible(true);
             fetchMovies();
+            setTimeout(() => setIsSuccessMessageVisible(false), 5000); // auto-hide after 5s
           }}
           initialData={editMovieData}
         />
@@ -201,6 +203,8 @@ const MovieUploadModal = ({
   const [convertedPrice, setConvertedPrice] = useState('');
   const [movieFile, setMovieFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [cancelTokenSource, setCancelTokenSource] = useState<any>(null);
 
   const convertPrice = (amount: string, currency: string) => {
     const rates: Record<string, number> = { USD: 1, EUR: 0.92, GBP: 0.78, KES: 130 };
@@ -220,6 +224,8 @@ const MovieUploadModal = ({
     }
 
     setIsUploading(true);
+    setUploadProgress(0);
+
     try {
       const formData = new FormData();
       formData.append('title', title);
@@ -234,31 +240,55 @@ const MovieUploadModal = ({
         await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/movies/${initialData.id}/update`, formData);
         alert("Movie updated successfully!");
       } else {
+        // Step 1: send metadata to backend
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/upload-movie`, {
           method: 'POST',
           body: formData,
         });
         const metadata = await res.json();
+        console.log("Backend response:", metadata);
+
         const bunnyVideoId = metadata.bunnyVideoId;
-        if (!bunnyVideoId) throw new Error("Failed to get video ID");
-        const bunnyUploadUrl = `https://video.bunnycdn.com/library/468878/videos/${metadata.bunnyVideoId}`;
-        await fetch(bunnyUploadUrl, {
-          method: 'PUT',
+        if (!bunnyVideoId) throw new Error("Failed to get Bunny video ID");
+
+        // Step 2: upload video directly to Bunny with AXIOS + progress + cancel
+        const bunnyUploadUrl = `https://video.bunnycdn.com/library/${process.env.NEXT_PUBLIC_BUNNY_STREAM_LIBRARY_ID}/videos/${bunnyVideoId}`;
+        const source = axiosOriginal.CancelToken.source();
+        setCancelTokenSource(source);
+
+        await axiosOriginal.put(bunnyUploadUrl, movieFile, {
           headers: {
-            'AccessKey': '9a08c4d9-5e1c-45e6-b85aca0a3e25-2cc4-49ce',
+            'AccessKey': process.env.NEXT_PUBLIC_BUNNY_STREAM_API_KEY ?? '',
             'Content-Type': 'application/octet-stream',
+          } as Record<string, string>,
+          onUploadProgress: (progressEvent) => {
+            if (progressEvent.total) {
+              const percent = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+              setUploadProgress(percent);
+            }
           },
-          body: movieFile,
+          cancelToken: source.token,
         });
       }
 
       onSuccess();
       onClose();
-    } catch (err) {
-      console.error("Upload error:", err);
-      alert("An error occurred during upload.");
+    } catch (err: any) {
+      if (axiosOriginal.isCancel(err)) {
+        alert("Upload canceled by user.");
+      } else {
+        console.error("Upload error:", err);
+        alert("An error occurred during upload.");
+      }
     } finally {
       setIsUploading(false);
+      setCancelTokenSource(null);
+    }
+  };
+
+  const handleCancelUpload = () => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel("Upload canceled by user.");
     }
   };
 
@@ -338,8 +368,25 @@ const MovieUploadModal = ({
           )}
         </div>
 
+        {/* Upload Progress Bar */}
+        {isUploading && (
+          <div className="w-full bg-gray-200 rounded-full h-4 mt-4">
+            <div
+              className="bg-blue-500 h-4 rounded-full text-white text-xs flex items-center justify-center"
+              style={{ width: `${uploadProgress}%` }}
+            >
+              {uploadProgress}%
+            </div>
+          </div>
+        )}
+
         <div className="flex justify-between mt-4">
           <Button className="bg-gray-500 text-white px-4 py-2 rounded" onClick={onClose}>Cancel</Button>
+          {isUploading && cancelTokenSource && (
+            <Button className="bg-red-500 text-white px-4 py-2 rounded" onClick={handleCancelUpload}>
+              Cancel Upload
+            </Button>
+          )}
           <Button className="bg-blue-500 text-white px-4 py-2 rounded" onClick={handleUpload} disabled={isUploading}>
             {isUploading ? "Uploading..." : initialData ? "Update" : "Upload"}
           </Button>
