@@ -6,6 +6,7 @@ import AdminSidebar from "../../components/sidebar/sidebar";
 import Navbar from "../../components/Admin/navbar";
 import axios from "axios";
 import axiosOriginal from "axios";
+import type { CancelTokenSource } from "axios";
 
 export default function MovieManagement() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
@@ -204,8 +205,7 @@ const MovieUploadModal = ({
   const [movieFile, setMovieFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
-  const [cancelTokenSource, setCancelTokenSource] = useState<any>(null);
-
+  const [cancelTokenSource, setCancelTokenSource] = useState<CancelTokenSource | null>(null);
   const convertPrice = (amount: string, currency: string) => {
     const rates: Record<string, number> = { USD: 1, EUR: 0.92, GBP: 0.78, KES: 130 };
     return (parseFloat(amount) * (rates[currency] || 1)).toFixed(2);
@@ -273,7 +273,7 @@ const MovieUploadModal = ({
 
       onSuccess();
       onClose();
-    } catch (err: any) {
+    } catch (err: unknown) {
       if (axiosOriginal.isCancel(err)) {
         alert("Upload canceled by user.");
       } else {
