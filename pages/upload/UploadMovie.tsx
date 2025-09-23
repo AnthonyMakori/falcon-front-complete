@@ -239,9 +239,9 @@ const MovieUploadModal = ({
           body: formData,
         });
         const metadata = await res.json();
-        const bunnyVideoId = metadata.movieId;
+        const bunnyVideoId = metadata.bunnyVideoId;
         if (!bunnyVideoId) throw new Error("Failed to get video ID");
-        const bunnyUploadUrl = `https://video.bunnycdn.com/library/468878/videos/${metadata.videoId}`;
+        const bunnyUploadUrl = `https://video.bunnycdn.com/library/468878/videos/${metadata.bunnyVideoId}`;
         await fetch(bunnyUploadUrl, {
           method: 'PUT',
           headers: {
