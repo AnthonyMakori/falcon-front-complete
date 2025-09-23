@@ -1,3 +1,4 @@
+"use client"
 import { Button } from "../../components/ui/button";
 import { useState, useEffect } from "react";
 import { Table, Tbody, Td, Th, Thead, Tr } from "../../components/ui/table";
