@@ -119,14 +119,17 @@ export default function MoviesPage() {
 >
   {/* eslint-disable-next-line @next/next/no-img-element */}
   <img
-    src={
-      movie.poster.startsWith("http")
-        ? movie.poster
-        : `https://api.falconeyephilmz.com/${movie.poster}`
-    }
-    alt={movie.title}
-    className="w-full h-full object-cover"
-  />
+  src={
+    movie.poster?.startsWith("http")
+      ? movie.poster
+      : movie.poster
+      ? `https://api.falconeyephilmz.com/${movie.poster}`
+      : "/fallback-poster.jpg"
+  }
+  alt={movie.title}
+  className="w-full h-full object-cover"
+/>
+
 
   {/* Overlay content at bottom */}
   <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black via-black/60 to-transparent p-4 text-white">
