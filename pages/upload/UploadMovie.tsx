@@ -163,7 +163,7 @@ export default function MovieManagement() {
               onSuccess={() => {
                 setIsSuccessMessageVisible(true);
                 fetchMovies();
-                setTimeout(() => setIsSuccessMessageVisible(false), 5000); // auto-hide after 5s
+                setTimeout(() => setIsSuccessMessageVisible(false), 5000); 
               }}
               initialData={editMovieData}
             />
@@ -248,7 +248,6 @@ const MovieUploadModal = ({
         await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/movies/${initialData.id}/update`, formData);
         alert("Movie updated successfully!");
       } else {
-        // Step 1: send metadata to backend
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/upload-movie`, {
           method: 'POST',
           body: formData,
@@ -259,7 +258,6 @@ const MovieUploadModal = ({
         const bunnyVideoId = metadata.bunnyVideoId;
         if (!bunnyVideoId) throw new Error("Failed to get Bunny video ID");
 
-        // Step 2: upload video directly to Bunny with AXIOS + progress + cancel
         const bunnyUploadUrl = `https://video.bunnycdn.com/library/${process.env.NEXT_PUBLIC_BUNNY_STREAM_LIBRARY_ID}/videos/${bunnyVideoId}`;
         const source = axiosOriginal.CancelToken.source();
         setCancelTokenSource(source);
